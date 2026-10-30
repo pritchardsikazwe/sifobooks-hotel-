@@ -4,11 +4,13 @@ import { requireSupabase } from "./lib/supabase";
 
 type Props = { hotelId: string; role: string };
 type Setting = { enabled: boolean; environment: "test" | "production"; tpin: string | null; branch_id: string | null; device_serial: string | null; connector_id: string | null; connector_status: string; last_heartbeat_at: string | null; last_error_message: string | null };
+type Folio = { id:string; folio_number:string; status:string; reservation_id:string };
 type Submission = { id: string; source_type: string; source_id: string; status: string; response_code: string | null; response_message: string | null; zra_reference: string | null; created_at: string; environment: string };
 
 export function ZraPanel({ hotelId, role }: Props) {
   const [settings, setSettings] = useState<Setting>({ enabled:false, environment:"test", tpin:"", branch_id:"", device_serial:"", connector_id:null, connector_status:"not_configured", last_heartbeat_at:null, last_error_message:null });
   const [history, setHistory] = useState<Submission[]>([]);
+  const [folios, setFolios] = useState<Folio[]>([]);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -16,14 +18,17 @@ export function ZraPanel({ hotelId, role }: Props) {
   const load = useCallback(async () => {
     setError("");
     const client = requireSupabase();
-    const [s, h] = await Promise.all([
+    const [s, h, f] = await Promise.all([
       client.from("hotel_zra_settings").select("enabled,environment,tpin,branch_id,device_serial,connector_id,connector_status,last_heartbeat_at,last_error_message").eq("hotel_id",hotelId).maybeSingle(),
-      client.from("hotel_zra_submissions").select("id,source_type,source_id,status,response_code,response_message,zra_reference,created_at,environment").eq("hotel_id",hotelId).order("created_at",{ascending:false}).limit(50)
+      client.from("hotel_zra_submissions").select("id,source_type,source_id,status,response_code,response_message,zra_reference,created_at,environment").eq("hotel_id",hotelId).order("created_at",{ascending:false}).limit(50),
+      client.from("folios").select("id,folio_number,status,reservation_id").eq("hotel_id",hotelId).order("created_at",{ascending:false}).limit(200)
     ]);
     if (s.error) throw s.error;
     if (h.error) throw h.error;
+    if (f.error) throw f.error;
     if (s.data) setSettings(s.data as Setting);
     setHistory((h.data ?? []) as Submission[]);
+    setFolios((f.data ?? []) as Folio[]);
   },[hotelId]);
   useEffect(()=>{ load().catch(e=>setError(e instanceof Error?e.message:String(e))); },[load]);
   const save = async (event: React.FormEvent) => {
@@ -48,6 +53,16 @@ export function ZraPanel({ hotelId, role }: Props) {
         window.prompt("Copy this connector token now. It is shown once; store it securely on the hotel's Windows connector.", data.connector_token);
         setMessage("Connector pairing token created. Configure the Windows connector with this token; never paste it into public support messages.");
       } else setMessage(data?.message ?? "Pairing request completed.");
+      await load();
+    } catch(e) { setError(e instanceof Error?e.message:String(e)); }
+    finally { setBusy(false); }
+  };
+  const queueFolio = async (folio: Folio) => {
+    setBusy(true); setError(""); setMessage("");
+    try {
+      const { data, error } = await requireSupabase().functions.invoke("hotel-zra-control", { body:{ action:"enqueue_folio", hotel_id:hotelId, source_id:folio.id } });
+      if (error) throw error;
+      setMessage(data?.message ?? "Folio queued for connector validation.");
       await load();
     } catch(e) { setError(e instanceof Error?e.message:String(e)); }
     finally { setBusy(false); }
@@ -77,6 +92,9 @@ export function ZraPanel({ hotelId, role }: Props) {
       {settings.last_heartbeat_at && <p className="muted">Last connector heartbeat: {new Date(settings.last_heartbeat_at).toLocaleString()}</p>}
       {settings.last_error_message && <div className="alert error"><AlertTriangle size={17}/>{settings.last_error_message}</div>}
       <p className="muted">Production is not a certification switch. Confirm current ZRA classification, unit and tax codes, device registration, and complete ZRA UAT before fiscal use.</p>
+    </div>
+    <div className="panel"><div className="panel-head"><div><h2>Queue a folio invoice</h2><p>Creates an idempotent staging record; it does not yet issue a ZRA fiscal invoice.</p></div></div>
+      {folios.length===0?<p className="muted">No folios found. Create a reservation and post folio charges first.</p>:<div className="table-wrap"><table><thead><tr>{["Folio","Status","Action"].map(x=><th key={x}>{x}</th>)}</tr></thead><tbody>{folios.map(folio=><tr key={folio.id}><td>{folio.folio_number}</td><td>{folio.status}</td><td><button className="small" disabled={busy||!canConfigure||!settings.enabled} onClick={()=>queueFolio(folio)}>Queue for validation</button></td></tr>)}</tbody></table></div>}
     </div>
     <div className="panel"><div className="panel-head"><div><h2>Submission history</h2><p>Recent queue items and ZRA responses.</p></div><span>{history.length} records</span></div>
       {history.length===0?<p className="muted">No fiscal submissions yet. Invoice enqueueing is enabled only after the source transaction mapping and connector test are configured.</p>:<div className="table-wrap"><table><thead><tr>{["Created","Source","Environment","Status","ZRA reference","Response","Action"].map(x=><th key={x}>{x}</th>)}</tr></thead><tbody>{history.map(item=><tr key={item.id}><td>{new Date(item.created_at).toLocaleString()}</td><td>{item.source_type}</td><td>{item.environment}</td><td><span className="status-pill">{item.status}</span></td><td>{item.zra_reference??"—"}</td><td>{[item.response_code,item.response_message].filter(Boolean).join(" · ")||"—"}</td><td>{["rejected","retry_wait"].includes(item.status)&&<button className="small" disabled={busy} onClick={()=>retry(item)}>Retry safely</button>}</td></tr>)}</tbody></table></div>}
