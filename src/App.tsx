@@ -54,6 +54,7 @@ export function App() {
   const [form, setForm] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
   const [staff, setStaff] = useState<Row[]>([]);
+  const [tableSearch, setTableSearch] = useState("");
 
   useEffect(() => {
     if (!supabase) { setAuthLoading(false); return; }
@@ -349,7 +350,18 @@ export function App() {
   const select = (name: string, label: string, options: { value: string; label: string }[], required = true) => <label key={name}>{label}<select required={required} value={form[name] ?? ""} onChange={(e) => setForm((s) => ({ ...s, [name]: e.target.value }))}><option value="">Select…</option>{options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select></label>;
   const submitButton = (label: string) => <button className="primary" disabled={saving}><Plus size={16} />{saving ? "Saving…" : label}</button>;
   const submitForm = (children: ReactNode) => <form className="form-grid" onSubmit={save}>{children}</form>;
-  const table = (headers: string[], rows: (string | ReactNode)[][]) => <div className="table-scroll"><table><thead><tr>{headers.map((h) => <th key={h}>{h}</th>)}</tr></thead><tbody>{rows.length ? rows.map((row, i) => <tr key={i}>{row.map((cell, j) => <td key={j}>{cell}</td>)}</tr>) : <tr><td colSpan={headers.length} className="empty">No records yet. Add your first record above.</td></tr>}</tbody></table></div>;
+  const table = (headers: string[], rows: (string | ReactNode)[][]) => {
+    const textOf = (node: ReactNode): string => {
+      if (node == null || typeof node === "boolean") return "";
+      if (typeof node === "string" || typeof node === "number") return String(node);
+      if (Array.isArray(node)) return node.map(textOf).join(" ");
+      if (typeof node === "object" && "props" in node) return textOf((node as any).props?.children);
+      return "";
+    };
+    const query = tableSearch.trim().toLocaleLowerCase();
+    const filtered = query ? rows.filter((row) => row.some((cell) => textOf(cell).toLocaleLowerCase().includes(query))) : rows;
+    return <section className="data-table-card"><div className="data-table-toolbar"><div><span className="data-table-eyebrow">PROPERTY RECORDS</span><strong>{filtered.length} <small>{filtered.length === 1 ? "record" : "records"}{query ? " found" : ""}</small></strong></div><label className="table-search"><span className="sr-only">Search records</span><input type="search" value={tableSearch} onChange={(e) => setTableSearch(e.target.value)} placeholder="Search this list…" /><span aria-hidden="true">⌕</span></label></div><div className="table-scroll"><table><thead><tr>{headers.map((h) => <th key={h}>{h}</th>)}</tr></thead><tbody>{filtered.length ? filtered.map((row, i) => <tr key={i}>{row.map((cell, j) => <td key={j}>{cell}</td>)}</tr>) : <tr><td colSpan={headers.length} className="empty">{query ? "No matching records. Try another search." : "No records yet. Add your first record above."}</td></tr>}</tbody></table></div></section>;
+  };
   const badge = (status: string) => <span className={`badge ${status}`}>{status?.replaceAll("_", " ")}</span>;
   const reservationActions = (r: Row) => <div className="actions">{r.status === "confirmed" && <button className="small" onClick={() => updateReservation(r, "checkin")}>Check in</button>}{r.status === "checked_in" && <button className="small" onClick={() => updateReservation(r, "checkout")}>Check out</button>}{["pending", "confirmed"].includes(r.status) && <button className="small danger" onClick={() => updateReservation(r, "cancel")}>Cancel</button>}</div>;
 
