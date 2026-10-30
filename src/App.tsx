@@ -188,6 +188,11 @@ export function App() {
         });
         if (error) throw error;
         setNotice(`Night audit closed for ${businessDate}. Cash variance: ${money(countedCash - expectedCash)}.`);
+      } else if (tab === "staff") {
+        const { error } = await client.rpc("add_hotel_member_by_email", { p_hotel_id: hotel.id, p_email: v.staff_email.trim(), p_role: v.staff_role });
+        if (error) throw error;
+        setNotice("Staff access added. The staff member can sign in using their existing confirmed account.");
+        await loadStaff();
       } else if (tab === "settings") {
         const { error } = await client.from("hotels").update({ name: (v.name ?? hotel.name).trim(), legal_name: v.legal_name ?? hotel.legal_name ?? null, email: v.email ?? hotel.email ?? null, phone: v.phone ?? hotel.phone ?? null, address: v.address ?? hotel.address ?? null, city: v.city ?? hotel.city ?? null, tax_registration_number: v.tax_registration_number ?? hotel.tax_registration_number ?? null, vat_enabled: (v.vat_enabled ?? String(hotel.vat_enabled)) === "true", vat_rate: Number(v.vat_rate ?? hotel.vat_rate ?? 0) }).eq("id", hotel.id);
         if (error) throw error;
@@ -211,6 +216,13 @@ export function App() {
       setNotice("Reservation " + (action === "checkin" ? "checked in" : action === "checkout" ? "checked out" : "cancelled") + ".");
       await refresh();
     } catch (e) { setError(errorMessage(e)); }
+  };
+
+  const toggleStaff = async (member: Row) => {
+    if (!hotel || member.role === "owner") return;
+    setError(""); setNotice("");
+    const { error } = await requireSupabase().rpc("set_hotel_member_active", { p_hotel_id: hotel.id, p_membership_id: member.id, p_active: !member.active });
+    if (error) setError(error.message); else { setNotice(member.active ? "Staff access suspended." : "Staff access restored."); await loadStaff(); }
   };
 
   const completeTask = async (task: Row) => {
@@ -287,6 +299,21 @@ export function App() {
       content = <><div className="panel"><h2>Night audit · Daily close</h2><p className="muted">Reconcile today's room charges, other charges, receipts and physical cash before closing the business date. This does not post to an external accounting ledger.</p>{auditedToday ? <div className="alert success"><CheckCircle2 size={18} />Audit closed for {auditedToday.business_date}. Cash variance: {money(auditedToday.variance)}.</div> : submitForm(<>{field("business_date", "Business date", "date", true, {defaultValue:today(),max:today()})}{field("cash_counted", "Physical cash counted (ZMW)", "number", true, {min:0,step:"0.01",defaultValue:"0"})}{field("notes", "Closing notes", "text", false)}{submitButton("Reconcile and close day")}</>)}</div><div className="panel"><h2>Previous night audits</h2>{table(["Business date", "Room revenue", "Other revenue", "Payments", "Cash variance", "Status"], data.night_audits.map((a) => [a.business_date, money(a.room_revenue), money(a.other_revenue), money(a.payments_total), money(a.variance), badge(a.status)]))}</div></>;
       break;
     }
+    case "reports": {
+      const bookedNights = data.reservations.filter((r) => !["cancelled", "no_show"].includes(r.status)).reduce((n, r) => n + Math.max(0, (new Date(r.check_out_date).getTime() - new Date(r.check_in_date).getTime()) / 86400000), 0);
+      const charged = data.folio_items.filter((i) => i.item_type !== "discount").reduce((n, i) => n + Number(i.amount || 0), 0);
+      const discounts = data.folio_items.filter((i) => i.item_type === "discount").reduce((n, i) => n + Number(i.amount || 0), 0);
+      const receipts = data.payments.filter((p) => p.status === "posted" && p.payment_type !== "refund").reduce((n, p) => n + Number(p.amount || 0), 0);
+      const refunds = data.payments.filter((p) => p.status === "posted" && p.payment_type === "refund").reduce((n, p) => n + Number(p.amount || 0), 0);
+      const occupied = data.rooms.filter((r) => r.status === "occupied").length;
+      const activeRooms = data.rooms.filter((r) => r.active && !["maintenance", "out_of_service"].includes(r.status)).length;
+      const kinds = Array.from(new Set(data.folio_items.map((i) => i.item_type))).sort();
+      content = <><div className="metrics"><Metric title="Reservations" value={data.reservations.length} icon={<CalendarDays />} /><Metric title="Room nights booked" value={bookedNights} icon={<BedDouble />} /><Metric title="Gross charges" value={money(charged)} icon={<Wallet />} /><Metric title="Discounts" value={money(discounts)} icon={<CreditCard />} /><Metric title="Receipts" value={money(receipts)} icon={<CreditCard />} /><Metric title="Refunds" value={money(refunds)} icon={<Wallet />} /><Metric title="Current occupancy" value={activeRooms ? Math.round(occupied / activeRooms * 100) + "%" : "0%"} icon={<DoorOpen />} /></div><div className="panel"><h2>Revenue by charge type</h2>{table(["Charge type", "Transactions", "Total"], kinds.map((kind) => { const items = data.folio_items.filter((i) => i.item_type === kind); return [kind.replaceAll("_", " "), String(items.length), money(items.reduce((sum, i) => sum + Number(i.amount || 0), 0))]; }))}</div><div className="panel"><h2>Daily audit history</h2>{table(["Business date", "Room revenue", "Other revenue", "Payments", "Cash variance", "Status"], data.night_audits.map((a) => [a.business_date, money(a.room_revenue), money(a.other_revenue), money(a.payments_total), money(a.variance), badge(a.status)]))}</div></>;
+      break;
+    }
+    case "staff":
+      content = <><div className="panel"><h2>Add staff member</h2><p className="muted">Staff must first create an account and confirm their email. Access is limited to this hotel.</p>{submitForm(<>{field("staff_email", "Staff account email", "email")}{select("staff_role", "Role", [{value:"manager",label:"Manager"},{value:"receptionist",label:"Receptionist"},{value:"housekeeping",label:"Housekeeping"},{value:"accountant",label:"Accountant"},{value:"maintenance",label:"Maintenance"},{value:"viewer",label:"Read-only viewer"}])}{submitButton("Grant hotel access")}</>)}</div><div className="panel"><h2>Staff access</h2>{table(["Email", "Role", "Access", "Action"], staff.map((m) => [m.email ?? m.user_id, m.role, badge(m.active ? "active" : "suspended"), m.role === "owner" ? "Property owner" : <button className={m.active ? "small danger" : "small"} onClick={() => toggleStaff(m)}>{m.active ? "Suspend access" : "Restore access"}</button>]))}</div></>;
+      break;
     case "settings":
       content = <div className="panel"><h2>Property settings</h2><p className="muted">Zambia defaults: ZMW, Africa/Lusaka, with VAT disabled until configured by the hotel.</p>{submitForm(<>{field("name", "Hotel name", "text", true, {defaultValue:hotel.name})}{field("legal_name", "Registered legal name", "text", false, {defaultValue:hotel.legal_name ?? ""})}{field("email", "Business email", "email", false, {defaultValue:hotel.email ?? ""})}{field("phone", "Phone", "tel", false, {defaultValue:hotel.phone ?? ""})}{field("address", "Address", "text", false, {defaultValue:hotel.address ?? ""})}{field("city", "City", "text", false, {defaultValue:hotel.city ?? ""})}{field("tax_registration_number", "Tax registration number", "text", false, {defaultValue:hotel.tax_registration_number ?? ""})}{select("vat_enabled", "VAT enabled?", [{value:"false",label:"No"},{value:"true",label:"Yes"}], true)}{field("vat_rate", "VAT rate (%)", "number", true, {min:0,max:100,step:"0.01",defaultValue:String(hotel.vat_rate ?? 0)})}{submitButton("Save settings")}</>)}</div>;
       break;
