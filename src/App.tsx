@@ -17,7 +17,8 @@ const tabs: { id: Tab; label: string; icon: typeof Hotel }[] = [
   { id: "staff", label: "Staff & access", icon: UserCog },
   { id: "settings", label: "Hotel settings", icon: DoorOpen },
 ];
-const today = () => { const p = new Intl.DateTimeFormat("en-GB", { timeZone: "Africa/Lusaka", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date()); const v = Object.fromEntries(p.map((x) => [x.type, x.value])); return `${v.year}-${v.month}-${v.day}`; };
+const dateInZambia = (value: string | Date) => { const p = new Intl.DateTimeFormat("en-GB", { timeZone: "Africa/Lusaka", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date(value)); const v = Object.fromEntries(p.map((x) => [x.type, x.value])); return `${v.year}-${v.month}-${v.day}`; };
+const today = () => dateInZambia(new Date());
 const escapeHtml = (value: unknown) => String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;");
 const money = (n: unknown) => new Intl.NumberFormat("en-ZM", { style: "currency", currency: "ZMW", maximumFractionDigits: 2 }).format(Number(n || 0));
 const errorMessage = (e: unknown) => e instanceof Error ? e.message : String(e);
@@ -177,7 +178,7 @@ export function App() {
         const chargesForDay = data.folio_items.filter((i) => i.service_date === businessDate);
         const roomRevenue = chargesForDay.filter((i) => i.item_type === "room_charge").reduce((s, i) => s + Number(i.amount || 0), 0);
         const otherRevenue = chargesForDay.filter((i) => i.item_type !== "room_charge" && i.item_type !== "discount").reduce((s, i) => s + Number(i.amount || 0), 0);
-        const receiptsForDay = data.payments.filter((p) => p.status === "posted" && p.received_at?.slice(0, 10) === businessDate);
+        const receiptsForDay = data.payments.filter((p) => p.status === "posted" && dateInZambia(p.received_at) === businessDate);
         const paymentsTotal = receiptsForDay.reduce((s, p) => s + Number(p.amount || 0), 0);
         const expectedCash = receiptsForDay.filter((p) => p.method === "cash").reduce((s, p) => s + Number(p.amount || 0), 0);
         const countedCash = Number(v.cash_counted || 0);
@@ -247,9 +248,9 @@ export function App() {
     const arrivals = data.reservations.filter((r) => r.check_in_date === today() && ["pending", "confirmed"].includes(r.status)).length;
     const departures = data.reservations.filter((r) => r.check_out_date === today() && r.status === "checked_in").length;
     const revenue = data.folio_items.filter((i) => i.service_date === today() && i.item_type !== "discount").reduce((s, i) => s + Number(i.amount || 0), 0);
-    const paid = data.payments.filter((p) => p.status === "posted" && p.received_at?.slice(0, 10) === today()).reduce((s, p) => s + Number(p.amount || 0), 0);
+    const paid = data.payments.filter((p) => p.status === "posted" && dateInZambia(p.received_at) === today()).reduce((s, p) => s + Number(p.amount || 0), 0);
     const outstanding = data.folios.filter((f) => f.status === "open").reduce((sum, f) => {
-      const charges = data.folio_items.filter((i) => i.folio_id === f.id).reduce((s, i) => s + Number(i.amount || 0), 0);
+      const charges = data.folio_items.filter((i) => i.folio_id === f.id).reduce((s, i) => s + (i.item_type === "discount" ? -Math.abs(Number(i.amount || 0)) : Number(i.amount || 0)), 0);
       const payments = data.payments.filter((p) => p.folio_id === f.id && p.status === "posted").reduce((s, p) => s + Number(p.amount || 0) * (p.payment_type === "refund" ? -1 : 1), 0);
       return sum + charges - payments;
     }, 0);
@@ -273,7 +274,7 @@ export function App() {
     popup.document.open(); popup.document.write(html); popup.document.close();
   };
 
-  const folioBalance = (folio: Row) => data.folio_items.filter((i) => i.folio_id === folio.id).reduce((s, i) => s + Number(i.amount || 0), 0) - data.payments.filter((p) => p.folio_id === folio.id && p.status === "posted").reduce((s, p) => s + Number(p.amount || 0) * (p.payment_type === "refund" ? -1 : 1), 0);
+  const folioBalance = (folio: Row) => data.folio_items.filter((i) => i.folio_id === folio.id).reduce((s, i) => s + (i.item_type === "discount" ? -Math.abs(Number(i.amount || 0)) : Number(i.amount || 0)), 0) - data.payments.filter((p) => p.folio_id === folio.id && p.status === "posted").reduce((s, p) => s + Number(p.amount || 0) * (p.payment_type === "refund" ? -1 : 1), 0);
   const field = (name: string, label: string, type = "text", required = true, extra: Record<string, any> = {}) => <label key={name}>{label}<input type={type} required={required} value={form[name] ?? extra.defaultValue ?? ""} onChange={(e) => setForm((s) => ({ ...s, [name]: e.target.value }))} {...Object.fromEntries(Object.entries(extra).filter(([k]) => k !== "defaultValue"))} /></label>;
   const select = (name: string, label: string, options: { value: string; label: string }[], required = true) => <label key={name}>{label}<select required={required} value={form[name] ?? ""} onChange={(e) => setForm((s) => ({ ...s, [name]: e.target.value }))}><option value="">Select…</option>{options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select></label>;
   const submitButton = (label: string) => <button className="primary" disabled={saving}><Plus size={16} />{saving ? "Saving…" : label}</button>;
