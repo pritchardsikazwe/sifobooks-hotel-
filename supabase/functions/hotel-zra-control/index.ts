@@ -33,7 +33,7 @@ Deno.serve(async (req: Request) => {
         return json({ok:true,hotel_id:setting.hotel_id,environment:setting.environment},200,headers);
       }
       if (action === "connector_poll") {
-        const {data:items,error} = await admin.from("hotel_zra_submissions").select("id,source_type,source_id,idempotency_key,environment,status,request_summary,attempt_count").eq("hotel_id",setting.hotel_id).in("status",["queued","retry_wait"]).lte("next_attempt_at",new Date().toISOString()).order("created_at").limit(10);
+        const {data:items,error} = await admin.from("hotel_zra_submissions").select("id,source_type,source_id,idempotency_key,environment,status,request_summary,attempt_count").eq("hotel_id",setting.hotel_id).in("status",["queued","retry_wait"]).or("next_attempt_at.is.null,next_attempt_at.lte."+new Date().toISOString()).order("created_at").limit(10);
         if (error) throw error;
         if (items?.length) {
           const ids=items.map(x=>x.id);
@@ -79,9 +79,9 @@ Deno.serve(async (req: Request) => {
     if(action==="pair_connector") {
       if(!["owner","manager"].includes(role)) throw new Error("Only owner or manager can pair a connector.");
       const token=randomToken(); const digest=await sha256(token);
-      const {data:prior}=await admin.from("hotel_zra_settings").select("configuration").eq("hotel_id",hotelId).maybeSingle();
+      const {data:prior}=await admin.from("hotel_zra_settings").select("*").eq("hotel_id",hotelId).maybeSingle();
       const configuration={...(prior?.configuration??{}),connector_token_hash:digest,connector_paired_at:new Date().toISOString()};
-      const {error}=await admin.from("hotel_zra_settings").upsert({hotel_id:hotelId,enabled:true,environment:"test",configuration,connector_status:"offline",updated_by:user.id},{onConflict:"hotel_id"});
+      const {error}=await admin.from("hotel_zra_settings").upsert({hotel_id:hotelId,enabled:prior?.enabled??false,environment:prior?.environment??"test",tpin:prior?.tpin??null,branch_id:prior?.branch_id??null,device_serial:prior?.device_serial??null,configuration,connector_status:"offline",updated_by:user.id},{onConflict:"hotel_id"});
       if(error) throw error;
       await admin.from("hotel_zra_events").insert({hotel_id:hotelId,event_type:"connector_paired",status:"pending",message:"One-time connector token issued",actor_user_id:user.id});
       return json({ok:true,connector_token:token,message:"Token displayed once. Configure it on the trusted Windows connector."},200,headers);
