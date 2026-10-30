@@ -5,7 +5,7 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Vary": "Origin",
 };
-const allowedOrigins = new Set(["https://hotel.sifobooks.com", "http://localhost:5173", "http://127.0.0.1:5173"]);
+const allowedOrigins = new Set(["https://hotel.sifobooks.com", "https://pritchardsikazwe.github.io", "http://localhost:5173", "http://127.0.0.1:5173"]);
 
 Deno.serve(async (req: Request) => {
   const origin = req.headers.get("Origin") ?? "";
