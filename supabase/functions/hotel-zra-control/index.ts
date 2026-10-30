@@ -25,7 +25,7 @@ Deno.serve(async (req: Request) => {
       const token = req.headers.get("x-connector-token") ?? String(body.connector_token ?? "");
       if (token.length < 30) return json({error:"Connector token required."},401,headers);
       const digest = await sha256(token);
-      const {data:setting,error:findError} = await admin.from("hotel_zra_settings").select("*").eq("configuration->>connector_token_hash",digest).maybeSingle();
+      const {data:setting,error:findError} = await admin.from("hotel_zra_settings").select("*").filter("configuration->>connector_token_hash","eq",digest).maybeSingle();
       if (findError || !setting || !setting.enabled) return json({error:"Connector is not paired or integration is disabled."},401,headers);
       if (action === "connector_heartbeat") {
         const {error} = await admin.from("hotel_zra_settings").update({connector_status:body.error?"error":"online",last_heartbeat_at:new Date().toISOString(),last_error_message:body.error?String(body.error).slice(0,500):null}).eq("hotel_id",setting.hotel_id);
@@ -48,7 +48,7 @@ Deno.serve(async (req: Request) => {
       const {data:existing,error:subError}=await admin.from("hotel_zra_submissions").select("id,status,environment").eq("id",submissionId).eq("hotel_id",setting.hotel_id).maybeSingle();
       if (subError || !existing || existing.status!=="sending") throw new Error("Submission is not in a claimable sending state.");
       if (existing.environment!==setting.environment) throw new Error("Environment mismatch; submission stopped.");
-      const updates={status,response_code:body.response_code?String(body.response_code).slice(0,100):null,response_message:body.response_message?String(body.response_message).slice(0,1000):null,zra_reference:body.zra_reference?String(body.zra_reference).slice(0,200):null,fiscal_signature:body.fiscal_signature?String(body.fiscal_signature).slice(0,500):null,receipt_qr_url:body.receipt_qr_url?String(body.receipt_qr_url).slice(0,1000):null,submitted_at:new Date().toISOString(),accepted_at:status==="accepted"?new Date().toISOString():null,updated_at:new Date().toISOString()};
+      const updates={status,next_attempt_at:status==="retry_wait"?new Date(Date.now()+5*60*1000).toISOString():null,response_code:body.response_code?String(body.response_code).slice(0,100):null,response_message:body.response_message?String(body.response_message).slice(0,1000):null,zra_reference:body.zra_reference?String(body.zra_reference).slice(0,200):null,fiscal_signature:body.fiscal_signature?String(body.fiscal_signature).slice(0,500):null,receipt_qr_url:body.receipt_qr_url?String(body.receipt_qr_url).slice(0,1000):null,submitted_at:new Date().toISOString(),accepted_at:status==="accepted"?new Date().toISOString():null,updated_at:new Date().toISOString()};
       const {error:updateError}=await admin.from("hotel_zra_submissions").update(updates).eq("id",submissionId).eq("hotel_id",setting.hotel_id);
       if(updateError) throw updateError;
       await admin.from("hotel_zra_events").insert({hotel_id:setting.hotel_id,submission_id:submissionId,event_type:"connector_result",status,message:updates.response_message,details:{response_code:updates.response_code,zra_reference:updates.zra_reference}});
