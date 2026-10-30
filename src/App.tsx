@@ -78,7 +78,7 @@ export function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<Record<string, Row[]>>({
-    room_types: [], rooms: [], guests: [], reservations: [], folios: [], folio_items: [], payments: [],
+    room_types: [], rooms: [], guests: [], reservations: [], folios: [], folio_items: [], payments: [], hotel_pos_sales: [], hotel_pos_sale_items: [], hotel_daily_expenses: [], hotel_event_bookings: [],
     housekeeping_tasks: [], maintenance_requests: [], night_audits: [], hotel_maintenance_work_logs: [], hotel_locations: [],
   });
   const [form, setForm] = useState<Record<string, string>>({});
@@ -124,7 +124,7 @@ export function App() {
     if (!hotel?.id) return;
     setLoading(true);
     const client = requireSupabase();
-    const tables = ["room_types", "rooms", "guests", "reservations", "folios", "folio_items", "payments", "housekeeping_tasks", "maintenance_requests", "night_audits", "hotel_maintenance_work_logs", "hotel_locations", "hotel_daily_expenses", "hotel_pos_sales", "hotel_pos_inventory", "hotel_cash_declarations"];
+    const tables = ["room_types", "rooms", "guests", "reservations", "folios", "folio_items", "payments", "housekeeping_tasks", "maintenance_requests", "night_audits", "hotel_maintenance_work_logs", "hotel_locations", "hotel_daily_expenses", "hotel_pos_sales", "hotel_pos_sale_items", "hotel_pos_inventory", "hotel_cash_declarations", "hotel_event_bookings"];
     try {
       const results = await Promise.all(tables.map((table) => client.from(table).select("*").eq("hotel_id", hotel.id).order("created_at", { ascending: false }).limit(1000)));
       const next: Record<string, Row[]> = {};
