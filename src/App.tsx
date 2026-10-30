@@ -139,17 +139,16 @@ export function App() {
         const type = data.room_types.find((r) => r.id === room.room_type_id);
         const guest = data.guests.find((g) => g.id === v.guest_id);
         if (!guest) throw new Error("Choose a guest.");
-        const reservationNo = `HT-${Date.now().toString().slice(-8)}`;
-        const { data: created, error } = await client.from("reservations").insert({
-          hotel_id: hotel.id, reservation_number: reservationNo, guest_id: guest.id, room_id: room.id,
-          check_in_date: v.check_in_date, check_out_date: v.check_out_date, adults: Number(v.adults || 1),
-          children: Number(v.children || 0), nightly_rate: Number(v.nightly_rate || type?.base_rate || 0),
-          currency_code: hotel.currency_code || "ZMW", status: "confirmed", created_by: session.user.id,
-        }).select("*").single();
+        if (!v.check_in_date || !v.check_out_date || v.check_out_date <= v.check_in_date) throw new Error("Check-out must be after check-in.");
+        if (Number(v.adults || 1) + Number(v.children || 0) > Number(type?.max_occupancy || 99)) throw new Error("Guest count exceeds this room type maximum occupancy.");
+        const { data: created, error } = await client.rpc("create_hotel_reservation", {
+          p_hotel_id: hotel.id, p_guest_id: guest.id, p_room_id: room.id,
+          p_check_in: v.check_in_date, p_check_out: v.check_out_date,
+          p_adults: Number(v.adults || 1), p_children: Number(v.children || 0),
+          p_nightly_rate: v.nightly_rate === "" ? null : Number(v.nightly_rate),
+        });
         if (error) throw error;
-        const { error: folioError } = await client.from("folios").insert({ hotel_id: hotel.id, reservation_id: created.id, folio_number: `F-${Date.now().toString().slice(-8)}` });
-        if (folioError) throw new Error(`Reservation saved, but folio creation failed: ${folioError.message}`);
-        setNotice(`Reservation ${reservationNo} confirmed.`);
+        setNotice("Reservation " + ((created as any)?.reservation?.reservation_number ?? "confirmed") + " confirmed and folio created.");
       } else if (tab === "housekeeping") {
         const { error } = await client.from("housekeeping_tasks").insert({ hotel_id: hotel.id, room_id: v.room_id, task_type: v.task_type || "cleaning", priority: v.priority || "normal", notes: v.notes || null });
         if (error) throw error;
@@ -162,7 +161,7 @@ export function App() {
       } else if (tab === "folios" && v.kind === "payment") {
         const folio = data.folios.find((f) => f.id === v.folio_id);
         if (!folio) throw new Error("Choose a folio.");
-        const { error } = await client.from("payments").insert({ hotel_id: hotel.id, folio_id: folio.id, reservation_id: folio.reservation_id, payment_number: `RC-${Date.now().toString().slice(-8)}`, payment_type: "receipt", method: v.method || "cash", amount: Number(v.amount || 0), currency_code: hotel.currency_code || "ZMW", reference: v.reference || null, received_by: session.user.id });
+        const { error } = await client.rpc("record_hotel_payment", { p_hotel_id: hotel.id, p_folio_id: folio.id, p_method: v.method || "cash", p_amount: Number(v.amount || 0), p_reference: v.reference || null });
         if (error) throw error;
         setNotice("Payment receipt recorded.");
       } else if (tab === "maintenance") {
@@ -207,26 +206,9 @@ export function App() {
     setError(""); setNotice("");
     try {
       const client = requireSupabase();
-      const now = new Date().toISOString();
-      const status = action === "checkin" ? "checked_in" : action === "checkout" ? "checked_out" : "cancelled";
-      const patch: Row = { status };
-      if (action === "checkin") patch.checked_in_at = now;
-      if (action === "checkout") patch.checked_out_at = now;
-      if (action === "cancel") patch.cancelled_at = now;
-      const { error } = await client.from("reservations").update(patch).eq("id", reservation.id).eq("hotel_id", hotel.id);
+      const { error } = await client.rpc("transition_hotel_reservation", { p_reservation_id: reservation.id, p_action: action });
       if (error) throw error;
-      const roomStatus = action === "checkin" ? "occupied" : action === "checkout" ? "dirty" : "available";
-      const { error: roomError } = await client.from("rooms").update({ status: roomStatus }).eq("id", reservation.room_id).eq("hotel_id", hotel.id);
-      if (roomError) throw roomError;
-      if (action === "checkin") {
-        const folio = data.folios.find((f) => f.reservation_id === reservation.id);
-        if (folio) {
-          const nights = Math.max(1, Math.round((new Date(reservation.check_out_date).getTime() - new Date(reservation.check_in_date).getTime()) / 86400000));
-          const { error: chargeError } = await client.from("folio_items").insert({ hotel_id: hotel.id, folio_id: folio.id, item_type: "room_charge", description: `Room ${data.rooms.find((r) => r.id === reservation.room_id)?.room_number ?? ""} · ${nights} night(s)`, quantity: nights, unit_price: reservation.nightly_rate, amount: nights * Number(reservation.nightly_rate), service_date: reservation.check_in_date, posted_by: session.user.id });
-          if (chargeError) throw chargeError;
-        }
-      }
-      setNotice(`Reservation ${status.replace("_", " ")}.`);
+      setNotice("Reservation " + (action === "checkin" ? "checked in" : action === "checkout" ? "checked out" : "cancelled") + ".");
       await refresh();
     } catch (e) { setError(errorMessage(e)); }
   };
