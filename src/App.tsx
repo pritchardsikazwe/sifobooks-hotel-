@@ -12,12 +12,14 @@ import { AccountingPanel } from "./AccountingPanel";
 import { PropertyWorkspace } from "./PropertyWorkspace";
 import { ReportsPanel } from "./ReportsPanel";
 import { CompliancePanel } from "./CompliancePanel";
+import { AdminSettingsPanel } from "./AdminSettingsPanel";
 import { requireSupabase, supabase, supabaseReady } from "./lib/supabase";
 
 type Row = Record<string, any>;
-type Tab = "overview" | "rooms" | "guests" | "reservations" | "housekeeping" | "folios" | "maintenance" | "night_audit" | "reports" | "accounting" | "staff" | "settings" | "zra" | "documents" | "pos" | "printing_network" | "inventory" | "daily_ops" | "guest_portal" | "property_setup" | "cash_declaration" | "compliance";
+type Tab = "overview" | "rooms" | "guests" | "reservations" | "housekeeping" | "folios" | "maintenance" | "night_audit" | "reports" | "accounting" | "staff" | "settings" | "zra" | "documents" | "pos" | "printing_network" | "inventory" | "daily_ops" | "guest_portal" | "property_setup" | "cash_declaration" | "compliance" | "admin_settings";
 const tabs: { id: Tab; label: string; icon: typeof Hotel }[] = [
   { id: "overview", label: "Overview", icon: Hotel },
+  { id: "admin_settings", label: "Admin Settings", icon: UserCog },
   { id: "rooms", label: "Rooms & units", icon: BedDouble },
   { id: "guests", label: "Guests", icon: Users },
   { id: "reservations", label: "Reservations", icon: CalendarDays },
@@ -689,6 +691,10 @@ export function App() {
     case "accounting":
       content = <AccountingPanel hotelId={hotel.id} />;
       break;
+    case "admin_settings": {
+      content = <AdminSettingsPanel hotel={hotel} role={membershipRole} staff={staff} onRefresh={() => void refresh()} />;
+      break;
+    }
     case "compliance": {
       content = <CompliancePanel hotelId={hotel.id} />;
       break;
