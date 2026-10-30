@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
-import { BedDouble, CalendarDays, CheckCircle2, ClipboardList, CreditCard, DoorOpen, FileBarChart, BookOpen, Hotel, LogOut, Moon, Plus, Printer, RefreshCw, UserCog, Users, Wallet, Wrench, Utensils, Wifi, Boxes, CheckCircle2 } from "lucide-react";
+import { BedDouble, CalendarDays, CheckCircle2, ClipboardList, CreditCard, DoorOpen, FileBarChart, BookOpen, Hotel, LogOut, Moon, Plus, Printer, RefreshCw, UserCog, Users, Wallet, Wrench, Utensils, Wifi, Boxes } from "lucide-react";
 import { ZraPanel } from "./ZraPanel";
 import { DocumentsPanel } from "./DocumentsPanel";
 import { PosWorkspace } from "./PosWorkspace";
