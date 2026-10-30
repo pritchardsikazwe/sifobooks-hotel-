@@ -1,0 +1,67 @@
+name: SifoBooks Hotel Desktop and Android Builds
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Build target
+        required: true
+        type: choice
+        options:
+          - all
+          - windows
+          - android-apk
+          - android-aab
+  push:
+    tags:
+      - "hotel-v*"
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    if: github.event_name == 'push' || inputs.target == 'all' || inputs.target == 'windows'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run build
+      - name: Package standalone Windows web runtime
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path release/hotel-windows | Out-Null
+          Copy-Item -Recurse dist release/hotel-windows/dist
+          Copy-Item package.json release/hotel-windows/package.json
+          @'
+          @echo off
+          echo SifoBooks Hotel web bundle is in dist.
+          echo This artifact is a portable web bundle, not a native signed EXE installer.
+          echo To run it, serve dist on a trusted local web server or use hotel.sifobooks.com.
+          pause
+          '@ | Set-Content release/hotel-windows/README-WINDOWS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sifobooks-hotel-windows-web-bundle
+          path: release/hotel-windows
+
+  android:
+    if: (github.event_name == 'workflow_dispatch' && (inputs.target == 'all' || inputs.target == 'android-apk' || inputs.target == 'android-aab')) || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/hotel-v'))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run build
+      - name: Explain Android wrapper prerequisites
+        run: |
+          echo "Android APK/AAB packaging is not yet enabled in this repository."
+          echo "The app needs a configured native wrapper, Android project, bundle ID, and release signing credentials."
+          echo "No APK/AAB is produced by this placeholder job."
+      - name: Stop until native wrapper is configured
+        run: exit 1
