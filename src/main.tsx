@@ -1,8 +1,30 @@
-import React from "react";
+import React, { Component, type ErrorInfo, type ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
 import { GuestPortal } from "./GuestPortal";
 import "./styles.css";
+
+class StartupErrorBoundary extends Component<{ children: ReactNode }, { error: string }> {
+  state = { error: "" };
+  static getDerivedStateFromError(error: unknown) {
+    return { error: error instanceof Error ? error.message : String(error) };
+  }
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("SifoBooks Hotel render error:", error, info.componentStack);
+  }
+  render() {
+    if (this.state.error) {
+      return <main className="auth-wrap"><section className="auth-card" role="alert">
+        <div className="brand"><span className="brand-mark">S</span><div><strong>SifoBooks Hotel</strong><small>Application startup problem</small></div></div>
+        <h1>The page could not load</h1>
+        <p>The app encountered an unexpected error. Refresh the page. If it happens again, send support the error below.</p>
+        <pre style={{whiteSpace:"pre-wrap",overflowWrap:"anywhere",padding:12,borderRadius:10,background:"#0b0e16",color:"#ffb7ad",fontSize:12}}>{this.state.error}</pre>
+        <button className="primary wide" onClick={() => window.location.reload()}>Refresh application</button>
+      </section></main>;
+    }
+    return this.props.children;
+  }
+}
 
 if ("serviceWorker" in navigator && import.meta.env.PROD) {
   window.addEventListener("load", () => {
@@ -12,6 +34,8 @@ if ("serviceWorker" in navigator && import.meta.env.PROD) {
 
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    {new URLSearchParams(window.location.search).has("guest") ? <GuestPortal /> : <App />}
+    <StartupErrorBoundary>
+      {new URLSearchParams(window.location.search).has("guest") ? <GuestPortal /> : <App />}
+    </StartupErrorBoundary>
   </React.StrictMode>,
 );
