@@ -191,7 +191,7 @@ export function App() {
         const { error } = await client.rpc("record_hotel_payment", { p_hotel_id: hotel.id, p_folio_id: folio.id, p_method: v.method || "cash", p_amount: Number(v.amount || 0), p_reference: v.reference || null });
         if (error) throw error;
         setNotice("Payment receipt recorded.");
-      } else if (tab === "maintenance") {
+      } else if (tab === "maintenance" && v.kind !== "maintenance_work") {
         const { error } = await client.from("maintenance_requests").insert({ hotel_id: hotel.id, room_id: v.room_id || null, title: v.title.trim(), description: v.description || null, priority: v.priority || "normal", blocks_room_sale: v.blocks_room_sale !== "false", reported_by: session.user.id });
         if (error) throw error;
         if (v.room_id && v.blocks_room_sale !== "false") await client.from("rooms").update({ status: "maintenance" }).eq("id", v.room_id).eq("hotel_id", hotel.id);
