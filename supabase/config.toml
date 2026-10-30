@@ -19,3 +19,7 @@ enable_signup = true
 enable_signup = true
 double_confirm_changes = true
 enable_confirmations = true
+
+[functions.hotel-zra-control]
+# This endpoint validates either the caller's Supabase JWT or a one-time hashed connector token itself.
+verify_jwt = false
