@@ -111,7 +111,7 @@ export function App() {
     if (!email.trim()) { setError("Enter your email address first."); return; }
     setBusy(true);
     try {
-      const { error } = await requireSupabase().auth.resetPasswordForEmail(email.trim(), { redirectTo: window.location.origin });
+      const { error } = await requireSupabase().auth.resetPasswordForEmail(email.trim(), { redirectTo: "https://hotel.sifobooks.com/" });
       if (error) throw error;
       setNotice("If that account exists, a password-reset email has been sent.");
     } catch (e) { setError(errorMessage(e)); }
@@ -291,6 +291,8 @@ export function App() {
   };
   const changeRoomStatus = async (room: Row, status: string) => {
     if (!hotel) return;
+    if (status === "available" && data.reservations.some((r) => r.room_id === room.id && r.status === "checked_in")) { setError("This room has an active checked-in reservation. Check the guest out first."); return; }
+    if (status === "occupied" && !data.reservations.some((r) => r.room_id === room.id && r.status === "checked_in")) { setError("Use Check in on a reservation to mark a room occupied."); return; }
     setError(""); setNotice("");
     try {
       const { error } = await requireSupabase().from("rooms").update({ status }).eq("id", room.id).eq("hotel_id", hotel.id);
