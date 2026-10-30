@@ -561,3 +561,18 @@ html,body,#root{width:100%;max-width:100%;overflow-x:hidden}
   .hl-copy h1{font-size:32px}
   .hl-pill{font-size:9px}
 }
+
+
+/* Mobile module launcher: expose Rooms, POS, Reservations and every permitted module */
+.mobile-menu-toggle{display:none}
+@media(max-width:680px){
+  .mobile-menu-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0;padding:11px 13px;border:1px solid #3a4357;border-radius:12px;background:#1a2232;color:#fff;font-weight:750;font-size:13px}
+  .mobile-menu-count{color:var(--gold);font-size:11px;font-weight:700}
+  .top-menu{display:none;flex-wrap:wrap;align-items:stretch;overflow:visible;margin:8px 0 0;padding:10px;gap:7px;border:1px solid #30394c;border-radius:14px;background:#101725;box-shadow:0 14px 34px #0005}
+  .top-menu.mobile-menu-open{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-height:min(55vh,440px);overflow-y:auto;overscroll-behavior:contain}
+  .top-menu .top-menu-item{display:flex;align-items:center;justify-content:flex-start;gap:8px;width:100%;min-width:0;min-height:46px;padding:10px;border:1px solid #30394b;border-radius:10px;background:#192235;color:#dce4f2;text-align:left;font-size:12px;white-space:normal}
+  .top-menu .top-menu-item span{display:block;min-width:0;overflow-wrap:anywhere}
+  .top-menu .top-menu-item.active{background:#3a321b;border-color:#b99a37;color:var(--gold);box-shadow:inset 3px 0 var(--gold)}
+  .top-menu .top-menu-item svg{flex:0 0 17px}
+}
+@media(max-width:360px){.top-menu.mobile-menu-open{grid-template-columns:1fr}.app-brand-row .brand strong{font-size:14px}}
