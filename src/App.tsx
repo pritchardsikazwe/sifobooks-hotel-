@@ -11,10 +11,11 @@ import { PrintingNetworkPanel } from "./PrintingNetworkPanel";
 import { AccountingPanel } from "./AccountingPanel";
 import { PropertyWorkspace } from "./PropertyWorkspace";
 import { ReportsPanel } from "./ReportsPanel";
+import { CompliancePanel } from "./CompliancePanel";
 import { requireSupabase, supabase, supabaseReady } from "./lib/supabase";
 
 type Row = Record<string, any>;
-type Tab = "overview" | "rooms" | "guests" | "reservations" | "housekeeping" | "folios" | "maintenance" | "night_audit" | "reports" | "accounting" | "staff" | "settings" | "zra" | "documents" | "pos" | "printing_network" | "inventory" | "daily_ops" | "guest_portal" | "property_setup" | "cash_declaration";
+type Tab = "overview" | "rooms" | "guests" | "reservations" | "housekeeping" | "folios" | "maintenance" | "night_audit" | "reports" | "accounting" | "staff" | "settings" | "zra" | "documents" | "pos" | "printing_network" | "inventory" | "daily_ops" | "guest_portal" | "property_setup" | "cash_declaration" | "compliance";
 const tabs: { id: Tab; label: string; icon: typeof Hotel }[] = [
   { id: "overview", label: "Overview", icon: Hotel },
   { id: "rooms", label: "Rooms & units", icon: BedDouble },
@@ -28,6 +29,7 @@ const tabs: { id: Tab; label: string; icon: typeof Hotel }[] = [
   { id: "maintenance", label: "Maintenance", icon: Wrench },
   { id: "night_audit", label: "Night audit", icon: Moon },
   { id: "reports", label: "Reports", icon: FileBarChart },
+  { id: "compliance", label: "Compliance & Licences", icon: CheckCircle2 },
   { id: "accounting", label: "Accounting & posting", icon: BookOpen },
   { id: "staff", label: "Staff & access", icon: UserCog },
   { id: "settings", label: "Property settings", icon: DoorOpen },
@@ -687,6 +689,10 @@ export function App() {
     case "accounting":
       content = <AccountingPanel hotelId={hotel.id} />;
       break;
+    case "compliance": {
+      content = <CompliancePanel hotelId={hotel.id} />;
+      break;
+    }
     case "reports": {
       content = <ReportsPanel hotel={hotel} data={data} from={reportFrom} to={reportTo} setFrom={setReportFrom} setTo={setReportTo} money={money} guestName={guestName} roomName={roomName} />;
       break;
