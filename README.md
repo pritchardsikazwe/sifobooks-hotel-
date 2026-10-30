@@ -17,7 +17,7 @@ Independent hotel property-management application for hotels, lodges and guest h
 - Guest folios, discount-aware balances, payment validation, receipt history and printable payment receipts.
 - Housekeeping tasks and maintenance requests.
 - Night audit with cash variance and daily audit history.
-- Staff access by existing confirmed email, role assignment, suspension/restoration, and tenant-scoped RLS.
+- Staff invitations through a server-side Supabase Edge Function, role assignment, suspension/restoration, and tenant-scoped RLS.
 - Operational reports for booked nights, occupancy, charges, discounts, receipts, refunds and revenue by charge type.
 - Property contact details and VAT configuration.
 - Version-controlled SQL migrations and GitHub Actions build/deploy workflows.
@@ -40,7 +40,7 @@ After the site is live, set Supabase Authentication → URL Configuration:
 Also add any local development URL used by the team.
 
 ## Important operational limitations before paid production
-- The staff screen grants access to an already registered, email-confirmed user. Automated email invitations still need a trusted server-side invite service.
+- Staff invitation emails redirect to `https://hotel.sifobooks.com`; configure that URL in Supabase Auth URL Configuration once the domain is enabled. Confirm that email delivery is configured and test an invitation end to end.
 - VAT settings are configurable, but VAT invoice calculation, ZRA e-invoicing/VSDC, and posting to SifoBooks accounting are not yet integrated.
 - Validate registration, email confirmation, tenant isolation, booking conflict handling, check-in/out, payments/refunds, night audit and recovery with a dedicated test account before onboarding paying hotels.
 - Configure and test Supabase backups/PITR, recovery procedures, alerting and a rollback process.
