@@ -52,7 +52,7 @@ jobs:
           if-no-files-found: error
 
   android:
-    if: (github.event_name == 'workflow_dispatch' && (inputs.target == 'all' || inputs.target == 'android-apk' || inputs.target == 'android-aab')) || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/hotel-v'))
+    if: (github.event_name == 'workflow_dispatch' && (inputs.target == 'all' || inputs.target == 'android-apk' || inputs.target == 'android-aab')) || (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/hotel-v') || github.ref == 'refs/heads/main'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
