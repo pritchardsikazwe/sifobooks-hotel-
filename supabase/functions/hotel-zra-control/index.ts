@@ -70,6 +70,7 @@ Deno.serve(async (req: Request) => {
       const environment=String(body.environment??"test");
       if(!["test","production"].includes(environment)) throw new Error("Invalid environment.");
       if(environment==="production" && body.enabled!==true) throw new Error("Production must be explicitly enabled before selecting production.");
+      if(environment==="production" && Deno.env.get("ZRA_PRODUCTION_ENABLED")!=="true") throw new Error("Production fiscalisation is locked until ZRA UAT and deployment review are explicitly approved.");
       const {data:prior}=await admin.from("hotel_zra_settings").select("configuration,connector_id,connector_status,last_heartbeat_at").eq("hotel_id",hotelId).maybeSingle();
       const {error}=await admin.from("hotel_zra_settings").upsert({hotel_id:hotelId,enabled:body.enabled===true,environment,tpin:String(body.tpin??"").trim()||null,branch_id:String(body.branch_id??"").trim()||null,device_serial:String(body.device_serial??"").trim()||null,connector_id:prior?.connector_id??null,connector_status:prior?.connector_status??"not_configured",last_heartbeat_at:prior?.last_heartbeat_at??null,configuration:prior?.configuration??{},updated_by:user.id},{onConflict:"hotel_id"});
       if(error) throw error;
@@ -85,6 +86,28 @@ Deno.serve(async (req: Request) => {
       if(error) throw error;
       await admin.from("hotel_zra_events").insert({hotel_id:hotelId,event_type:"connector_paired",status:"pending",message:"One-time connector token issued",actor_user_id:user.id});
       return json({ok:true,connector_token:token,message:"Token displayed once. Configure it on the trusted Windows connector."},200,headers);
+    }
+    if(action==="enqueue_folio") {
+      if(!["owner","manager","accountant"].includes(role)) throw new Error("Not authorised to queue fiscal invoices.");
+      const sourceId=String(body.source_id??"");
+      if(!sourceId) throw new Error("Choose a folio first.");
+      const {data:setting,error:settingError}=await admin.from("hotel_zra_settings").select("enabled,environment,tpin,branch_id,device_serial").eq("hotel_id",hotelId).maybeSingle();
+      if(settingError||!setting?.enabled) throw new Error("Enable Smart Invoice and configure this hotel's taxpayer/device settings first.");
+      const {data:folio,error:folioError}=await admin.from("folios").select("id,folio_number,status,reservation_id").eq("hotel_id",hotelId).eq("id",sourceId).maybeSingle();
+      if(folioError||!folio) throw new Error("Folio not found in this hotel.");
+      const {data:items,error:itemsError}=await admin.from("folio_items").select("item_type,description,quantity,unit_price,amount,service_date").eq("hotel_id",hotelId).eq("folio_id",sourceId);
+      if(itemsError) throw itemsError;
+      if(!items?.length) throw new Error("This folio has no charges to invoice.");
+      const gross=items.reduce((sum,item)=>sum+Number(item.amount||0),0);
+      if(!Number.isFinite(gross)||gross<=0) throw new Error("Folio total must be positive before queuing an invoice.");
+      const idempotencyKey="folio_invoice:"+sourceId;
+      const summary={folio_number:folio.folio_number,folio_status:folio.status,currency:"ZMW",gross_total:Number(gross.toFixed(2)),line_count:items.length,lines:items.map(i=>({item_type:i.item_type,description:i.description,quantity:i.quantity,unit_price:i.unit_price,amount:i.amount,service_date:i.service_date})),mapping_status:"needs_zra_item_tax_unit_mapping"};
+      const {data:existing}=await admin.from("hotel_zra_submissions").select("id,status").eq("hotel_id",hotelId).eq("idempotency_key",idempotencyKey).maybeSingle();
+      if(existing) return json({ok:true,existing:true,submission:existing,message:"This folio already has a submission record. The same idempotency key was retained."},200,headers);
+      const {data:submission,error:insertError}=await admin.from("hotel_zra_submissions").insert({hotel_id:hotelId,source_type:"folio_invoice",source_id:sourceId,idempotency_key:idempotencyKey,environment:setting.environment,status:"queued",request_summary:summary,created_by:user.id,next_attempt_at:new Date().toISOString()}).select("id,status,environment").single();
+      if(insertError) throw insertError;
+      await admin.from("hotel_zra_events").insert({hotel_id:hotelId,submission_id:submission.id,event_type:"invoice_queued",status:"queued",message:"Folio queued for mapping and connector validation; not yet submitted to ZRA",actor_user_id:user.id,details:{folio_number:folio.folio_number,gross_total:summary.gross_total}});
+      return json({ok:true,submission,message:"Queued for connector validation. No ZRA invoice is issued until the approved payload adapter is enabled."},200,headers);
     }
     if(action==="retry_submission") {
       if(!["owner","manager","accountant"].includes(role)) throw new Error("Not authorised to retry fiscal submissions.");
