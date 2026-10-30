@@ -1,0 +1,19 @@
+-- Add indexes to keep tenant lookups, reservations and FK deletes/updates responsive.
+create index if not exists hotels_owner_user_id_idx on public.hotels(owner_user_id);
+create index if not exists rooms_room_type_id_idx on public.rooms(room_type_id);
+create index if not exists reservations_guest_id_idx on public.reservations(guest_id);
+create index if not exists reservations_created_by_idx on public.reservations(created_by);
+create index if not exists folio_items_posted_by_idx on public.folio_items(posted_by);
+create index if not exists payments_folio_id_fk_idx on public.payments(folio_id);
+create index if not exists payments_reservation_id_fk_idx on public.payments(reservation_id);
+create index if not exists payments_received_by_fk_idx on public.payments(received_by);
+create index if not exists housekeeping_tasks_room_id_fk_idx on public.housekeeping_tasks(room_id);
+create index if not exists housekeeping_tasks_assigned_to_fk_idx on public.housekeeping_tasks(assigned_to);
+create index if not exists housekeeping_tasks_verified_by_fk_idx on public.housekeeping_tasks(verified_by);
+create index if not exists maintenance_requests_room_id_fk_idx on public.maintenance_requests(room_id);
+create index if not exists maintenance_requests_assigned_to_fk_idx on public.maintenance_requests(assigned_to);
+create index if not exists maintenance_requests_reported_by_fk_idx on public.maintenance_requests(reported_by);
+create index if not exists night_audits_opened_by_fk_idx on public.night_audits(opened_by);
+create index if not exists night_audits_closed_by_fk_idx on public.night_audits(closed_by);
+create index if not exists hotel_audit_events_actor_user_id_fk_idx on public.hotel_audit_events(actor_user_id);
+create index if not exists hotel_audit_events_hotel_id_fk_idx on public.hotel_audit_events(hotel_id);
