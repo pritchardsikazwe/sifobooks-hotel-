@@ -576,3 +576,55 @@ html,body,#root{width:100%;max-width:100%;overflow-x:hidden}
   .top-menu .top-menu-item svg{flex:0 0 17px}
 }
 @media(max-width:360px){.top-menu.mobile-menu-open{grid-template-columns:1fr}.app-brand-row .brand strong{font-size:14px}}
+
+
+/* QuickBooks-inspired SifoBooks Hotel inventory workspace */
+.inventory-management{display:grid;gap:16px;min-width:0;color:#eef2f6}
+.inventory-management>.panel{margin:0;min-width:0;background:linear-gradient(145deg,#171e2a,#121823);border:1px solid #303a49;border-radius:18px;padding:clamp(15px,2vw,24px);box-shadow:0 8px 25px #00000012}
+.inventory-management .panel-head{align-items:flex-start;gap:14px}
+.inventory-management h2{font:800 clamp(18px,2vw,23px) Manrope,sans-serif;letter-spacing:-.035em;color:#f7f9fc;margin:5px 0 8px}
+.inventory-management p{color:#a2adbd;font-size:12px;line-height:1.65}
+.inv-eyebrow{display:block;color:#e5c15e;font-size:9px;letter-spacing:.16em;font-weight:800}
+.inventory-management .page-highlights{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}
+.inventory-management .page-highlight{position:relative;min-width:0;padding:17px;border:1px solid #303b4c;border-radius:15px;background:linear-gradient(140deg,#202a39,#171e2a);overflow:hidden}
+.inventory-management .page-highlight:before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:#d9b84f}
+.inventory-management .page-highlight span{display:block;font-size:11px;color:#aab6c6}
+.inventory-management .page-highlight strong{display:block;margin-top:9px;color:#f8fafc;font:800 clamp(20px,2vw,27px) Manrope,sans-serif;overflow-wrap:anywhere}
+.inventory-management .page-highlight small{display:block;color:#8e9caf;font-size:10px;margin-top:4px}
+.inventory-management .page-highlight.inv-low:before{background:#ef7976}
+.inv-quick-actions{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:18px 0 6px}
+.inv-quick-actions button{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:7px;min-width:0;min-height:112px;text-align:left;padding:14px;border:1px solid #303a4a;border-radius:14px;background:#111925;color:#f3f6fa}
+.inv-quick-actions button:hover,.inv-quick-actions button.selected{border-color:#bca04d;background:linear-gradient(145deg,#29291f,#171e29)}
+.inv-quick-actions button strong{font-size:12px;line-height:1.4}
+.inv-quick-actions button span{font-size:10px;line-height:1.5;color:#9eabbd}
+.inv-quick-actions button b{margin-top:auto;font:800 18px Manrope,sans-serif;color:#e6c45d}
+.inv-section-heading{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:15px}
+.inv-section-heading p{margin:0}
+.inv-toolbar{display:grid;grid-template-columns:minmax(180px,1fr) minmax(150px,.35fr) auto;gap:10px;margin:16px 0}
+.inv-toolbar input,.inv-toolbar select{width:100%;min-width:0;padding:11px 13px;border:1px solid #354052;border-radius:10px;background:#0e1520;color:#eef2f6;outline:none;color-scheme:dark}
+.inv-toolbar input:focus,.inv-toolbar select:focus{border-color:#d9b84f;box-shadow:0 0 0 3px #d9b84f18}
+.inventory-management .table-wrap{border:1px solid #30394a;border-radius:12px;overflow-x:auto}
+.inventory-management table{width:100%;border-collapse:collapse;min-width:720px}
+.inventory-management thead{background:#202938}
+.inventory-management th{padding:13px 14px;text-align:left;font-size:10px;letter-spacing:.035em;text-transform:uppercase;color:#aeb9c8;white-space:nowrap;border-bottom:1px solid #354052}
+.inventory-management td{padding:13px 14px;border-bottom:1px solid #283242;color:#dce3ec;font-size:12px;vertical-align:middle}
+.inventory-management tbody tr:last-child td{border-bottom:0}
+.inventory-management tbody tr:hover{background:#ffffff04}
+.inventory-management td small{display:block;color:#8795a8;font-size:10px;margin-top:4px}
+.inv-status{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border-radius:99px;font-size:10px;font-weight:800;white-space:nowrap}
+.inv-status:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.inv-status.good{background:#17372e;color:#78dbb3}
+.inv-status.low{background:#43272a;color:#ffaaa5}
+.inv-empty{padding:26px;text-align:center;color:#9ba8ba;font-size:12px}
+.inv-table-foot{display:flex;justify-content:space-between;gap:12px;padding:12px 2px 0;color:#99a6b7;font-size:10px}
+.inv-add-panel{scroll-margin-top:20px}
+.inventory-management .form-grid{gap:13px}
+.inventory-management .form-grid label{min-width:0;color:#b8c4d3;font-size:11px;font-weight:700}
+.inventory-management .form-grid input,.inventory-management .form-grid select{width:100%;min-width:0;margin-top:6px;padding:11px 12px;border:1px solid #354052;border-radius:10px;background:#0d1420;color:#f0f3f7;outline:none;color-scheme:dark}
+.inventory-management .form-grid input:focus,.inventory-management .form-grid select:focus{border-color:#d9b84f;box-shadow:0 0 0 3px #d9b84f18}
+.inventory-management .primary{background:linear-gradient(110deg,#f4d36c,#dfad37);color:#171a1e;border-color:#f2cf5f}
+.inventory-management .secondary{background:#202a39;color:#dbe4ee;border-color:#394659}
+.inventory-management .alert{border-radius:11px;padding:12px 14px;font-size:12px;margin-top:12px}
+@media(max-width:1050px){.inv-quick-actions{grid-template-columns:repeat(3,minmax(0,1fr))}.inventory-management .page-highlights{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.inventory-management>.panel{padding:14px;border-radius:15px}.inventory-management .panel-head,.inv-section-heading{align-items:flex-start;flex-direction:column}.inventory-management .page-highlights{gap:8px;margin:15px 0}.inventory-management .page-highlight{padding:13px}.inventory-management .page-highlight strong{font-size:21px}.inv-quick-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.inv-quick-actions button{min-height:105px;padding:12px}.inv-toolbar{grid-template-columns:minmax(0,1fr)}.inv-toolbar .secondary{width:100%}.inv-table-foot{flex-direction:column}.inventory-management .table-wrap{border-radius:10px}.inventory-management .pos-tabs{margin:0 -2px}.inventory-management .form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:390px){.inventory-management .form-grid{grid-template-columns:minmax(0,1fr)}.inv-quick-actions{grid-template-columns:repeat(2,minmax(0,1fr))}.inv-quick-actions button span{font-size:9px}}
