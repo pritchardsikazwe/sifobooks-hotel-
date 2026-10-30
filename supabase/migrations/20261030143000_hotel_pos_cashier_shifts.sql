@@ -73,13 +73,30 @@ alter table public.hotel_pos_shifts enable row level security;
 alter table public.hotel_pos_sales enable row level security;
 alter table public.hotel_pos_sale_items enable row level security;
 alter table public.hotel_pos_cash_declarations enable row level security;
-do $$ declare t text; begin
- foreach t in array array['hotel_pos_inventory','hotel_pos_shifts','hotel_pos_sales','hotel_pos_sale_items','hotel_pos_cash_declarations'] loop
-  execute format('drop policy if exists %I on public.%I','hotel_pos_select_members',t);
-  execute format('create policy %I on public.%I for select to authenticated using (exists (select 1 from public.hotels h where h.id = hotel_id and h.owner_user_id = auth.uid()) or exists (select 1 from public.hotel_memberships m where m.hotel_id = hotel_id and m.user_id = auth.uid() and m.active = true and m.role in (''owner'',''manager'',''pos_cashier'',''cashier'',''bar_cashier'',''restaurant_cashier'',''accountant'')))', 'hotel_pos_select_members', t);
-  execute format('drop policy if exists %I on public.%I','hotel_pos_write_cashier',t);
- end loop;
-end $$;
+drop policy if exists hotel_pos_inventory_select on public.hotel_pos_inventory;
+create policy hotel_pos_inventory_select on public.hotel_pos_inventory for select to authenticated using (
+ exists(select 1 from public.hotels h where h.id=hotel_pos_inventory.hotel_id and h.owner_user_id=auth.uid()) or
+ exists(select 1 from public.hotel_memberships m where m.hotel_id=hotel_pos_inventory.hotel_id and m.user_id=auth.uid() and m.active and m.role in ('owner','manager','pos_cashier','cashier','bar_cashier','restaurant_cashier','accountant'))
+);
+drop policy if exists hotel_pos_shifts_select on public.hotel_pos_shifts;
+create policy hotel_pos_shifts_select on public.hotel_pos_shifts for select to authenticated using (
+ cashier_id=auth.uid() or exists(select 1 from public.hotels h where h.id=hotel_pos_shifts.hotel_id and h.owner_user_id=auth.uid()) or
+ exists(select 1 from public.hotel_memberships m where m.hotel_id=hotel_pos_shifts.hotel_id and m.user_id=auth.uid() and m.active and m.role in ('owner','manager','accountant','pos_cashier','cashier','bar_cashier','restaurant_cashier'))
+);
+drop policy if exists hotel_pos_sales_select on public.hotel_pos_sales;
+create policy hotel_pos_sales_select on public.hotel_pos_sales for select to authenticated using (
+ cashier_id=auth.uid() or exists(select 1 from public.hotels h where h.id=hotel_pos_sales.hotel_id and h.owner_user_id=auth.uid()) or
+ exists(select 1 from public.hotel_memberships m where m.hotel_id=hotel_pos_sales.hotel_id and m.user_id=auth.uid() and m.active and m.role in ('owner','manager','accountant','pos_cashier','cashier','bar_cashier','restaurant_cashier'))
+);
+drop policy if exists hotel_pos_sale_items_select on public.hotel_pos_sale_items;
+create policy hotel_pos_sale_items_select on public.hotel_pos_sale_items for select to authenticated using (
+ exists(select 1 from public.hotel_pos_sales s where s.id=hotel_pos_sale_items.sale_id and (s.cashier_id=auth.uid() or exists(select 1 from public.hotels h where h.id=s.hotel_id and h.owner_user_id=auth.uid()) or exists(select 1 from public.hotel_memberships m where m.hotel_id=s.hotel_id and m.user_id=auth.uid() and m.active and m.role in ('owner','manager','accountant','pos_cashier','cashier','bar_cashier','restaurant_cashier'))))
+);
+drop policy if exists hotel_pos_cash_declarations_select on public.hotel_pos_cash_declarations;
+create policy hotel_pos_cash_declarations_select on public.hotel_pos_cash_declarations for select to authenticated using (
+ cashier_id=auth.uid() or exists(select 1 from public.hotels h where h.id=hotel_pos_cash_declarations.hotel_id and h.owner_user_id=auth.uid()) or
+ exists(select 1 from public.hotel_memberships m where m.hotel_id=hotel_pos_cash_declarations.hotel_id and m.user_id=auth.uid() and m.active and m.role in ('owner','manager','accountant','pos_cashier','cashier','bar_cashier','restaurant_cashier'))
+);
 drop policy if exists hotel_pos_inventory_write on public.hotel_pos_inventory;
 create policy hotel_pos_inventory_write on public.hotel_pos_inventory for all to authenticated using (
  exists(select 1 from public.hotels h where h.id=hotel_id and h.owner_user_id=auth.uid()) or
