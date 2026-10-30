@@ -32,12 +32,22 @@ jobs:
       - run: npm install
       - name: Build native Windows installers
         run: npm run tauri:build
+      - name: Package Windows ZRA connector agent
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path release | Out-Null
+          npm run connector:build
       - uses: actions/upload-artifact@v4
         with:
           name: sifobooks-hotel-windows-installers
           path: |
             src-tauri/target/release/bundle/nsis/*.exe
             src-tauri/target/release/bundle/msi/*.msi
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sifobooks-hotel-zra-connector
+          path: release/HotelZraConnector.exe
           if-no-files-found: error
 
   android:
