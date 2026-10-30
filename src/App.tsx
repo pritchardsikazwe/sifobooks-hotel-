@@ -10,6 +10,7 @@ import { GuestPortalAdmin } from "./GuestPortalAdmin";
 import { PrintingNetworkPanel } from "./PrintingNetworkPanel";
 import { AccountingPanel } from "./AccountingPanel";
 import { PropertyWorkspace } from "./PropertyWorkspace";
+import { ReportsPanel } from "./ReportsPanel";
 import { requireSupabase, supabase, supabaseReady } from "./lib/supabase";
 
 type Row = Record<string, any>;
@@ -115,7 +116,7 @@ export function App() {
     if (!hotel?.id) return;
     setLoading(true);
     const client = requireSupabase();
-    const tables = ["room_types", "rooms", "guests", "reservations", "folios", "folio_items", "payments", "housekeeping_tasks", "maintenance_requests", "night_audits", "hotel_maintenance_work_logs", "hotel_locations"];
+    const tables = ["room_types", "rooms", "guests", "reservations", "folios", "folio_items", "payments", "housekeeping_tasks", "maintenance_requests", "night_audits", "hotel_maintenance_work_logs", "hotel_locations", "hotel_daily_expenses", "hotel_pos_sales", "hotel_pos_inventory", "hotel_cash_declarations"];
     try {
       const results = await Promise.all(tables.map((table) => client.from(table).select("*").eq("hotel_id", hotel.id).order("created_at", { ascending: false }).limit(1000)));
       const next: Record<string, Row[]> = {};
@@ -687,31 +688,7 @@ export function App() {
       content = <AccountingPanel hotelId={hotel.id} />;
       break;
     case "reports": {
-      const inPeriod = (value: unknown) => { const d=String(value??"").slice(0,10); return (!reportFrom||d>=reportFrom)&&(!reportTo||d<=reportTo); };
-      const reservations=data.reservations.filter(r=>inPeriod(r.created_at||r.check_in_date));
-      const periodItems=data.folio_items.filter(i=>inPeriod(i.service_date||i.created_at));
-      const periodPayments=data.payments.filter(p=>inPeriod(p.received_at||p.created_at)&&p.status==="posted");
-      const roomRevenue=periodItems.filter(i=>i.item_type==="room_charge").reduce((n,i)=>n+Number(i.amount||0),0);
-      const foodRevenue=periodItems.filter(i=>["food_beverage","service"].includes(i.item_type)).reduce((n,i)=>n+Number(i.amount||0),0);
-      const otherRevenue=periodItems.filter(i=>!["room_charge","food_beverage","service","discount","tax"].includes(i.item_type)).reduce((n,i)=>n+Number(i.amount||0),0);
-      const taxes=periodItems.filter(i=>i.item_type==="tax").reduce((n,i)=>n+Number(i.amount||0),0);
-      const discounts=periodItems.filter(i=>i.item_type==="discount").reduce((n,i)=>n+Math.abs(Number(i.amount||0)),0);
-      const gross=periodItems.filter(i=>i.item_type!=="discount").reduce((n,i)=>n+Number(i.amount||0),0);
-      const net=gross-discounts;
-      const receipts=periodPayments.filter(p=>p.payment_type!=="refund").reduce((n,p)=>n+Number(p.amount||0),0);
-      const refunds=periodPayments.filter(p=>p.payment_type==="refund").reduce((n,p)=>n+Number(p.amount||0),0);
-      const paymentByMethod=Array.from(new Set(periodPayments.map(p=>p.method))).sort().map(method=>{const rows=periodPayments.filter(p=>p.method===method);return [method.replaceAll("_"," "),String(rows.length),money(rows.reduce((n,p)=>n+(p.payment_type==="refund"?-Number(p.amount||0):Number(p.amount||0)),0))]});
-      const statuses=["pending","confirmed","checked_in","checked_out","cancelled","no_show"].map(status=>{const rows=reservations.filter(r=>r.status===status);return [status.replaceAll("_"," "),String(rows.length),String(rows.filter(r=>r.status==="checked_in").length)]});
-      const nights=reservations.filter(r=>!["cancelled","no_show"].includes(r.status)).reduce((n,r)=>n+Math.max(0,(new Date(r.check_out_date).getTime()-new Date(r.check_in_date).getTime())/86400000),0);
-      const occupied=data.rooms.filter(r=>r.status==="occupied").length;const sellable=data.rooms.filter(r=>r.active!==false&&!["maintenance","out_of_service"].includes(r.status)).length;
-      const exportRows=[["Report","Value"],["Period",reportFrom+" to "+reportTo],["Reservations",reservations.length],["Booked room nights",nights],["Current occupancy",sellable?Math.round(occupied/sellable*100)+"%":"0%"],["Room revenue",roomRevenue.toFixed(2)],["Food & beverage / service",foodRevenue.toFixed(2)],["Other revenue",otherRevenue.toFixed(2)],["Tax charges",taxes.toFixed(2)],["Discounts",discounts.toFixed(2)],["Net recorded charges",net.toFixed(2)],["Receipts",receipts.toFixed(2)],["Refunds",refunds.toFixed(2)],["Net receipts",(receipts-refunds).toFixed(2)]];
-      content = <><div className="panel"><div className="panel-head"><div><h2>Hotel management reports</h2><p>Filter transactions by service/receipt date. Occupancy is the current snapshot; room nights and money totals use the selected period.</p></div><button className="secondary" onClick={()=>exportCsv("sifobooks-hotel-summary-"+reportFrom+"-to-"+reportTo+".csv",["Report","Value"],exportRows.slice(1))}>Export summary CSV</button></div><div className="form-grid"><label>From date<input type="date" value={reportFrom} max={reportTo||undefined} onChange={e=>setReportFrom(e.target.value)}/></label><label>To date<input type="date" value={reportTo} min={reportFrom||undefined} max={today()} onChange={e=>setReportTo(e.target.value)}/></label><button className="secondary" onClick={()=>{setReportFrom("");setReportTo(today())}}>Year-to-date / all available</button></div></div>
-      <div className="metrics"><Metric title="Reservations in period" value={reservations.length} icon={<CalendarDays/>}/><Metric title="Booked room nights" value={nights} icon={<BedDouble/>}/><Metric title="Room revenue" value={money(roomRevenue)} icon={<Wallet/>}/><Metric title="Food & service" value={money(foodRevenue)} icon={<Utensils/>}/><Metric title="Net recorded charges" value={money(net)} icon={<CreditCard/>}/><Metric title="Net receipts" value={money(receipts-refunds)} icon={<Wallet/>}/><Metric title="Current occupancy" value={sellable?Math.round(occupied/sellable*100)+"%":"0%"} icon={<DoorOpen/>}/></div>
-      <div className="panel"><div className="panel-head"><div><h2>Revenue & charges by category</h2><p>Based on folio items in the selected period.</p></div><button className="secondary" onClick={()=>exportCsv("sifobooks-charge-detail-"+reportFrom+"-to-"+reportTo+".csv",["Date","Folio","Type","Description","Quantity","Unit price","Amount"],periodItems.map(i=>[i.service_date||i.created_at,i.folio_id,i.item_type,i.description,i.quantity,i.unit_price,Number(i.amount||0).toFixed(2)]))}>Export charge detail</button></div>{table(["Category","Transactions","Total ZMW"],[["Room revenue",String(periodItems.filter(i=>i.item_type==="room_charge").length),money(roomRevenue)],["Food & beverage / service",String(periodItems.filter(i=>["food_beverage","service"].includes(i.item_type)).length),money(foodRevenue)],["Other charges",String(periodItems.filter(i=>!["room_charge","food_beverage","service","discount","tax"].includes(i.item_type)).length),money(otherRevenue)],["Tax charges",String(periodItems.filter(i=>i.item_type==="tax").length),money(taxes)],["Discounts",String(periodItems.filter(i=>i.item_type==="discount").length),money(discounts)],["Net recorded charges",String(periodItems.length),money(net)]])}</div>
-      <div className="panel"><div className="panel-head"><h2>Payments by method</h2><button className="secondary" onClick={()=>exportCsv("sifobooks-payments-"+reportFrom+"-to-"+reportTo+".csv",["Payment number","Date","Type","Method","Status","Amount ZMW","Reference"],periodPayments.map(p=>[p.payment_number,p.received_at,p.payment_type,p.method,p.status,p.amount,p.reference]))}>Export payments CSV</button></div>{table(["Method","Transactions","Net amount ZMW"],paymentByMethod)}</div>
-      <div className="panel"><div className="panel-head"><h2>Reservation status report</h2><button className="secondary" onClick={()=>exportCsv("sifobooks-reservations-"+reportFrom+"-to-"+reportTo+".csv",["Reservation","Guest","Room","Check in","Check out","Status","Nightly rate"],reservations.map(r=>[r.reservation_number,guestName(r.guest_id),roomName(r.room_id),r.check_in_date,r.check_out_date,r.status,r.nightly_rate]))}>Export reservations CSV</button></div>{table(["Status","Reservations","Checked-in count"],statuses)}</div>
-      <div className="panel"><div className="panel-head"><h2>Daily audit history</h2><button className="secondary" onClick={()=>exportCsv("sifobooks-night-audits-"+reportFrom+"-to-"+reportTo+".csv",["Business date","Room revenue","Other revenue","Payments","Variance","Status"],data.night_audits.filter(a=>inPeriod(a.business_date)).map(a=>[a.business_date,a.room_revenue,a.other_revenue,a.payments_total,a.variance,a.status]))}>Export audit CSV</button></div>{table(["Business date","Room revenue","Other revenue","Payments","Cash variance","Status"],data.night_audits.filter(a=>inPeriod(a.business_date)).map(a=>[a.business_date,money(a.room_revenue),money(a.other_revenue),money(a.payments_total),money(a.variance),badge(a.status)]))}</div>
-      <div className="alert">Reporting note: this is an operational revenue and receipt report, not a complete accounting Profit & Loss statement. Expenses, accruals and depreciation must be posted through the accounting ledger before net profit can be reported.</div></>;
+      content = <ReportsPanel hotel={hotel} data={data} from={reportFrom} to={reportTo} setFrom={setReportFrom} setTo={setReportTo} money={money} guestName={guestName} roomName={roomName} />;
       break;
     }
     case "staff":
