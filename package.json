@@ -12,7 +12,8 @@
     "android:apk": "cap sync android && cd android && ./gradlew assembleDebug",
     "android:aab": "cap sync android && cd android && ./gradlew bundleRelease",
     "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build"
+    "tauri:build": "tauri build",
+    "connector:build": "pkg connector/windows/agent.js --targets node20-win-x64 --output release/HotelZraConnector.exe"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.76.1",
@@ -29,6 +30,7 @@
     "typescript": "5.7.3",
     "vite": "6.1.0",
     "@capacitor/cli": "^7.4.3",
-    "@tauri-apps/cli": "^2.8.4"
+    "@tauri-apps/cli": "^2.8.4",
+    "@yao-pkg/pkg": "^6.6.0"
   }
 }
