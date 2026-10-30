@@ -14,14 +14,16 @@ import { ReportsPanel } from "./ReportsPanel";
 import { CompliancePanel } from "./CompliancePanel";
 import { AdminSettingsPanel } from "./AdminSettingsPanel";
 import { InvoiceWorkspace } from "./InvoiceWorkspace";
+import { EventsConferencePanel } from "./EventsConferencePanel";
 import { requireSupabase, supabase, supabaseReady } from "./lib/supabase";
 
 type Row = Record<string, any>;
-type Tab = "overview" | "rooms" | "guests" | "reservations" | "housekeeping" | "folios" | "maintenance" | "night_audit" | "reports" | "accounting" | "staff" | "settings" | "zra" | "documents" | "pos" | "printing_network" | "inventory" | "daily_ops" | "guest_portal" | "property_setup" | "cash_declaration" | "compliance" | "admin_settings" | "invoicing";
+type Tab = "overview" | "rooms" | "guests" | "reservations" | "housekeeping" | "folios" | "maintenance" | "night_audit" | "reports" | "accounting" | "staff" | "settings" | "zra" | "documents" | "pos" | "printing_network" | "inventory" | "daily_ops" | "guest_portal" | "property_setup" | "cash_declaration" | "compliance" | "admin_settings" | "invoicing" | "events_conference";
 const tabs: { id: Tab; label: string; icon: typeof Hotel }[] = [
   { id: "overview", label: "Overview", icon: Hotel },
   { id: "admin_settings", label: "Admin Settings", icon: UserCog },
   { id: "invoicing", label: "Invoicing", icon: FileBarChart },
+  { id: "events_conference", label: "Events & Conferences", icon: CalendarDays },
   { id: "rooms", label: "Rooms & units", icon: BedDouble },
   { id: "guests", label: "Guests", icon: Users },
   { id: "reservations", label: "Reservations", icon: CalendarDays },
@@ -713,6 +715,9 @@ export function App() {
       break;
     case "invoicing":
       content = <InvoiceWorkspace hotel={hotel} guests={data.guests} reservations={data.reservations} rooms={data.rooms} folios={data.folios} folioItems={data.folio_items} payments={data.payments} />;
+      break;
+    case "events_conference":
+      content = <EventsConferencePanel hotel={hotel} role={membershipRole} session={session} money={money} />;
       break;
     case "documents":
       content = <DocumentsPanel hotel={hotel} guests={data.guests} reservations={data.reservations} rooms={data.rooms} roomTypes={data.room_types} folios={data.folios} folioItems={data.folio_items} payments={data.payments} />;
