@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
-import { BedDouble, CalendarDays, CheckCircle2, ClipboardList, CreditCard, DoorOpen, Hotel, LogOut, Moon, Plus, RefreshCw, Users, Wallet, Wrench } from "lucide-react";
+import { BedDouble, CalendarDays, CheckCircle2, ClipboardList, CreditCard, DoorOpen, FileBarChart, Hotel, LogOut, Moon, Plus, RefreshCw, UserCog, Users, Wallet, Wrench } from "lucide-react";
 import { requireSupabase, supabase, supabaseReady } from "./lib/supabase";
 
 type Row = Record<string, any>;
-type Tab = "overview" | "rooms" | "guests" | "reservations" | "housekeeping" | "folios" | "maintenance" | "night_audit" | "settings";
+type Tab = "overview" | "rooms" | "guests" | "reservations" | "housekeeping" | "folios" | "maintenance" | "night_audit" | "reports" | "staff" | "settings";
 const tabs: { id: Tab; label: string; icon: typeof Hotel }[] = [
   { id: "overview", label: "Overview", icon: Hotel },
   { id: "rooms", label: "Rooms", icon: BedDouble },
@@ -13,9 +13,11 @@ const tabs: { id: Tab; label: string; icon: typeof Hotel }[] = [
   { id: "folios", label: "Folios & payments", icon: Wallet },
   { id: "maintenance", label: "Maintenance", icon: Wrench },
   { id: "night_audit", label: "Night audit", icon: Moon },
+  { id: "reports", label: "Reports", icon: FileBarChart },
+  { id: "staff", label: "Staff & access", icon: UserCog },
   { id: "settings", label: "Hotel settings", icon: DoorOpen },
 ];
-const today = () => new Date().toISOString().slice(0, 10);
+const today = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Africa/Lusaka", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
 const money = (n: unknown) => new Intl.NumberFormat("en-ZM", { style: "currency", currency: "ZMW", maximumFractionDigits: 2 }).format(Number(n || 0));
 const errorMessage = (e: unknown) => e instanceof Error ? e.message : String(e);
 
@@ -38,6 +40,7 @@ export function App() {
   });
   const [form, setForm] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
+  const [staff, setStaff] = useState<Row[]>([]);
 
   useEffect(() => {
     if (!supabase) { setAuthLoading(false); return; }
