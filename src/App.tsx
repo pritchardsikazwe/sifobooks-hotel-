@@ -13,13 +13,15 @@ import { PropertyWorkspace } from "./PropertyWorkspace";
 import { ReportsPanel } from "./ReportsPanel";
 import { CompliancePanel } from "./CompliancePanel";
 import { AdminSettingsPanel } from "./AdminSettingsPanel";
+import { InvoiceWorkspace } from "./InvoiceWorkspace";
 import { requireSupabase, supabase, supabaseReady } from "./lib/supabase";
 
 type Row = Record<string, any>;
-type Tab = "overview" | "rooms" | "guests" | "reservations" | "housekeeping" | "folios" | "maintenance" | "night_audit" | "reports" | "accounting" | "staff" | "settings" | "zra" | "documents" | "pos" | "printing_network" | "inventory" | "daily_ops" | "guest_portal" | "property_setup" | "cash_declaration" | "compliance" | "admin_settings";
+type Tab = "overview" | "rooms" | "guests" | "reservations" | "housekeeping" | "folios" | "maintenance" | "night_audit" | "reports" | "accounting" | "staff" | "settings" | "zra" | "documents" | "pos" | "printing_network" | "inventory" | "daily_ops" | "guest_portal" | "property_setup" | "cash_declaration" | "compliance" | "admin_settings" | "invoicing";
 const tabs: { id: Tab; label: string; icon: typeof Hotel }[] = [
   { id: "overview", label: "Overview", icon: Hotel },
   { id: "admin_settings", label: "Admin Settings", icon: UserCog },
+  { id: "invoicing", label: "Invoicing", icon: FileBarChart },
   { id: "rooms", label: "Rooms & units", icon: BedDouble },
   { id: "guests", label: "Guests", icon: Users },
   { id: "reservations", label: "Reservations", icon: CalendarDays },
@@ -708,6 +710,9 @@ export function App() {
       break;
     case "zra":
       content = <ZraPanel hotelId={hotel.id} role={membershipRole} />;
+      break;
+    case "invoicing":
+      content = <InvoiceWorkspace hotel={hotel} guests={data.guests} reservations={data.reservations} rooms={data.rooms} folios={data.folios} folioItems={data.folio_items} payments={data.payments} />;
       break;
     case "documents":
       content = <DocumentsPanel hotel={hotel} guests={data.guests} reservations={data.reservations} rooms={data.rooms} roomTypes={data.room_types} folios={data.folios} folioItems={data.folio_items} payments={data.payments} />;
