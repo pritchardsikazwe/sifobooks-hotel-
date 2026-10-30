@@ -585,7 +585,7 @@ export function App() {
       break;
     }
     case "reservations": {
-      const activeReservations = data.reservations.filter(r => !["cancelled","no_show"].includes(String(r.status||"").toLowerCase()));
+      const activeReservations = data.reservations.filter(r => !["cancelled","no_show","checked_out"].includes(String(r.status||"").toLowerCase()));
       const todayDate = today();
       const arrivalRows = activeReservations.filter(r => r.check_in_date === todayDate && ["pending","confirmed","checked_in"].includes(String(r.status||"").toLowerCase()));
       const departureRows = activeReservations.filter(r => r.check_out_date === todayDate && ["checked_in","confirmed"].includes(String(r.status||"").toLowerCase()));
