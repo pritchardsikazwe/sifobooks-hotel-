@@ -62,3 +62,10 @@ a{color:#ffda57}
 hr{border:0;border-top:1px solid #303b51}
 @media(max-width:850px){body{background-size:36px 36px,36px 36px,auto}.panel{padding:15px}.metric{padding:13px}}
 @media(max-width:560px){.page-intro-copy h2{font-size:21px}.page-intro-copy p{font-size:12px}.panel{border-radius:14px;padding:13px}.metric strong,.metric .value{font-size:21px}td{padding:11px 9px;font-size:11px}}
+
+/* Front desk controls: readable filters, accessible focus and touch targets */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0 16px}
+.toolbar input{flex:1 1 240px;min-width:0;background:#101725;color:#f5f7fc;border:1px solid #39465d;border-radius:10px;padding:10px 12px;min-height:40px}
+.toolbar select{flex:0 1 175px;min-width:145px;background:#101725;color:#f5f7fc;border:1px solid #39465d;border-radius:10px;padding:10px;min-height:40px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ffd23f99;outline-offset:2px}
+@media(max-width:560px){.toolbar{align-items:stretch}.toolbar input,.toolbar select,.toolbar button{width:100%;flex:1 1 100%}}
