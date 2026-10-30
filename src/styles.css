@@ -498,3 +498,66 @@ button.pos-product:disabled{opacity:.48;cursor:not-allowed}
 .pos-shift-grid>.panel{min-width:0}
 @media(max-width:900px){.pos-sell-grid{grid-template-columns:minmax(0,1fr)}.pos-order{position:static}.pos-shift-grid{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:560px){.pos-banner{align-items:flex-start;flex-wrap:wrap;padding:15px;gap:12px;border-radius:16px}.pos-banner-icon{flex-basis:43px;height:43px;border-radius:13px}.pos-banner>div:nth-child(2){flex:1 1 calc(100% - 60px)}.pos-banner p{font-size:11px}.pos-shift-state{width:100%;min-width:0;grid-template-columns:10px minmax(0,1fr);column-gap:9px;align-items:center;padding:10px 12px}.pos-shift-state i{grid-row:span 2}.pos-shift-state small{grid-column:2}.pos-open-shift-cta{grid-column:1/-1;width:100%;margin-top:4px}.pos-tabs{gap:6px}.pos-tabs button{padding:10px 12px;font-size:11px}.pos-product-toolbar{grid-template-columns:minmax(0,1fr)}.pos-products{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.pos-product{min-height:118px;padding:11px!important}.pos-shift-required{align-items:flex-start;flex-wrap:wrap;padding:13px}.pos-shift-required-copy{flex:1 1 calc(100% - 58px)}.pos-shift-required>.primary{width:100%;justify-content:center}.pos-cart-line{grid-template-columns:minmax(0,1fr) auto}.pos-cart-line>strong{grid-column:2;grid-row:2;text-align:right}.pos-qty{grid-column:2;grid-row:1}.pos-total b{font-size:22px}}
+
+
+/* Responsive layout correction: mobile header, real module navigation and landing page */
+html,body,#root{width:100%;max-width:100%;overflow-x:hidden}
+.app-shell{width:100%;min-width:0}
+.app-header{position:relative;z-index:20;padding-top:env(safe-area-inset-top,0px);min-width:0}
+.app-brand-row{min-width:0;gap:12px;flex-wrap:wrap}
+.app-header-right{min-width:0;max-width:100%;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.property-chip,.user-chip{max-width:clamp(100px,24vw,260px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.top-menu{display:flex;align-items:stretch;gap:5px;max-width:100%;min-width:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.top-menu-item{flex:0 0 auto;white-space:nowrap;min-height:48px}
+.main{min-width:0;width:100%;overflow-wrap:anywhere}
+.main>*{min-width:0;max-width:100%}
+.panel,.metrics,.metric,.page-intro,.dashboard-hero{min-width:0}
+.hotel-landing{width:100%;max-width:100%;overflow-x:clip}
+.hl-nav{min-width:0}
+.hl-brand{min-width:0}
+.hl-brand strong{white-space:nowrap}
+.hl-main{min-width:0}
+.hl-copy,.hl-auth{min-width:0}
+.hl-actions .hl-btn{min-height:46px}
+@media(max-width:680px){
+  .app-header{padding-left:12px;padding-right:12px}
+  .app-brand-row{align-items:center;gap:8px;padding:10px 0}
+  .app-brand-row .brand{flex:1 1 145px;min-width:0}
+  .app-brand-row .brand strong{font-size:15px}
+  .app-brand-row .brand small{font-size:10px}
+  .app-brand-row .brand-mark{flex:0 0 38px;width:38px;height:38px}
+  .app-header-right{flex:1 1 100%;width:100%;gap:7px}
+  .property-chip{flex:1 1 120px;max-width:none;min-width:0}
+  .user-chip{display:none}
+  .signout-button{flex:0 0 auto;padding:8px 10px;font-size:11px}
+  .top-menu{margin:0 -12px;padding:0 12px;gap:4px}
+  .top-menu-item{padding:10px 11px;font-size:12px;min-height:48px}
+  .top-menu-item svg{width:16px;height:16px;flex-shrink:0}
+  .top-menu-item span{display:inline}
+  .main{padding-top:18px}
+  .hl-nav{padding-left:16px;padding-right:16px}
+  .hl-brand strong{font-size:16px}
+  .hl-brand small{font-size:8px;letter-spacing:1.2px}
+  .hl-mark{width:40px;height:40px;flex:0 0 40px}
+  .hl-main{padding:24px 16px 28px;gap:22px}
+  .hl-copy h1{font-size:clamp(32px,8.6vw,40px);letter-spacing:-1.2px;overflow-wrap:normal}
+  .hl-copy p{font-size:14px;line-height:1.65}
+  .hl-benefits{font-size:13px;gap:10px}
+  .hl-actions{display:grid;grid-template-columns:1fr;gap:10px}
+  .hl-actions .hl-btn{width:100%;padding:14px 16px}
+  .hl-orbit-area{min-height:310px;transform:none;margin:0;overflow:visible}
+  .hl-ring{width:min(78vw,300px)}
+  .hl-ring.reverse{width:min(64vw,245px)}
+  .hl-feature.f2,.hl-feature.f3{right:-9px}
+  .hl-feature.f5,.hl-feature.f6{left:-9px}
+  .hl-feature-strip{padding-left:16px;padding-right:16px}
+}
+@media(max-width:380px){
+  .app-header-right .property-chip{font-size:11px;padding:8px}
+  .signout-button{font-size:0}
+  .signout-button svg{width:17px;height:17px}
+  .top-menu-item{padding:9px;font-size:11px}
+  .hl-main{padding-left:14px;padding-right:14px}
+  .hl-copy h1{font-size:32px}
+  .hl-pill{font-size:9px}
+}
