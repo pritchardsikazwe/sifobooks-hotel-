@@ -89,3 +89,123 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 
 /* Accounting and ledger reporting */
 .accounting-workspace{display:grid;gap:16px}.accounting-workspace .metrics{margin:14px 0}.accounting-subhead{margin-top:20px;padding-top:16px;border-top:1px solid #e7ebf1}.accounting-subhead h3{display:flex;align-items:center;gap:8px;margin:0;color:#1c2b43}.accounting-workspace table tfoot th{padding:12px 10px;background:#f5f7fa;border-top:2px solid #dce2eb;color:#1c2b43;text-align:left}.accounting-warning{padding:12px 14px;border:1px solid #ead89b;border-radius:10px;background:#fff9e5;color:#6b5818;font-size:12px;line-height:1.6}
+
+
+/* SifoHotel motion system: touch-first, smooth, restrained robotic styling */
+:root{
+  --motion-fast:150ms;
+  --motion-mid:240ms;
+  --motion-slow:420ms;
+  --motion-ease:cubic-bezier(.2,.75,.25,1);
+  scroll-behavior:smooth;
+  -webkit-tap-highlight-color:transparent;
+}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{
+  overscroll-behavior-y:contain;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+button,a,[role="button"],input[type="checkbox"],input[type="radio"],select{
+  touch-action:manipulation;
+}
+button,a,[role="button"]{
+  -webkit-tap-highlight-color:transparent;
+}
+button:focus-visible,a:focus-visible,[role="button"]:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--gold,#f6c945);
+  outline-offset:3px;
+}
+button:active,[role="button"]:active{
+  transform:scale(.975);
+}
+main, .main-content, .workspace, .content-area{
+  scroll-margin-top:84px;
+}
+.card,.panel,.metric-card,.stat-card,.room-card,.reservation-card,.onboarding-step,
+button,.nav-item,.sidebar a,.sidebar button,.tab-button{
+  transition:
+    transform var(--motion-mid) var(--motion-ease),
+    box-shadow var(--motion-mid) var(--motion-ease),
+    border-color var(--motion-mid) ease,
+    background-color var(--motion-mid) ease,
+    color var(--motion-fast) ease;
+}
+.card:hover,.panel:hover,.metric-card:hover,.stat-card:hover,.room-card:hover{
+  box-shadow:0 12px 28px rgba(12,25,45,.09);
+}
+.nav-item:active,.sidebar a:active,.sidebar button:active,.tab-button:active,
+.onboarding-step:active{
+  transform:scale(.985);
+}
+input,select,textarea{
+  transition:border-color var(--motion-fast) ease,box-shadow var(--motion-fast) ease;
+}
+input:focus,select:focus,textarea:focus{
+  box-shadow:0 0 0 3px rgba(246,201,69,.18);
+}
+/* Subtle robotic/HUD accents; keep content readable and existing layout intact. */
+h1,h2,h3{
+  letter-spacing:-.025em;
+}
+.metric-card,.stat-card{
+  position:relative;
+  overflow:hidden;
+}
+.metric-card::after,.stat-card::after{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:3px;
+  background:linear-gradient(180deg,var(--gold,#f6c945),rgba(24,184,138,.55));
+  opacity:.8;
+  pointer-events:none;
+}
+table tbody tr{
+  transition:background-color var(--motion-fast) ease;
+}
+table tbody tr:hover{
+  background:rgba(246,201,69,.07);
+}
+@keyframes sifohotel-rise-in{
+  from{opacity:0;transform:translateY(9px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes sifohotel-glow-pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(246,201,69,0)}
+  50%{box-shadow:0 0 0 4px rgba(246,201,69,.09)}
+}
+.workspace,.accounting-workspace,.onboarding-panel{
+  animation:sifohotel-rise-in 360ms var(--motion-ease) both;
+}
+button.primary,.primary-button,.btn-primary{
+  box-shadow:0 5px 14px rgba(12,25,45,.10);
+}
+button.primary:hover,.primary-button:hover,.btn-primary:hover{
+  box-shadow:0 8px 20px rgba(12,25,45,.16);
+  transform:translateY(-1px);
+}
+.status-live,.connection-live,.status-connected{
+  animation:sifohotel-glow-pulse 2.8s ease-in-out infinite;
+}
+/* Mobile ergonomics: comfortable touch targets, momentum scrolling and no horizontal page drift. */
+*{-webkit-overflow-scrolling:touch}
+body{overflow-x:hidden}
+@media(max-width:700px){
+  button,a,[role="button"],.nav-item,.tab-button{min-height:40px}
+  input,select,textarea{font-size:16px}
+  .workspace,.accounting-workspace,.onboarding-panel{animation-duration:240ms}
+  .card:hover,.panel:hover,.metric-card:hover,.stat-card:hover,.room-card:hover{
+    transform:none;
+    box-shadow:0 4px 14px rgba(12,25,45,.06);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    scroll-behavior:auto!important;
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+}
