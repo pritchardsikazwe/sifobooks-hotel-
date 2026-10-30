@@ -13,7 +13,8 @@
     "android:aab": "cap sync android && cd android && ./gradlew bundleRelease",
     "tauri:dev": "tauri dev",
     "tauri:build": "tauri build",
-    "connector:build": "pkg connector/windows/agent.js --targets node20-win-x64 --output release/HotelZraConnector.exe"
+    "connector:build": "pkg connector/windows/agent.js --targets node20-win-x64 --output release/HotelZraConnector.exe",
+    "connector:print-network:build": "pkg connector/windows/print-network-agent.js --targets node20-win-x64 --output release/SifoBooksHotelPrintNetwork.exe"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.76.1",
