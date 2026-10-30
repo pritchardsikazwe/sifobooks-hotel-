@@ -1,4 +1,4 @@
-const CACHE = "sifobooks-hotel-shell-v1";
+const CACHE = "sifobooks-hotel-shell-v2";
 const SHELL = ["/", "/manifest.webmanifest", "/icons/hotel-192.svg", "/icons/hotel-512.svg"];
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -18,10 +18,14 @@ self.addEventListener("fetch", event => {
     }).catch(() => caches.match("/")));
     return;
   }
-  if (url.pathname.startsWith("/assets/") || SHELL.includes(url.pathname)) {
-    event.respondWith(caches.match(request).then(cached => cached || fetch(request).then(response => {
+  if (url.pathname.startsWith("/assets/")) {
+    event.respondWith(fetch(request).catch(() => caches.match(request)));
+    return;
+  }
+  if (SHELL.includes(url.pathname)) {
+    event.respondWith(fetch(request).then(response => {
       if (response.ok) caches.open(CACHE).then(cache => cache.put(request, response.clone()));
       return response;
-    })));
+    }).catch(() => caches.match(request)));
   }
 });
