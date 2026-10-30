@@ -39,6 +39,13 @@
 - Seeded counts: 3 room types, 4 rooms, 3 guests, 3 reservations, 3 folios, 4 charge lines, 2 payments, 2 housekeeping tasks, 1 maintenance ticket, 3 POS inventory items, 1 night audit.
 - The database returned these records after seeding.
 
+### Database tests completed in this pass
+- Default chart of 11 accounts created for the SifoHotel test property.
+- Seeded folio charges and receipts backfilled into the double-entry journal: 6 journal entries / 12 journal lines.
+- Debits total ZMW 7,945.00 and credits total ZMW 7,945.00; 0 unbalanced journal entries.
+- Trial-balance and profit-and-loss views created with invoker security so property access remains governed by row-level security.
+- POS checkout now calls a database RPC that validates cashier role, shift, item activity and stock, and posts the sale, sale lines and stock deduction in one database transaction.
+
 ### Not yet verified end-to-end
 - Browser/UI flows, build and deployment.
 - Complete booking overlap and concurrency protection.
