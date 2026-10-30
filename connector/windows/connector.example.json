@@ -1,0 +1,6 @@
+{
+  "supabaseUrl": "https://fotnafyrjawypbsttplf.supabase.co",
+  "connectorToken": "PASTE_THE_ONE_TIME_TOKEN_FROM_HOTEL_SETTINGS_HERE",
+  "pollSeconds": 30,
+  "vsdcHealthUrl": "http://127.0.0.1:8085/"
+}
