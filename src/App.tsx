@@ -596,6 +596,12 @@ export function App() {
     case "documents":
       content = <DocumentsPanel hotel={hotel} guests={data.guests} reservations={data.reservations} rooms={data.rooms} roomTypes={data.room_types} folios={data.folios} folioItems={data.folio_items} payments={data.payments} />;
       break;
+    case "daily_ops":
+      content = <DailyOperationsPanel hotel={hotel} session={session} role={membershipRole} />;
+      break;
+    case "guest_portal":
+      content = <GuestPortalAdmin hotel={hotel} />;
+      break;
     case "inventory":
       content = <InventoryManagementPanel hotel={hotel} session={session} role={membershipRole} />;
       break;
