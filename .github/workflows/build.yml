@@ -1,25 +1,35 @@
-name: Hotel Product Build
+name: SifoBooks Hotel Build
 
 concurrency:
-  group: hotel-product-${{ github.ref }}
+  group: hotel-build-${{ github.ref }}
   cancel-in-progress: true
 
 on:
   push:
-    branches: [main, '**']
+    branches: [main]
     paths:
-      - ".github/workflows/hotel-product-check.yml"
+      - ".github/workflows/build.yml"
+      - "package.json"
+      - "package-lock.json"
+      - "index.html"
+      - "src/**"
+      - "tsconfig.json"
+      - "vite.config.ts"
+      - "supabase/migrations/**"
   pull_request:
     paths:
-      - "products/hotel/**"
-      - ".github/workflows/hotel-product-check.yml"
+      - ".github/workflows/build.yml"
+      - "package.json"
+      - "package-lock.json"
+      - "index.html"
+      - "src/**"
+      - "tsconfig.json"
+      - "vite.config.ts"
+      - "supabase/migrations/**"
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: .
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,9 +37,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: package.json
       - name: Install dependencies
         run: npm install
-      - name: Build standalone Hotel app
+      - name: Type-check and build
         run: npm run build
