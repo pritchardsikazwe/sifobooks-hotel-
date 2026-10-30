@@ -279,7 +279,7 @@ export function App() {
   const updatePropertyRecord = async (tableName: string, record: Row, patch: Row, label: string) => {
     if (!hotel || !record?.id) return;
     setError(""); setNotice("");
-    try { const { error } = await requireSupabase().from(tableName).update(patch).eq("id", record.id).eq("hotel_id", hotel.id); if (error) throw error; setNotice(`${label} updated.`); await refresh(); }
+    try { const { error } = await requireSupabase().from(tableName as any).update(patch).eq("id", record.id).eq("hotel_id", hotel.id); if (error) throw error; setNotice(`${label} updated.`); await refresh(); }
     catch (e) { setError(errorMessage(e)); }
   };
 
@@ -288,7 +288,7 @@ export function App() {
     if (!window.confirm(`Delete this ${label}? This cannot be undone. Records linked to reservations, payments or audit history may be protected by the database.`)) return;
     setError(""); setNotice("");
     try {
-      const { error } = await requireSupabase().from(tableName).delete().eq("id", record.id).eq("hotel_id", hotel.id);
+      const { error } = await requireSupabase().from(tableName as any).delete().eq("id", record.id).eq("hotel_id", hotel.id);
       if (error) throw error;
       setNotice(`${label[0].toUpperCase()+label.slice(1)} deleted.`);
       if (tableName === "guests" && editingGuestId === record.id) { setEditingGuestId(null); setForm({}); }
