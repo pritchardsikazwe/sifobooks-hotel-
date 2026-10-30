@@ -2,26 +2,46 @@
 
 Independent hotel property-management application for hotels, lodges and guest houses. Built with React, TypeScript, Vite and Supabase.
 
-## Current status
-- Standalone application source and build configuration.
-- Dedicated Supabase project: `fotnafyrjawypbsttplf`.
+## Product isolation
+- Repository: `pritchardsikazwe/sifobooks-hotel-`
+- Dedicated Supabase project: `fotnafyrjawypbsttplf` (EU West).
+- The existing SifoBooks production app/database is not modified by this standalone app.
 - Zambia defaults: ZMW and `Africa/Lusaka`.
-- Hotel workspace, room inventory, guests, reservations, check-in/check-out, folios, receipts, housekeeping, maintenance and night-audit foundation.
-- Row-level security and database-level room-overlap protection.
+
+## Implemented application workflows
+- Email registration/sign-in and first-time hotel setup.
+- Room types and room inventory.
+- Guest directory and reservation book.
+- Database-atomic reservation + folio creation; database guard prevents overlapping active bookings.
+- Check-in/check-out/cancellation transitions, including idempotent room-stay charge posting.
+- Guest folios, discount-aware balances, payment validation, receipt history and printable payment receipts.
+- Housekeeping tasks and maintenance requests.
+- Night audit with cash variance and daily audit history.
+- Staff access by existing confirmed email, role assignment, suspension/restoration, and tenant-scoped RLS.
+- Operational reports for booked nights, occupancy, charges, discounts, receipts, refunds and revenue by charge type.
+- Property contact details and VAT configuration.
+- Version-controlled SQL migrations and GitHub Actions build/deploy workflows.
 
 ## Local development
 1. Install Node.js 22+ and npm.
-2. Copy `.env.example` to `.env.local`.
-3. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` using the project's URL and publishable/anon key. Never use a service-role key in browser code.
-4. Run `npm install`.
-5. Run `npm run dev`.
-6. Verify with `npm run build`.
-
-## Database
-SQL migrations are in `supabase/migrations/`. Review migration order and confirm the target project before applying changes. The connected project currently has the Hotel schema deployed; migrations should be tracked consistently before production release.
+2. The app defaults to its dedicated Supabase URL and public publishable key. You can override these using `.env.local` variables `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
+3. Never put a Supabase service-role key in browser code or GitHub.
+4. Run `npm install`, then `npm run dev`.
+5. Verify with `npm run build`.
 
 ## Deployment
-The app is not yet deployed. Configure environment variables, build checks, hosting, the `hotel.sifobooks.com` custom domain, TLS and Supabase Auth redirect URLs after choosing the hosting provider. Do not point DNS to an unprovisioned host.
+A GitHub Pages workflow now builds and deploys the static app from `main`. GitHub Actions status: https://github.com/pritchardsikazwe/sifobooks-hotel-/actions.
 
-## Production readiness
-This is an in-progress foundation, not yet a certified production PMS. Complete build verification, end-to-end tests for authentication/reservations/folio balances/receipts/night audit, backups, monitoring, and a deployment rollback plan before onboarding paying hotels.
+The custom domain file is `public/CNAME` for `hotel.sifobooks.com`. To make that address live, GitHub Pages must be enabled for this repository and DNS must point the subdomain to GitHub Pages. Configure the custom domain in repository Settings → Pages and enable HTTPS after DNS validation. Do not change SifoBooks production DNS.
+
+After the site is live, set Supabase Authentication → URL Configuration:
+- Site URL: `https://hotel.sifobooks.com`
+- Redirect URL: `https://hotel.sifobooks.com/**`
+Also add any local development URL used by the team.
+
+## Important operational limitations before paid production
+- The staff screen grants access to an already registered, email-confirmed user. Automated email invitations still need a trusted server-side invite service.
+- VAT settings are configurable, but VAT invoice calculation, ZRA e-invoicing/VSDC, and posting to SifoBooks accounting are not yet integrated.
+- Validate registration, email confirmation, tenant isolation, booking conflict handling, check-in/out, payments/refunds, night audit and recovery with a dedicated test account before onboarding paying hotels.
+- Configure and test Supabase backups/PITR, recovery procedures, alerting and a rollback process.
+- The app has not been independently audited or certified as a production PMS.
