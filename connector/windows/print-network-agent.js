@@ -1,6 +1,6 @@
 import http from "node:http";
 import os from "node:os";
-import { execFile } from "node:child_process";
+import { execFile, spawn } from "node:child_process";
 import { promisify } from "node:util";
 const execFileAsync=promisify(execFile);
 const HOST="127.0.0.1";
@@ -42,7 +42,7 @@ const server=http.createServer(async(req,res)=>{
    // Send plain text to the Windows spooler using Out-Printer; never interpolate user text into PowerShell code.
    try{
     const ps="$input | Out-Printer"+(target?" -Name "+("'"+target.replace(/'/g,"''")+"'"):"");
-    await execFileAsync("powershell.exe",["-NoProfile","-NonInteractive","-Command",ps],{input:b.text,timeout:15000,maxBuffer:1024*1024});
+    await new Promise((resolve,reject)=>{const child=spawn("powershell.exe",["-NoProfile","-NonInteractive","-Command",ps],{windowsHide:true,stdio:["pipe","ignore","pipe"]});let err="";const timer=setTimeout(()=>{child.kill();reject(new Error("Printer submission timed out"));},15000);child.stderr.on("data",chunk=>{err+=chunk.toString();});child.on("error",e=>{clearTimeout(timer);reject(e);});child.on("close",code=>{clearTimeout(timer);if(code===0)resolve();else reject(new Error(err||"PowerShell printer submission failed"));});child.stdin.end(b.text,"utf8");});
     job.status="accepted_by_windows_spooler";job.finishedAt=new Date().toISOString();json(res,202,{job}); 
    }catch(e){job.status="failed";job.error=String(e?.message||e);json(res,502,{job,error:"Windows could not submit this text job to the printer."});}
    return;
