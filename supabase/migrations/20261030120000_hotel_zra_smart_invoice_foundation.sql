@@ -79,7 +79,8 @@ create policy hotel_zra_settings_read_member on public.hotel_zra_settings
   for select to authenticated using (
     exists (select 1 from public.hotel_memberships m
       where m.hotel_id = hotel_zra_settings.hotel_id
-        and m.user_id = auth.uid() and m.active = true)
+        and m.user_id = auth.uid() and m.active = true
+        and m.role in ('owner','manager','accountant'))
   );
 
 drop policy if exists hotel_zra_submissions_read_member on public.hotel_zra_submissions;
@@ -87,7 +88,8 @@ create policy hotel_zra_submissions_read_member on public.hotel_zra_submissions
   for select to authenticated using (
     exists (select 1 from public.hotel_memberships m
       where m.hotel_id = hotel_zra_submissions.hotel_id
-        and m.user_id = auth.uid() and m.active = true)
+        and m.user_id = auth.uid() and m.active = true
+        and m.role in ('owner','manager','accountant'))
   );
 
 drop policy if exists hotel_zra_events_read_member on public.hotel_zra_events;
@@ -95,7 +97,8 @@ create policy hotel_zra_events_read_member on public.hotel_zra_events
   for select to authenticated using (
     exists (select 1 from public.hotel_memberships m
       where m.hotel_id = hotel_zra_events.hotel_id
-        and m.user_id = auth.uid() and m.active = true)
+        and m.user_id = auth.uid() and m.active = true
+        and m.role in ('owner','manager','accountant'))
   );
 
 drop trigger if exists hotel_zra_settings_set_updated_at on public.hotel_zra_settings;
