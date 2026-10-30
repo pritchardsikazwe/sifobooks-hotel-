@@ -15,7 +15,7 @@ type Row = Record<string, any>;
 type Tab = "overview" | "rooms" | "guests" | "reservations" | "housekeeping" | "folios" | "maintenance" | "night_audit" | "reports" | "accounting" | "staff" | "settings" | "zra" | "documents" | "pos" | "printing_network" | "inventory" | "daily_ops" | "guest_portal" | "property_setup";
 const tabs: { id: Tab; label: string; icon: typeof Hotel }[] = [
   { id: "overview", label: "Overview", icon: Hotel },
-  { id: "rooms", label: propertyUnitLabel(hotel), icon: BedDouble },
+  { id: "rooms", label: "Rooms & units", icon: BedDouble },
   { id: "guests", label: "Guests", icon: Users },
   { id: "reservations", label: "Reservations", icon: CalendarDays },
   { id: "housekeeping", label: "Housekeeping", icon: ClipboardList },
@@ -255,7 +255,7 @@ export function App() {
         const chargesForDay = data.folio_items.filter((i) => i.service_date === businessDate);
         const roomRevenue = chargesForDay.filter((i) => i.item_type === "room_charge").reduce((s, i) => s + Number(i.amount || 0), 0);
         const otherRevenue = chargesForDay.filter((i) => i.item_type !== "room_charge" && i.item_type !== "discount").reduce((s, i) => s + Number(i.amount || 0), 0);
-        const receiptsForDay = data.payments.filter((p) => p.status === "posted" && dateInZambia(p.received_at) === businessDate);
+        const receiptsForDay = data.payments.filter((p) => p.status === "posted" && dateInPropertyTimeZone(p.received_at) === businessDate);
         const paymentsTotal = receiptsForDay.reduce((s, p) => s + Number(p.amount || 0), 0);
         const expectedCash = receiptsForDay.filter((p) => p.method === "cash").reduce((s, p) => s + Number(p.amount || 0), 0);
         const countedCash = Number(v.cash_counted || 0);
@@ -348,7 +348,7 @@ export function App() {
     const arrivals = data.reservations.filter((r) => r.check_in_date === today() && ["pending", "confirmed"].includes(r.status)).length;
     const departures = data.reservations.filter((r) => r.check_out_date === today() && r.status === "checked_in").length;
     const revenue = data.folio_items.filter((i) => i.service_date === today() && i.item_type !== "discount").reduce((s, i) => s + Number(i.amount || 0), 0);
-    const paid = data.payments.filter((p) => p.status === "posted" && dateInZambia(p.received_at) === today()).reduce((s, p) => s + Number(p.amount || 0), 0);
+    const paid = data.payments.filter((p) => p.status === "posted" && dateInPropertyTimeZone(p.received_at) === today()).reduce((s, p) => s + Number(p.amount || 0), 0);
     const outstanding = data.folios.filter((f) => f.status === "open").reduce((sum, f) => {
       const charges = data.folio_items.filter((i) => i.folio_id === f.id).reduce((s, i) => s + (i.item_type === "discount" ? -Math.abs(Number(i.amount || 0)) : Number(i.amount || 0)), 0);
       const payments = data.payments.filter((p) => p.folio_id === f.id && p.status === "posted").reduce((s, p) => s + Number(p.amount || 0) * (p.payment_type === "refund" ? -1 : 1), 0);
@@ -504,8 +504,8 @@ export function App() {
       const recent = [...data.reservations].sort((a,b)=>String(b.created_at??"").localeCompare(String(a.created_at??""))).slice(0,5);
       const roomRevenue = data.folio_items.filter((i)=>i.service_date===today()&&i.item_type==="room_charge").reduce((n,i)=>n+Number(i.amount||0),0);
       const restaurantSales = 0; // POS sales are shown in the POS workspace; not inferred from folio charges.
-      const maxRate = Math.max(1,...[6,5,4,3,2,1,0].map((offset)=>data.folio_items.filter((i)=>i.service_date===dateInZambia(new Date(Date.now()-offset*86400000))&&i.item_type!=="discount").reduce((n,i)=>n+Number(i.amount||0),0)));
-      const revenueDays = [6,5,4,3,2,1,0].map((offset)=>{const day=dateInZambia(new Date(Date.now()-offset*86400000));return {day,total:data.folio_items.filter((i)=>i.service_date===day&&i.item_type!=="discount").reduce((n,i)=>n+Number(i.amount||0),0)};});
+      const maxRate = Math.max(1,...[6,5,4,3,2,1,0].map((offset)=>data.folio_items.filter((i)=>i.service_date===dateInPropertyTimeZone(new Date(Date.now()-offset*86400000))&&i.item_type!=="discount").reduce((n,i)=>n+Number(i.amount||0),0)));
+      const revenueDays = [6,5,4,3,2,1,0].map((offset)=>{const day=dateInPropertyTimeZone(new Date(Date.now()-offset*86400000));return {day,total:data.folio_items.filter((i)=>i.service_date===day&&i.item_type!=="discount").reduce((n,i)=>n+Number(i.amount||0),0)};});
       content = <div className="manager-dashboard">
         <section className="manager-welcome"><div><div className="hero-kicker">HOTEL OPERATIONS · MANAGER VIEW</div><h2>Welcome back</h2><p>Here’s what is happening at {hotel.name} today. Review front desk activity and take action from one place.</p><div className="manager-date"><CalendarDays size={15}/>{today()} <span>·</span> {hotel.city || "Hotel workspace"} <span className="live-dot"/> Live property records</div></div><div className="manager-actions"><button className="primary" onClick={()=>{setTab("reservations");setForm({});}}> <Plus size={16}/> New reservation</button><button className="secondary" onClick={()=>{setTab("guests");setForm({});}}><Users size={16}/> Walk-in guest</button></div></section>
         <div className="manager-kpis">
