@@ -26,7 +26,8 @@ Deno.serve(async (req: Request) => {
       if (token.length < 30) return json({error:"Connector token required."},401,headers);
       const digest = await sha256(token);
       const {data:setting,error:findError} = await admin.from("hotel_zra_settings").select("*").filter("configuration->>connector_token_hash","eq",digest).maybeSingle();
-      if (findError || !setting || !setting.enabled) return json({error:"Connector is not paired or integration is disabled."},401,headers);
+      if (findError || !setting) return json({error:"Connector is not paired."},401,headers);
+      if (action !== "connector_heartbeat" && !setting.enabled) return json({error:"Smart Invoice processing is disabled for this hotel."},403,headers);
       if (action === "connector_heartbeat") {
         const {error} = await admin.from("hotel_zra_settings").update({connector_status:body.error?"error":"online",last_heartbeat_at:new Date().toISOString(),last_error_message:body.error?String(body.error).slice(0,500):null}).eq("hotel_id",setting.hotel_id);
         if (error) throw error;
