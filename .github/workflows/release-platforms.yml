@@ -31,6 +31,21 @@ jobs:
           node-version: 22
       - uses: dtolnay/rust-toolchain@stable
       - run: npm install
+      - name: Generate Windows app icon
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path src-tauri/icons | Out-Null
+          Add-Type -AssemblyName System.Drawing
+          $bmp = New-Object System.Drawing.Bitmap 256,256
+          $g = [System.Drawing.Graphics]::FromImage($bmp)
+          $g.Clear([System.Drawing.Color]::FromArgb(9,43,70))
+          $font = New-Object System.Drawing.Font("Arial", 116, [System.Drawing.FontStyle]::Bold, [System.Drawing.GraphicsUnit]::Pixel)
+          $brush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromArgb(237,187,81))
+          $g.DrawString("S", $font, $brush, 62, 48)
+          $icon = [System.Drawing.Icon]::FromHandle($bmp.GetHicon())
+          $stream = [System.IO.File]::Create("src-tauri/icons/icon.ico")
+          $icon.Save($stream); $stream.Close()
+          $g.Dispose(); $bmp.Dispose(); $font.Dispose(); $brush.Dispose()
       - name: Build native Windows installers
         run: npm run tauri:build
       - name: Package Windows ZRA connector agent
@@ -65,7 +80,7 @@ jobs:
           java-version: '21'
       - uses: android-actions/setup-android@v3
         with:
-          packages: "platform-tools,platforms;android-35,build-tools;35.0.0"
+          packages: |\n            platform-tools\n            platforms;android-35\n            build-tools;35.0.0
       - run: npm install
       - run: npm run build
       - name: Create Android project and sync web app
