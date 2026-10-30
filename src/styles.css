@@ -22,3 +22,43 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opac
 .actions a.small{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid #394354;border-radius:8px;padding:7px 10px;color:#e6edf7;background:#1a2130;font-size:11px;font-weight:700;white-space:nowrap}
 .actions a.small:hover{border-color:#d7b84b;color:#f5d56a}
 @media(max-width:620px){.panel-head{align-items:flex-start;flex-direction:column}.inline-select{max-width:100%;width:100%}.actions{flex-wrap:wrap}.table-scroll table{min-width:640px}}
+
+
+/* Reference-led visual refresh: clearer hierarchy, contrast, spacing and responsive readability */
+:root{--bg:#0b1120;--surface:#151d2d;--surface-2:#1d273b;--line:#344057;--muted:#b0bbce;--gold:#ffd23f;--gold-deep:#f29d24;--green:#20c997}
+body{background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px),radial-gradient(ellipse at 82% 0%,#493a2860,transparent 38%);background-size:48px 48px,48px 48px,auto;background-attachment:fixed}
+.sidebar{background:#0e1421;border-right:1px solid #30394c}
+.sidebar .brand strong{font-size:17px;letter-spacing:-.035em}
+.sidebar .brand small{font-size:11px;color:#aeb8ca}
+.sidebar nav .nav-item{font-size:12px;font-weight:650;letter-spacing:.005em;min-height:39px;border-radius:11px}
+.sidebar nav .nav-item.active{background:linear-gradient(100deg,#ffd23f24,#ffd23f08);border:1px solid #ffd23f48;color:#ffdc62;box-shadow:inset 3px 0 #ffd23f}
+main,.main-content,.content{color:#f7f8fc}
+.page-intro{border-color:#3b465d;background:linear-gradient(110deg,#1b2435f5,#151b2af2);box-shadow:0 12px 32px #0002}
+.page-intro-copy .hero-kicker{font-size:10px;font-weight:800;letter-spacing:.19em;color:#ffda57}
+.page-intro-copy h2{font-size:clamp(22px,2vw,29px);letter-spacing:-.045em;line-height:1.15}
+.page-intro-copy p{font-size:13px;color:#bdc7d8;line-height:1.65}
+.intro-status{background:#102b26;border-color:#285b4c;color:#6ce4b6}
+.panel{background:linear-gradient(145deg,#171f2f,#121927);border:1px solid #303b51;border-radius:17px;padding:18px;box-shadow:0 8px 24px #00000012}
+.panel>h2,.panel-head h2{font:800 15px Manrope,sans-serif;color:#f7f8fc;letter-spacing:-.02em}
+.panel>h2:before{height:18px;width:4px;background:linear-gradient(#ffdf64,#f1a72b)}
+.panel p,.panel label,.panel .muted{color:#b8c2d4}
+.metric{background:linear-gradient(145deg,#1d2739,#151c2b);border:1px solid #344057;border-radius:16px;padding:16px}
+.metric strong,.metric .value{font:800 clamp(20px,2vw,27px) Manrope,sans-serif;letter-spacing:-.035em;color:#fff}
+.metric small,.metric .label{font-size:11px;color:#bdc7d8;font-weight:650}
+button.primary,.primary{background:linear-gradient(110deg,#ffdc57,#f4b82d);color:#171819;border:1px solid #ffe17b;border-radius:10px;font-weight:800;box-shadow:0 5px 16px #f6c94520}
+button.primary:hover,.primary:hover{filter:brightness(1.06);transform:translateY(-1px)}
+button.secondary,.secondary,.small{border:1px solid #3b4860;background:#202a3d;color:#eaf0fa;border-radius:9px;font-weight:700}
+input,select,textarea{background:#101725!important;color:#f5f7fc!important;border:1px solid #39465d!important;border-radius:10px!important;min-height:39px}
+input::placeholder,textarea::placeholder{color:#7f8ba1}
+input:focus,select:focus,textarea:focus{outline:2px solid #ffd23f66!important;border-color:#ffd23f!important}
+.table-scroll{border:1px solid #303b51;border-radius:12px;overflow:auto;background:#111827}
+table{width:100%;border-collapse:separate;border-spacing:0}
+th{background:#202a3d!important;color:#bdc9dd!important;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:13px 12px}
+td{color:#e9eef7;border-bottom:1px solid #283348;padding:13px 12px;font-size:12px;line-height:1.5}
+tbody tr:hover td{background:#ffffff06}
+td strong{color:#fff;font-weight:750}
+a{color:#ffda57}
+.badge,.status-pill{font-weight:800;letter-spacing:.02em}
+hr{border:0;border-top:1px solid #303b51}
+@media(max-width:850px){body{background-size:36px 36px,36px 36px,auto}.panel{padding:15px}.metric{padding:13px}}
+@media(max-width:560px){.page-intro-copy h2{font-size:21px}.page-intro-copy p{font-size:12px}.panel{border-radius:14px;padding:13px}.metric strong,.metric .value{font-size:21px}td{padding:11px 9px;font-size:11px}}
