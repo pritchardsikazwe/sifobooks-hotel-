@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
+import { GuestPortal } from "./GuestPortal";
 import "./styles.css";
 
 if ("serviceWorker" in navigator && import.meta.env.PROD) {
@@ -11,6 +12,6 @@ if ("serviceWorker" in navigator && import.meta.env.PROD) {
 
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+    {new URLSearchParams(window.location.search).has("guest") ? <GuestPortal /> : <App />}
   </React.StrictMode>,
 );
