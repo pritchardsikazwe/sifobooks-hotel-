@@ -49,6 +49,13 @@ export function App() {
     return () => listener.subscription.unsubscribe();
   }, []);
 
+  const loadStaff = useCallback(async () => {
+    if (!hotel?.id) return;
+    const { data: rows, error } = await requireSupabase().rpc("list_hotel_members", { p_hotel_id: hotel.id });
+    if (error) { setStaff([]); if (tab === "staff") setError(error.message); return; }
+    setStaff(Array.isArray(rows) ? rows : []);
+  }, [hotel?.id, tab]);
+
   const loadHotel = useCallback(async () => {
     if (!session?.user?.id) { setHotel(null); return; }
     const client = requireSupabase();
@@ -76,6 +83,7 @@ export function App() {
 
   useEffect(() => { if (session) loadHotel().catch((e) => setError(errorMessage(e))); }, [session, loadHotel]);
   useEffect(() => { if (hotel?.id) refresh(); }, [hotel?.id, refresh]);
+  useEffect(() => { if (hotel?.id) loadStaff(); }, [hotel?.id, loadStaff]);
 
   const submitAuth = async (event: FormEvent) => {
     event.preventDefault(); setError(""); setNotice(""); setBusy(true);
@@ -100,12 +108,9 @@ export function App() {
       const client = requireSupabase();
       const user = (await client.auth.getUser()).data.user;
       if (!user) throw new Error("Please sign in again.");
-      const { data: created, error: createError } = await client.from("hotels").insert({
-        owner_user_id: user.id, name: hotelName.trim(), country: "Zambia", currency_code: "ZMW", timezone: "Africa/Lusaka",
-      }).select("*").single();
+      const { data: created, error: createError } = await client.rpc("create_hotel_for_current_user", { p_name: hotelName.trim() });
       if (createError) throw createError;
-      // A database trigger creates the owner's membership in the same transaction.
-      setHotel(created); setNotice("Hotel workspace created.");
+      setHotel(created as Row); setNotice("Hotel workspace created.");
     } catch (e) { setError(errorMessage(e)); }
     finally { setBusy(false); }
   };
