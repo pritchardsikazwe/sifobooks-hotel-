@@ -1,14 +1,21 @@
-const CACHE = "sifobooks-hotel-shell-v3";
-const SHELL = ["/", "/manifest.webmanifest", "/icons/hotel-192.svg", "/icons/hotel-512.svg"];
+const CACHE = "sifohotel-shell-v4";
+const SHELL = ["/", "/manifest.webmanifest", "/icons/sifohotel-icon.svg"];
 
 self.addEventListener("install", event => {
-  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting()));
+  event.waitUntil(
+    caches.open(CACHE)
+      .then(cache => cache.addAll(SHELL))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(key => key.startsWith("sifobooks-hotel-shell-") && key !== CACHE).map(key => caches.delete(key))))
+      .then(keys => Promise.all(
+        keys.filter(key => key.startsWith("sifobooks-hotel-shell-") || (key.startsWith("sifohotel-shell-") && key !== CACHE))
+          .map(key => caches.delete(key))
+      ))
       .then(() => self.clients.claim())
   );
 });
@@ -22,7 +29,10 @@ self.addEventListener("fetch", event => {
   if (request.mode === "navigate") {
     event.respondWith(
       fetch(request).then(response => {
-        if (response.ok) caches.open(CACHE).then(cache => cache.put("/", response.clone()));
+        if (response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE).then(cache => cache.put("/", copy)).catch(() => {});
+        }
         return response;
       }).catch(async () => (await caches.match(request)) || (await caches.match("/")) || Response.error())
     );
@@ -32,7 +42,10 @@ self.addEventListener("fetch", event => {
   if (url.pathname.startsWith("/assets/")) {
     event.respondWith(
       fetch(request).then(response => {
-        if (response.ok) caches.open(CACHE).then(cache => cache.put(request, response.clone()));
+        if (response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE).then(cache => cache.put(request, copy)).catch(() => {});
+        }
         return response;
       }).catch(async () => (await caches.match(request)) || Response.error())
     );
@@ -42,7 +55,10 @@ self.addEventListener("fetch", event => {
   if (SHELL.includes(url.pathname)) {
     event.respondWith(
       fetch(request).then(response => {
-        if (response.ok) caches.open(CACHE).then(cache => cache.put(request, response.clone()));
+        if (response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE).then(cache => cache.put(request, copy)).catch(() => {});
+        }
         return response;
       }).catch(async () => (await caches.match(request)) || Response.error())
     );
