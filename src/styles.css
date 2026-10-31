@@ -1194,3 +1194,15 @@ footer{border-top:1px solid #e0e7ef!important;padding:16px 0!important;margin-to
 .front-desk-booking-actions{grid-column:1/-1}
 .front-desk-booking-actions .actions{display:flex;flex-wrap:wrap;gap:6px}
 @media(max-width:980px){.front-desk-action-grid{grid-template-columns:1fr}.front-desk-action-column>p{min-height:0}.front-desk-booking{grid-template-columns:minmax(0,1fr) auto}}
+
+
+/* Guest folio billing overview */
+.folio-summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 18px}
+.folio-summary-grid article{display:flex;flex-direction:column;gap:7px;padding:17px;border:1px solid #e1e7ef;border-radius:14px;background:#fff;box-shadow:0 3px 12px rgba(28,45,72,.04);min-width:0}
+.folio-summary-grid article span{font-size:12px;font-weight:700;color:#66758a}
+.folio-summary-grid article strong{font-size:clamp(18px,2vw,25px);line-height:1.2;color:#20324a;overflow-wrap:anywhere}
+.folio-summary-grid article small{font-size:11px;color:#7b8798}
+.folio-register-panel .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.folio-register-panel .panel-head p{margin:5px 0 0;color:#68778b;font-size:12px}
+@media(max-width:900px){.folio-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.folio-summary-grid{gap:8px}.folio-summary-grid article{padding:12px}.folio-register-panel .panel-head{align-items:flex-start;flex-direction:column}}
