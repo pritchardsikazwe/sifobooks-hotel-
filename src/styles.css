@@ -1069,3 +1069,51 @@ footer{border-top:1px solid #e0e7ef!important;padding:16px 0!important;margin-to
 @media(min-width:901px){
  .app-bottom-nav{display:none!important}
 }
+
+
+/* GraceSoft-style reservation planner and guest/housekeeping workspaces */
+.reservation-workspace{display:flex!important;flex-direction:column!important;gap:17px!important;min-width:0!important}
+.reservation-page-heading{display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:16px!important;flex-wrap:wrap!important;padding:18px 20px!important;background:#eaf2f9!important;border:1px solid #d7e2ed!important;border-radius:9px!important}
+.reservation-page-heading h2{display:flex!important;align-items:center!important;gap:9px!important;color:#174568!important;font-size:22px!important;margin:5px 0!important}
+.reservation-page-heading h2 svg{color:#3974bb!important}
+.reservation-page-heading p{color:#657a8e!important;margin:4px 0 0!important;font-size:12px!important}
+.reservation-page-heading .actions{display:flex!important;gap:8px!important;flex-wrap:wrap!important}
+.reservation-metrics{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:11px!important}
+.reservation-metrics article{display:flex!important;align-items:flex-start!important;gap:11px!important;min-width:0!important;padding:15px!important;background:#fff!important;border:1px solid #dce4ed!important;border-radius:8px!important;box-shadow:0 1px 3px #193b5a0a!important}
+.reservation-metrics article>div{min-width:0!important;display:flex!important;flex-direction:column!important;gap:4px!important}
+.reservation-metrics small{color:#64778b!important;font-size:11px!important}
+.reservation-metrics strong{font-size:24px!important;line-height:1.15!important;color:#174568!important}
+.reservation-metrics em{font-style:normal!important;font-size:10px!important;color:#8291a2!important}
+.reservation-metric-icon{width:35px!important;height:35px!important;display:grid!important;place-items:center!important;flex:0 0 35px!important;border-radius:8px!important;background:#e8f2fd!important;color:#2e72b9!important}
+.reservation-metric-icon.gold,.reservation-metric-icon.violet,.reservation-metric-icon.coral,.reservation-metric-icon.green,.reservation-metric-icon.blue{background:#e8f2fd!important;color:#2e72b9!important}
+.reservation-planner{min-width:0!important;overflow:hidden!important}
+.reservation-planner .panel-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;flex-wrap:wrap!important}
+.reservation-planner .calendar-controls{display:flex!important;align-items:center!important;gap:7px!important;flex-wrap:wrap!important}
+.reservation-planner .calendar-controls strong{min-width:135px!important;text-align:center!important;color:#315674!important;font-size:13px!important}
+.reservation-calendar-grid{display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;gap:5px!important}
+.reservation-calendar-grid .calendar-weekday{padding:9px 4px!important;text-align:center!important;background:#f2f6fa!important;border:1px solid #e0e7ef!important;border-radius:5px!important;color:#597086!important;font-size:11px!important;font-weight:800!important}
+.reservation-calendar-grid .calendar-day{min-width:0!important;min-height:78px!important;padding:7px!important;background:#fff!important;border:1px solid #dce4ed!important;border-radius:6px!important;overflow:hidden!important}
+.reservation-calendar-grid .calendar-day.outside{background:#f7f9fb!important;border-color:#edf0f4!important}
+.reservation-calendar-grid .calendar-day .day-number{color:#3d5872!important;font-size:11px!important;font-weight:800!important}
+.reservation-calendar-grid .calendar-day.selected{border:2px solid #3974bb!important;background:#f0f7ff!important}
+.reservation-calendar-grid .calendar-day.today{box-shadow:inset 0 2px #3974bb!important}
+.reservation-calendar-grid .calendar-day .calendar-booking,.reservation-calendar-grid .calendar-day .booking-chip{display:block!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;margin-top:4px!important;padding:3px 5px!important;background:#e5f1ff!important;color:#205f9d!important;border-radius:4px!important;font-size:10px!important}
+.reservation-calendar-grid .calendar-day .calendar-booking.confirmed,.reservation-calendar-grid .calendar-day .booking-chip.confirmed{background:#e4f5e9!important;color:#16743b!important}
+.reservation-calendar-grid .calendar-day .calendar-booking.pending,.reservation-calendar-grid .calendar-day .booking-chip.pending{background:#fff3d6!important;color:#875c00!important}
+.reservation-timeline,.room-timeline{overflow:auto!important;border:1px solid #dce4ed!important;border-radius:7px!important;background:#fff!important}
+.reservation-timeline table,.room-timeline table{min-width:900px!important}
+.reservation-timeline th:first-child,.reservation-timeline td:first-child,.room-timeline th:first-child,.room-timeline td:first-child{position:sticky!important;left:0!important;z-index:2!important;background:#f7f9fb!important}
+.reservation-timeline th:first-child,.room-timeline th:first-child{z-index:3!important}
+@media(max-width:1050px){.reservation-metrics{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:650px){
+ .reservation-page-heading{padding:14px!important}
+ .reservation-page-heading h2{font-size:19px!important}
+ .reservation-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .reservation-metrics article{padding:11px!important;gap:8px!important}
+ .reservation-metrics strong{font-size:21px!important}
+ .reservation-metric-icon{width:30px!important;height:30px!important;flex-basis:30px!important}
+ .reservation-calendar-grid{gap:3px!important}
+ .reservation-calendar-grid .calendar-day{min-height:58px!important;padding:4px!important}
+ .reservation-calendar-grid .calendar-weekday{font-size:10px!important;padding:7px 1px!important}
+ .reservation-calendar-grid .calendar-day .calendar-booking,.reservation-calendar-grid .calendar-day .booking-chip{font-size:9px!important;padding:2px 3px!important}
+}
