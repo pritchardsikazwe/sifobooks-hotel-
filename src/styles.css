@@ -1206,3 +1206,17 @@ footer{border-top:1px solid #e0e7ef!important;padding:16px 0!important;margin-to
 .folio-register-panel .panel-head p{margin:5px 0 0;color:#68778b;font-size:12px}
 @media(max-width:900px){.folio-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){.folio-summary-grid{gap:8px}.folio-summary-grid article{padding:12px}.folio-register-panel .panel-head{align-items:flex-start;flex-direction:column}}
+
+
+/* Payment reconciliation */
+.reconciliation-panel .panel-head,.reconciliation-panel .panel-head>div{min-width:0}
+.reconciliation-panel .panel-head{display:flex;justify-content:space-between;align-items:center;gap:14px}
+.reconciliation-panel .panel-head p{margin:5px 0 0;color:#68778b;font-size:12px}
+.reconciliation-methods{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+.reconciliation-method{display:flex;flex-direction:column;gap:7px;border:1px solid #e3e9f1;background:#f8fafc;border-radius:12px;padding:14px;min-width:0}
+.reconciliation-method span{text-transform:capitalize;color:#66758a;font-size:12px;font-weight:700;overflow-wrap:anywhere}
+.reconciliation-method strong{font-size:19px;color:#20324a;overflow-wrap:anywhere}
+.reconciliation-method small{font-size:11px;color:#7b8798}
+.reconciliation-table h3{font-size:15px;margin:18px 0 8px;color:#24364d}
+.reconciliation-note{font-size:12px;margin-top:12px}
+@media(max-width:560px){.reconciliation-panel .panel-head{align-items:flex-start;flex-direction:column}.reconciliation-methods{grid-template-columns:repeat(2,minmax(0,1fr))}}
