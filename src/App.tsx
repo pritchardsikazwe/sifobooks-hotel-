@@ -36,7 +36,6 @@ const tabs: { id: Tab; label: string; icon: typeof Hotel }[] = [
   { id: "folios", label: "Folios & payments", icon: Wallet },
   { id: "maintenance", label: "Maintenance", icon: Wrench },
   { id: "night_audit", label: "Night audit", icon: Moon },
-  { id: "reports", label: "Reports", icon: FileBarChart },
   { id: "compliance", label: "Compliance & Licences", icon: CheckCircle2 },
   { id: "accounting", label: "Accounting & posting", icon: BookOpen },
   { id: "staff", label: "Staff & access", icon: UserCog },
@@ -45,7 +44,6 @@ const tabs: { id: Tab; label: string; icon: typeof Hotel }[] = [
   { id: "printing_network", label: "Printing & network", icon: Wifi },
   { id: "zra", label: "ZRA Smart Invoice", icon: Printer },
   { id: "documents", label: "Document designs", icon: FileBarChart },
-  { id: "pos", label: "POS · Bar & Restaurant", icon: Utensils },
   { id: "inventory", label: "Inventory & Purchasing", icon: Boxes },
 ];
 let activeTimeZone = "UTC";
