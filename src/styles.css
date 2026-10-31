@@ -996,3 +996,76 @@ footer{color:#6b7c8f!important}
  table th{background:#eef2f6!important;color:#111!important}
  table td{color:#111!important}
 }
+
+
+/* Real SifoBooks Hotel component selectors — GraceSoft reference alignment */
+.app-shell{min-height:100vh;background:#f4f7fb!important;color:#243b53!important}
+.app-header{background:#eaf2f9!important;border-bottom:1px solid #d7e2ed!important;box-shadow:0 1px 3px #1836530d!important}
+.app-brand-row{min-height:66px!important;padding:12px 20px!important}
+.brand-mark{background:#3974bb!important;color:#fff!important;border-radius:9px!important}
+.brand strong{color:#174568!important;font-size:19px!important}
+.brand small{color:#637a90!important}
+.app-header-right .property-chip,.app-header-right .user-chip{background:#fff!important;color:#245174!important;border:1px solid #d4e0eb!important;border-radius:18px!important}
+.top-menu{background:#3974bb!important;border-top:1px solid #2c68a8!important;gap:4px!important;padding:7px 12px!important}
+.top-menu-item{color:#f4f8ff!important;background:transparent!important;border:1px solid transparent!important;border-radius:6px!important;padding:9px 11px!important}
+.top-menu-item:hover{background:#2e66a6!important;color:#fff!important}
+.top-menu-item.active{background:#fff!important;color:#1d5c9b!important;border-color:#d9e6f3!important;box-shadow:0 1px 2px #12385c22!important}
+.mobile-menu-toggle{background:#3974bb!important;color:#fff!important;border-radius:7px!important}
+.main{max-width:none!important;background:#f4f7fb!important;padding:22px 24px 88px!important}
+.topbar{background:transparent!important;border:0!important;padding:0 0 16px!important}
+.topbar .eyebrow{color:#3278bd!important;font-weight:800!important;letter-spacing:.09em!important}
+.topbar h1{font-size:25px!important;color:#174568!important;font-weight:750!important}
+.topbar p{color:#667b90!important}
+.page-intro{margin:8px 0 18px!important}
+.page-highlights{gap:12px!important;margin-bottom:18px!important}
+.page-highlight{background:#fff!important;border:1px solid #dce4ed!important;border-radius:8px!important;box-shadow:0 1px 3px #1836530a!important;padding:15px 17px!important}
+.page-highlight span,.page-highlight small{color:#667b90!important}
+.page-highlight strong{color:#174568!important;font-size:23px!important}
+.content-grid,.workspace-grid{gap:16px!important}
+.panel-head{padding-bottom:12px!important;border-bottom:1px solid #e2e8f0!important;margin-bottom:14px!important}
+.panel-head h2,.panel h2{font-size:16px!important;font-weight:750!important}
+.panel-head p{font-size:12px!important}
+.panel-actions{gap:8px!important}
+.table-scroll{overflow:auto!important;max-width:100%!important}
+.table-scroll table{min-width:680px!important;width:100%!important;border-collapse:separate!important;border-spacing:0!important}
+.table-scroll th{position:sticky!important;top:0!important;z-index:1!important;white-space:nowrap!important}
+.table-scroll td{vertical-align:middle!important}
+.table-scroll td:first-child,.table-scroll th:first-child{padding-left:15px!important}
+.form-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px 16px!important}
+.form-grid label,.fields-grid label{display:flex!important;flex-direction:column!important;gap:6px!important;font-size:12px!important;font-weight:700!important;color:#425b73!important}
+.form-grid input,.form-grid select,.form-grid textarea,.fields-grid input,.fields-grid select,.fields-grid textarea{width:100%!important;min-width:0!important;min-height:40px!important;padding:9px 11px!important}
+.form-grid textarea,.fields-grid textarea{min-height:96px!important;resize:vertical!important}
+.form-actions,.actions-row,.panel-actions{display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:8px!important}
+.form-actions{padding-top:14px!important;margin-top:16px!important;border-top:1px solid #e3eaf1!important}
+button{transition:background-color .12s ease,border-color .12s ease,box-shadow .12s ease!important}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0878f9!important;outline-offset:2px!important}
+.app-bottom-nav{z-index:30!important}
+footer{border-top:1px solid #e0e7ef!important;padding:16px 0!important;margin-top:24px!important;font-size:11px!important}
+@media(max-width:900px){
+ .app-brand-row{padding:10px 14px!important}
+ .top-menu{display:none!important}
+ .top-menu.mobile-menu-open{display:flex!important;flex-wrap:wrap!important}
+ .main{padding:16px 14px 90px!important}
+ .page-highlights{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:600px){
+ .app-header-right .user-chip{display:none!important}
+ .app-brand-row{min-height:58px!important}
+ .brand strong{font-size:17px!important}
+ .topbar{align-items:flex-start!important;gap:10px!important}
+ .topbar h1{font-size:21px!important}
+ .topbar p{font-size:12px!important}
+ .page-intro{padding:14px!important}
+ .page-intro .intro-status{display:none!important}
+ .page-highlights{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .page-highlight{padding:12px!important}
+ .page-highlight strong{font-size:20px!important}
+ .form-grid{grid-template-columns:minmax(0,1fr)!important}
+ .panel{padding:14px!important}
+ .table-scroll table{min-width:720px!important}
+ .app-bottom-nav{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important}
+ .app-bottom-nav-item{min-width:0!important;padding:8px 2px!important;font-size:10px!important}
+}
+@media(min-width:901px){
+ .app-bottom-nav{display:none!important}
+}
