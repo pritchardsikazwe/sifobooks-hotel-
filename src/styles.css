@@ -1176,3 +1176,21 @@ footer{border-top:1px solid #e0e7ef!important;padding:16px 0!important;margin-to
 .reservation-quick-filters button{border:1px solid var(--border,#dce3eb);background:#fff;color:var(--text,#263449);border-radius:999px;padding:8px 13px;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s ease,border-color .15s ease,color .15s ease}
 .reservation-quick-filters button:hover,.reservation-quick-filters button.active{background:#eaf2ff;border-color:#8bb5f4;color:#174b91}
 @media(max-width:640px){.reservation-quick-filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.reservation-quick-filters button{width:100%;padding:9px 8px}}
+
+
+/* Front desk guest movement action board */
+.front-desk-action-panel{margin-bottom:18px}
+.front-desk-action-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.front-desk-action-column{min-width:0;border:1px solid var(--border,#e1e7ef);border-radius:14px;padding:14px;background:#fbfcfe}
+.front-desk-column-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.front-desk-column-head h3{font-size:15px;margin:0;color:var(--text,#243247)}
+.front-desk-column-head>span{display:inline-flex;min-width:26px;height:26px;align-items:center;justify-content:center;border-radius:999px;background:#eaf2ff;color:#174b91;font-size:12px;font-weight:800}
+.front-desk-action-column>p{font-size:12px;line-height:1.45;color:var(--muted,#68778b);min-height:34px;margin:8px 0 12px}
+.front-desk-empty{padding:16px 10px;border:1px dashed #d6deea;border-radius:10px;color:var(--muted,#68778b);font-size:12px;text-align:center;background:#fff}
+.front-desk-booking{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;align-items:start;padding:12px 0;border-top:1px solid #e7ecf3}
+.front-desk-booking-main{display:flex;flex-direction:column;gap:3px;min-width:0}
+.front-desk-booking-main strong{font-size:13px;overflow-wrap:anywhere}
+.front-desk-booking-main span,.front-desk-booking-main small{font-size:11px;color:var(--muted,#68778b);overflow-wrap:anywhere}
+.front-desk-booking-actions{grid-column:1/-1}
+.front-desk-booking-actions .actions{display:flex;flex-wrap:wrap;gap:6px}
+@media(max-width:980px){.front-desk-action-grid{grid-template-columns:1fr}.front-desk-action-column>p{min-height:0}.front-desk-booking{grid-template-columns:minmax(0,1fr) auto}}
