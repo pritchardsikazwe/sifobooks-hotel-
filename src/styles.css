@@ -1117,3 +1117,39 @@ footer{border-top:1px solid #e0e7ef!important;padding:16px 0!important;margin-to
  .reservation-calendar-grid .calendar-weekday{font-size:10px!important;padding:7px 1px!important}
  .reservation-calendar-grid .calendar-day .calendar-booking,.reservation-calendar-grid .calendar-day .booking-chip{font-size:9px!important;padding:2px 3px!important}
 }
+
+
+/* GraceSoft-inspired housekeeping room readiness summary */
+.housekeeping-room-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 16px 0 20px;
+}
+.housekeeping-room-summary .metric-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 16px 18px;
+  border: 1px solid #dfe6ee;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 7px rgba(16, 42, 67, .04);
+}
+.housekeeping-room-summary .metric-card span {
+  color: #65768a;
+  font-size: 12px;
+  font-weight: 650;
+}
+.housekeeping-room-summary .metric-card strong {
+  color: #123552;
+  font-size: 27px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 720px) {
+  .housekeeping-room-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .housekeeping-room-summary .metric-card { padding: 13px; }
+  .housekeeping-room-summary .metric-card strong { font-size: 23px; }
+}
