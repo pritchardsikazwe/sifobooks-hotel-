@@ -1220,3 +1220,14 @@ footer{border-top:1px solid #e0e7ef!important;padding:16px 0!important;margin-to
 .reconciliation-table h3{font-size:15px;margin:18px 0 8px;color:#24364d}
 .reconciliation-note{font-size:12px;margin-top:12px}
 @media(max-width:560px){.reconciliation-panel .panel-head{align-items:flex-start;flex-direction:column}.reconciliation-methods{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+
+/* Daily hotel financial overview */
+.report-financial-overview{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 16px}
+.report-financial-overview article{min-width:0;display:flex;flex-direction:column;gap:7px;background:#fff;border:1px solid #e0e8e3;border-radius:13px;padding:14px;box-shadow:0 3px 12px rgba(24,52,39,.04)}
+.report-financial-overview article span{font-size:12px;font-weight:700;color:#627468}
+.report-financial-overview article strong{font-size:clamp(16px,1.8vw,22px);color:#126447;overflow-wrap:anywhere}
+.report-financial-overview article small{font-size:11px;line-height:1.4;color:#7b8980}
+@media(max-width:1000px){.report-financial-overview{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:620px){.report-financial-overview{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.report-financial-overview article{padding:11px}}
+@media(max-width:360px){.report-financial-overview{grid-template-columns:1fr}}
