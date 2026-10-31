@@ -199,7 +199,7 @@ export function App() {
     const client = requireSupabase();
     // Read the live form controls as well as React state. Date inputs with defaultValue
     // can display a value without updating state until the user changes the field.
-    const submittedValues = Object.fromEntries(new FormData(event.currentTarget).entries());
+    const submittedValues = Object.fromEntries(new FormData(event.currentTarget as HTMLFormElement).entries()) as Record<string, any>;
     const v = { ...form, ...submittedValues };
     try {
       if (tab === "rooms" && v.kind === "room_type") {
