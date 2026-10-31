@@ -598,7 +598,7 @@ export function App() {
       const repeatCount = (g: Row) => guestReservations(g).length;
       const searchedGuests = data.guests.filter(g => [guestName(g),g.email,g.phone,g.id_document_number,g.nationality,g.company_name].some(v => String(v || "").toLowerCase().includes(guestSearch.toLowerCase().trim())));
       const filteredGuests = searchedGuests.filter(g => guestView === "in_house" ? isInHouse(g) : guestView === "arrivals" ? isArrival(g) : guestView === "departures" ? isDeparture(g) : guestView === "repeat" ? repeatCount(g) > 1 : true);
-      const selectedGuest = data.guests.find(g => g.id === selectedGuestId) || filteredGuests[0] || data.guests[0] || null;
+      const selectedGuest = filteredGuests.find(g => g.id === selectedGuestId) || filteredGuests[0] || null;
       const selectedReservations = selectedGuest ? guestReservations(selectedGuest).sort((a,b) => String(b.check_in_date || "").localeCompare(String(a.check_in_date || ""))) : [];
       const currentStay = selectedGuest ? selectedReservations.find(r => ["checked_in","in_house"].includes(String(r.status || "").toLowerCase()) || (r.check_in_date <= guestToday && r.check_out_date > guestToday)) : null;
       const guestCard = (label: string, value: number, hint: string, icon: ReactNode, tone: string) => <div className="guest-metric"><span className={`guest-metric-icon ${tone}`}>{icon}</span><div><small>{label}</small><strong>{value}</strong><span>{hint}</span></div></div>;
