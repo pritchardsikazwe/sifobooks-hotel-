@@ -21,12 +21,14 @@ type Row = Record<string, any>;
 type Tab = "overview" | "rooms" | "guests" | "reservations" | "housekeeping" | "folios" | "maintenance" | "night_audit" | "reports" | "accounting" | "staff" | "settings" | "zra" | "documents" | "pos" | "printing_network" | "inventory" | "daily_ops" | "guest_portal" | "property_setup" | "cash_declaration" | "compliance" | "admin_settings" | "invoicing" | "events_conference";
 const tabs: { id: Tab; label: string; icon: typeof Hotel }[] = [
   { id: "overview", label: "Overview", icon: Hotel },
+  { id: "reports", label: "Daily Report", icon: FileBarChart },
+  { id: "rooms", label: "Rooms & units", icon: BedDouble },
+  { id: "reservations", label: "Reservations", icon: CalendarDays },
+  { id: "pos", label: "POS · Bar & Restaurant", icon: Utensils },
   { id: "admin_settings", label: "Admin Settings", icon: UserCog },
   { id: "invoicing", label: "Invoicing", icon: FileBarChart },
   { id: "events_conference", label: "Events & Conferences", icon: CalendarDays },
-  { id: "rooms", label: "Rooms & units", icon: BedDouble },
   { id: "guests", label: "Guests", icon: Users },
-  { id: "reservations", label: "Reservations", icon: CalendarDays },
   { id: "housekeeping", label: "Housekeeping", icon: ClipboardList },
   { id: "daily_ops", label: "Daily Operations", icon: CheckCircle2 },
   { id: "cash_declaration", label: "Cash Declaration", icon: Wallet },
