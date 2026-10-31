@@ -1153,3 +1153,19 @@ footer{border-top:1px solid #e0e7ef!important;padding:16px 0!important;margin-to
   .housekeeping-room-summary .metric-card { padding: 13px; }
   .housekeeping-room-summary .metric-card strong { font-size: 23px; }
 }
+
+
+/* Room board quick filters */
+.room-quick-filters { display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
+.room-quick-filters button {
+  border:1px solid #d9e2eb; border-radius:999px; padding:8px 12px;
+  background:#fff; color:#42566b; font:inherit; font-size:12px; font-weight:700;
+  cursor:pointer; transition:background .15s,border-color .15s,color .15s;
+}
+.room-quick-filters button:hover { border-color:#8eb5d5; color:#174a70; }
+.room-quick-filters button.active { background:#e8f2fb; border-color:#3b7fb2; color:#174a70; }
+@media(max-width:760px) {
+  .rooms-toolbar { align-items:stretch; }
+  .room-quick-filters { order:3; width:100%; }
+  .room-quick-filters button { flex:1 1 auto; }
+}
