@@ -1,4 +1,4 @@
-const CACHE = "sifohotel-shell-v5";
+const CACHE = "sifohotel-shell-v6";
 const SHELL = ["/manifest.webmanifest", "/icons/sifohotel-icon.svg"];
 
 // Keep the application HTML and hashed JavaScript/CSS network-only.
@@ -16,7 +16,7 @@ self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys()
       .then(keys => Promise.all(
-        keys.filter(key => key.startsWith("sifobooks-hotel-shell-") || key.startsWith("sifohotel-shell-"))
+        keys.filter(key => key !== CACHE && (key.startsWith("sifobooks-hotel-shell-") || key.startsWith("sifohotel-shell-")) )
           .map(key => caches.delete(key))
       ))
       .then(() => self.clients.claim())
