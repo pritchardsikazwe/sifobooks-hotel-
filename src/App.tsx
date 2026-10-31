@@ -197,7 +197,10 @@ export function App() {
     event.preventDefault(); if (!hotel) return;
     setError(""); setNotice(""); setSaving(true);
     const client = requireSupabase();
-    const v = form;
+    // Read the live form controls as well as React state. Date inputs with defaultValue
+    // can display a value without updating state until the user changes the field.
+    const submittedValues = Object.fromEntries(new FormData(event.currentTarget).entries());
+    const v = { ...form, ...submittedValues };
     try {
       if (tab === "rooms" && v.kind === "room_type") {
         const { error } = await client.from("room_types").insert({ hotel_id: hotel.id, name: v.type_name, code: v.type_code.toUpperCase(), max_occupancy: Number(v.max_occupancy || 2), base_rate: Number(v.base_rate || 0), description: v.description || null });
@@ -500,7 +503,7 @@ export function App() {
   const folioBalance = (folio: Row) => data.folio_items.filter((i) => i.folio_id === folio.id).reduce((s, i) => s + (i.item_type === "discount" ? -Math.abs(Number(i.amount || 0)) : Number(i.amount || 0)), 0) - data.payments.filter((p) => p.folio_id === folio.id && p.status === "posted").reduce((s, p) => s + Number(p.amount || 0) * (p.payment_type === "refund" ? -1 : 1), 0);
   const field = (name: string, label: string, type = "text", required = true, extra: Record<string, any> = {}) => <label key={name}>{label}<input type={type} required={required} value={form[name] ?? extra.defaultValue ?? ""} onChange={(e) => setForm((s) => ({ ...s, [name]: e.target.value }))} {...Object.fromEntries(Object.entries(extra).filter(([k]) => k !== "defaultValue"))} /></label>;
   const select = (name: string, label: string, options: { value: string; label: string }[], required = true) => <label key={name}>{label}<select required={required} value={form[name] ?? ""} onChange={(e) => setForm((s) => ({ ...s, [name]: e.target.value }))}><option value="">Select…</option>{options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select></label>;
-  const submitButton = (label: string) => <button className="primary" disabled={saving}><Plus size={16} />{saving ? "Saving…" : label}</button>;
+  const submitButton = (label: string) => <button type="submit" className="primary" disabled={saving} aria-busy={saving}><Plus size={16} />{saving ? "Saving…" : label}</button>;
   const submitForm = (children: ReactNode) => <form className="form-grid" onSubmit={save}>{children}</form>;
   const table = (headers: string[], rows: (string | ReactNode)[][]) => {
     const textOf = (node: ReactNode): string => {
