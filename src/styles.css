@@ -1169,3 +1169,10 @@ footer{border-top:1px solid #e0e7ef!important;padding:16px 0!important;margin-to
   .room-quick-filters { order:3; width:100%; }
   .room-quick-filters button { flex:1 1 auto; }
 }
+
+
+/* Reservation register quick filters */
+.reservation-quick-filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.reservation-quick-filters button{border:1px solid var(--border,#dce3eb);background:#fff;color:var(--text,#263449);border-radius:999px;padding:8px 13px;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s ease,border-color .15s ease,color .15s ease}
+.reservation-quick-filters button:hover,.reservation-quick-filters button.active{background:#eaf2ff;border-color:#8bb5f4;color:#174b91}
+@media(max-width:640px){.reservation-quick-filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.reservation-quick-filters button{width:100%;padding:9px 8px}}
