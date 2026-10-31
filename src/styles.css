@@ -1231,3 +1231,147 @@ footer{border-top:1px solid #e0e7ef!important;padding:16px 0!important;margin-to
 @media(max-width:1000px){.report-financial-overview{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:620px){.report-financial-overview{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.report-financial-overview article{padding:11px}}
 @media(max-width:360px){.report-financial-overview{grid-template-columns:1fr}}
+
+
+/* SifoBooks Hotel — unified system-wide interface refresh (development branch) */
+:root{
+  --hotel-navy:#123b5d;
+  --hotel-blue:#1f5d8f;
+  --hotel-blue-hover:#174a73;
+  --hotel-blue-soft:#eaf3fb;
+  --hotel-workspace:#f4f7fb;
+  --hotel-card:#ffffff;
+  --hotel-border:#dbe4ee;
+  --hotel-text:#20354a;
+  --hotel-muted:#64788d;
+  --hotel-focus:#f0b429;
+}
+html,body{background:var(--hotel-workspace);color:var(--hotel-text)}
+body{background:var(--hotel-workspace)}
+.app-shell{background:var(--hotel-workspace);color:var(--hotel-text)}
+.sidebar{background:linear-gradient(180deg,#123b5d 0%,#0f304d 100%);border-right:1px solid #0c2b45;color:#f7fbff;box-shadow:3px 0 18px rgba(20,48,74,.08)}
+.sidebar .brand-mark{background:#f0b429;color:#153b5b;box-shadow:none}
+.sidebar .brand strong,.sidebar .property-name{color:#fff}
+.sidebar .brand small,.sidebar .property-label,.sidebar-bottom>span{color:#c2d5e5}
+.sidebar-bottom{border-top-color:#ffffff2a}
+.nav-item{color:#d5e4f0;border-radius:10px;border-color:transparent;min-height:42px}
+.nav-item:hover{background:#ffffff16;color:#fff}
+.nav-item.active{background:#ffffff;color:#123b5d;border-color:#d5e7f5;box-shadow:inset 4px 0 #f0b429;font-weight:800}
+.main{background:var(--hotel-workspace);color:var(--hotel-text)}
+.topbar{border-bottom:1px solid var(--hotel-border)}
+.topbar h1,.panel h2{color:var(--hotel-text)}
+.topbar p,.muted{color:var(--hotel-muted)}
+.eyebrow{color:var(--hotel-blue)}
+.panel,.metric,.dashboard-hero,.auth-card{
+ background:var(--hotel-card);
+ border:1px solid var(--hotel-border);
+ color:var(--hotel-text);
+ box-shadow:0 3px 14px rgba(25,55,84,.045);
+}
+.panel{border-radius:14px;padding:clamp(14px,2vw,22px)}
+.panel h2{font-size:16px;letter-spacing:-.01em}
+.metric{border-radius:14px;min-height:118px}
+.metric strong{color:var(--hotel-text)}
+.metric-label,.form-grid label{color:var(--hotel-muted)}
+.metric-icon{background:var(--hotel-blue-soft);color:var(--hotel-blue)}
+.primary{background:var(--hotel-blue);color:#fff;box-shadow:none}
+.primary:hover{background:var(--hotel-blue-hover)}
+.secondary{background:#fff;border-color:#cbd8e5;color:#25445f}
+.secondary:hover{background:var(--hotel-blue-soft);border-color:#8eafcb}
+.small{background:var(--hotel-blue-soft);border-color:#c7dced;color:#194f7a}
+.form-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.form-grid input,.form-grid select,.auth-card input{
+ background:#fff;color:var(--hotel-text);border:1px solid #cbd8e5;border-radius:9px;color-scheme:light;min-height:42px
+}
+.form-grid input::placeholder,.auth-card input::placeholder{color:#8a9aab}
+.form-grid input:focus,.form-grid select:focus,.auth-card input:focus{border-color:var(--hotel-blue);box-shadow:0 0 0 3px #1f5d8f22;outline:none}
+.table-scroll{overflow:auto;overscroll-behavior-x:contain;border:1px solid var(--hotel-border);border-radius:10px;background:#fff;max-width:100%}
+.table-scroll table{min-width:680px;width:100%;border-collapse:separate;border-spacing:0}
+.table-scroll thead th,table thead th,th{
+ position:sticky;top:0;z-index:2;background:#eaf1f7;color:#36546e;
+ font-size:10px;font-weight:800;letter-spacing:.06em;border-bottom:1px solid #d2dfeb
+}
+.table-scroll td, .table-scroll th,td,th{padding:12px 14px}
+.table-scroll tbody tr:nth-child(even){background:#f8fafc}
+.table-scroll tbody tr:hover{background:#edf5fc}
+.table-scroll tbody td{color:#2c4358;border-bottom:1px solid #e8eef4}
+.badge{font-size:10px;letter-spacing:.01em;border:1px solid transparent}
+.badge.confirmed,.badge.completed,.badge.posted,.badge.inspected,.badge.available,.badge.verified,.badge.active{background:#e2f5eb;color:#176b47;border-color:#c7ead8}
+.badge.checked_in,.badge.occupied,.badge.in_progress,.badge.open{background:#e4f1fd;color:#205f91;border-color:#c9e1f6}
+.badge.pending,.badge.dirty,.badge.cleaning,.badge.high,.badge.urgent{background:#fff3d5;color:#805900;border-color:#f2dfaa}
+.badge.cancelled,.badge.maintenance,.badge.out_of_service,.badge.void,.badge.voided,.badge.suspended{background:#ffebeb;color:#9c3434;border-color:#f5cece}
+.alert.error{background:#fff0f0;color:#8f2e35;border-color:#f0c7cb}
+.alert.success{background:#e9f8f0;color:#176b47;border-color:#c9ead8}
+.empty{color:#718499}
+.auth-wrap{background:var(--hotel-workspace)}
+.auth-card h1,.brand strong{color:var(--hotel-text)}
+.auth-card p,.auth-card label{color:var(--hotel-muted)}
+.auth-card .brand-mark{background:var(--hotel-blue);color:#fff}
+.auth-card code{background:var(--hotel-blue-soft);color:var(--hotel-blue)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{
+ outline:3px solid var(--hotel-focus)!important;outline-offset:2px!important
+}
+button:disabled{opacity:.55;cursor:not-allowed}
+input:disabled,select:disabled,textarea:disabled{opacity:.7;cursor:not-allowed}
+:where(.panel,.dashboard-hero,.metric,.table-scroll,.form-grid) *{scroll-margin-top:12px}
+.mobile-nav{background:#fff;border-top:1px solid var(--hotel-border);box-shadow:0 -8px 24px rgba(20,48,74,.08)}
+.mobile-nav button{color:#60758a}
+.mobile-nav button.active{color:var(--hotel-blue);font-weight:800}
+.mobile-nav button.active svg{color:var(--hotel-blue)}
+/* Keep page-specific custom layouts visually aligned with the shared design system. */
+.reservation-page-heading{background:#eaf3fb!important;border-color:#d5e4f1!important}
+.reservation-page-heading h2,.reservation-metrics strong{color:#123b5d!important}
+.reservation-metrics article,.folio-summary-grid article,.reconciliation-method,.report-financial-overview article,.housekeeping-room-summary .metric-card{
+ background:#fff!important;border-color:var(--hotel-border)!important;box-shadow:0 3px 12px rgba(25,55,84,.04)!important
+}
+.reservation-metrics article{border-radius:12px!important}
+.reservation-metric-icon,.reservation-metric-icon.gold,.reservation-metric-icon.violet,.reservation-metric-icon.coral,.reservation-metric-icon.green,.reservation-metric-icon.blue{background:#e3effa!important;color:#1f5d8f!important}
+.reservation-calendar-grid .calendar-weekday{background:#eaf1f7!important;border-color:#dbe4ee!important;color:#36546e!important}
+.reservation-calendar-grid .calendar-day{border-color:#dbe4ee!important;border-radius:8px!important}
+.reservation-calendar-grid .calendar-day.selected{border-color:#1f5d8f!important;background:#edf6ff!important}
+.room-quick-filters button.active,.reservation-quick-filters button.active{background:#1f5d8f!important;border-color:#1f5d8f!important;color:#fff!important}
+.front-desk-action-column{background:#f8fafc!important;border-color:#dbe4ee!important;border-radius:12px!important}
+.front-desk-column-head h3,.folio-summary-grid article strong,.reconciliation-method strong{color:#203b53!important}
+.report-financial-overview article strong{color:#176b50!important}
+/* Prevent wide grids from squeezing action columns or overflowing the viewport. */
+.table-scroll table{table-layout:auto}
+td,th{max-width:360px}
+.actions{flex-wrap:wrap;align-items:center}
+@media(max-width:900px){
+ .sidebar{width:228px}
+ .main{margin-left:228px;padding:22px 18px}
+ .form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:680px){
+ .sidebar{width:min(86vw,300px);transform:translateX(-102%);transition:transform .2s ease;box-shadow:none}
+ .sidebar.open,.sidebar[data-open="true"]{transform:translateX(0);box-shadow:18px 0 48px #102b4350}
+ .main{margin-left:0;padding:17px 12px calc(86px + env(safe-area-inset-bottom))}
+ .topbar{align-items:flex-start;gap:10px;margin-bottom:17px;padding-bottom:15px}
+ .topbar h1{font-size:24px}
+ .topbar .actions{flex-wrap:wrap}
+ .panel{padding:14px;border-radius:12px}
+ .metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .metric{padding:13px;min-height:105px}
+ .metric strong{font-size:19px}
+ .form-grid{grid-template-columns:minmax(0,1fr);gap:12px}
+ .form-grid .primary{width:100%}
+ .panel-head{align-items:flex-start;flex-wrap:wrap}
+ .table-scroll{border-radius:8px}
+ .table-scroll table{min-width:640px}
+ .mobile-nav{display:flex;position:fixed;z-index:30;inset:auto 0 0;min-height:64px;padding:7px 6px calc(7px + env(safe-area-inset-bottom));justify-content:space-around;gap:2px}
+ .mobile-nav button{display:flex;flex:1;min-width:0;align-items:center;justify-content:center;flex-direction:column;gap:4px;padding:5px 2px;border:0;border-radius:9px;background:transparent;font-size:10px}
+ .mobile-nav button svg{width:19px;height:19px}
+ .reservation-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .front-desk-action-grid{grid-template-columns:minmax(0,1fr)}
+ .folio-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .report-financial-overview{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:380px){
+ .main{padding-left:9px;padding-right:9px}
+ .metrics,.folio-summary-grid,.report-financial-overview{grid-template-columns:minmax(0,1fr)}
+ .topbar h1{font-size:21px}
+ .panel{padding:11px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
