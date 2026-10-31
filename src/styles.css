@@ -902,3 +902,97 @@ table th,table td{overflow-wrap:anywhere}
   .app-bottom-nav-item:focus-visible{outline:2px solid #ffda61;outline-offset:2px}
 }
 @media(min-width:681px){.app-bottom-nav{display:none}}
+
+
+/* GraceSoft-inspired global PMS skin: applied across existing and future modules.
+   Keeps existing component and business logic; only shared presentation is changed. */
+:root{
+ color-scheme:light;
+ --bg:#f4f7fb;--surface:#fff;--surface-2:#eef4fa;--line:#d9e2ed;--muted:#65758a;
+ --gold:#0878f9;--gold-deep:#075fc7;--green:#16834a;
+ --sf-ink:#17334f;--sf-navy:#2767b4;--sf-muted:#65758a;--sf-border:#dce4ed;
+ --sf-surface:#fff;--sf-gold:#0878f9;--sf-green:#14804a;
+ font-family:'DM Sans',Arial,sans-serif;color:#172b45;background:#f4f7fb;
+}
+html,body{background:#f4f7fb!important;color:#172b45}
+body{background-image:none!important;line-height:1.45}
+body:before{display:none!important}
+.app-shell{background:#f4f7fb}
+.sidebar{background:#3974bb!important;color:#fff!important;border-right:0!important;box-shadow:2px 0 8px #1e47701a}
+.sidebar .brand strong,.sidebar .brand small,.property-name{color:#fff!important}
+.sidebar .brand-mark{background:#fff!important;color:#2868ad!important}
+.property-label,.eyebrow{color:#e5effb!important}
+.nav-item{color:#f1f6ff!important;border-radius:7px!important}
+.nav-item:hover,.nav-item.active{background:#255c9c!important;color:#fff!important;border-color:#7eafe8!important;box-shadow:inset 3px 0 #fff!important}
+.sidebar-bottom{border-color:#8db3dc!important}
+.main{color:#172b45!important}
+.topbar{border-bottom:1px solid #dce4ed!important}
+.topbar h1{color:#174568!important;letter-spacing:-.025em!important}
+.topbar p,.eyebrow{color:#65758a!important}
+.page-intro{background:#eaf2f9!important;border:1px solid #d6e2ee!important;border-radius:10px!important;box-shadow:none!important;padding:17px 20px!important}
+.page-intro:after{display:none!important}
+.page-intro-mark{background:#3974bb!important;color:#fff!important;box-shadow:none!important;border-radius:10px!important}
+.page-intro-copy h2{color:#174568!important}
+.page-intro-copy p{color:#5e7186!important}
+.intro-status{background:#e5f6ec!important;color:#187545!important;border-color:#bfe5ce!important}
+.panel,.card,.workspace-card,.settings-card,.register-card,.report-card,.form-card{
+ background:#fff!important;color:#172b45!important;border:1px solid #dce4ed!important;
+ border-radius:9px!important;box-shadow:0 1px 3px #193b5a0c!important;
+}
+.panel h2,.panel-head h2,.card h2,.workspace-card h2,.settings-card h2,.register-card h2{color:#254766!important}
+.panel>h2:before{background:#1680f8!important}
+.panel p,.panel label,.panel .muted,.panel-head p{color:#5e6e81!important}
+.metric{background:#fff!important;border:1px solid #dce4ed!important;border-radius:10px!important;box-shadow:none!important}
+.metric:after{display:none!important}
+.metric-icon{background:#e7f1fc!important;color:#2876c4!important}
+.metric strong,.metric .value,.events-metrics .metric strong{color:#174568!important}
+.metric-label,.metric small,.metric .label,.metric span{color:#65758a!important}
+.dashboard-hero{background:#eaf2f9!important;border:1px solid #d7e3ef!important;border-radius:10px!important;box-shadow:none!important}
+.dashboard-hero h2{color:#174568!important}.dashboard-hero p{color:#5d7186!important}
+.dashboard-hero .hero-kicker{color:#2777c5!important}
+.hero-stat{background:#fff!important;border-color:#d5e1ed!important;color:#5d7186!important}
+.hero-stat strong{color:#174568!important}
+.primary,button.primary{background:#0878f9!important;border:1px solid #0878f9!important;color:#fff!important;border-radius:6px!important;box-shadow:none!important;font-weight:700}
+.primary:hover,button.primary:hover{background:#0666d5!important}
+.secondary,button.secondary,.small{background:#fff!important;border:1px solid #cbd8e6!important;color:#315675!important;border-radius:6px!important;box-shadow:none!important}
+.secondary:hover,button.secondary:hover,.small:hover{background:#eff6fd!important;border-color:#80b5ee!important}
+.small.danger{background:#fff0f0!important;border-color:#f0c6c6!important;color:#b4232f!important}
+.link-button,a{color:#0878f9}
+.form-grid label,.fields-grid label,.event-field{color:#425b73!important}
+input,select,textarea,.form-grid input,.form-grid select,.form-grid textarea,.fields-grid input,.fields-grid select,.fields-grid textarea,.inline-select{
+ background:#fff!important;color:#243b53!important;border:1px solid #d2dce7!important;border-radius:6px!important;box-shadow:none!important;color-scheme:light!important;
+}
+input::placeholder,textarea::placeholder{color:#8998a9!important}
+input:focus,select:focus,textarea:focus{outline:2px solid #0878f933!important;border-color:#0878f9!important}
+.table-scroll,.table-wrap,.data-table-wrap{background:#fff!important;border:1px solid #dce4ed!important;border-radius:7px!important;box-shadow:none!important}
+table{background:#fff!important;color:#263e56!important}
+th,table th{background:#f4f7fa!important;color:#4a5e73!important;border-bottom:1px solid #dce4ed!important;font-size:11px!important;letter-spacing:.015em!important;text-transform:none!important;padding:13px 12px!important}
+td,table td{background:#fff!important;color:#243b53!important;border-bottom:1px solid #e4e9ef!important;font-size:12px!important;padding:12px!important}
+tbody tr:hover td{background:#f5faff!important}
+tbody tr:last-child td{border-bottom:0!important}
+.badge,.status-pill,.event-status{border-radius:5px!important;font-weight:700!important}
+.badge.confirmed,.badge.completed,.badge.posted,.badge.inspected,.badge.available,.badge.verified,.badge.active,.event-status.status-confirmed,.event-status.status-completed{background:#e4f5e9!important;color:#16743b!important;border:1px solid #c7e8d1!important}
+.badge.checked_in,.badge.occupied,.badge.in_progress,.badge.open{background:#e4f1ff!important;color:#1b64a6!important}
+.badge.pending,.badge.dirty,.badge.cleaning,.badge.high,.badge.urgent{background:#fff3d6!important;color:#875c00!important}
+.badge.cancelled,.badge.maintenance,.badge.out_of_service,.badge.void,.badge.voided,.badge.suspended,.event-status.status-cancelled{background:#ffebeb!important;color:#ad2c35!important}
+.alert.error{background:#fff0f0!important;color:#a6242d!important;border-color:#f2caca!important}
+.alert.success{background:#eaf8ef!important;color:#176d39!important;border-color:#c8e9d2!important}
+.toolbar input,.toolbar select{background:#fff!important;color:#243b53!important;border-color:#d2dce7!important}
+.app-bottom-nav{background:#3974bb!important;border-color:#285e9d!important;box-shadow:0 -2px 8px #1d4b791f!important}
+.app-bottom-nav-item{color:#f1f6ff!important}
+.app-bottom-nav-item.active{background:#255c9c!important;border-color:#8db8e8!important;color:#fff!important}
+footer{color:#6b7c8f!important}
+@media(max-width:850px){.sidebar{background:#3974bb!important}.main{color:#172b45!important}}
+@media(max-width:560px){
+ .main{background:#f4f7fb!important}
+ .panel,.card,.workspace-card,.settings-card,.register-card,.report-card,.form-card{padding:12px!important}
+ .topbar h1{color:#174568!important}
+ .app-bottom-nav{padding-bottom:calc(7px + env(safe-area-inset-bottom))}
+}
+@media print{
+ .sidebar,.app-bottom-nav,.topbar .actions,.toolbar,.primary,.secondary{display:none!important}
+ body,.main,.panel{background:#fff!important;color:#111!important;box-shadow:none!important}
+ .main{margin:0!important;padding:0!important}
+ table th{background:#eef2f6!important;color:#111!important}
+ table td{color:#111!important}
+}
