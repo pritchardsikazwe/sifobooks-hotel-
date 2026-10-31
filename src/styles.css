@@ -786,3 +786,69 @@ th{color:#d2d9e6}
  .form-grid{grid-template-columns:minmax(0,1fr)}
  .form-grid input,.form-grid select,.form-grid textarea,.event-field input,.event-field select,.event-field textarea{width:100%;min-height:43px;font-size:14px}
 }
+
+
+/* Cross-module UI consistency pass — dashboard, forms, registers, reports and settings */
+:root{
+ --sf-ink:#172b45;--sf-navy:#111b2b;--sf-muted:#5d6b7d;
+ --sf-border:#dbe3ec;--sf-surface:#fff;--sf-gold:#f6c844;
+ --sf-green:#08795d;
+}
+*{box-sizing:border-box}
+img,svg{flex-shrink:0}
+h1,h2,h3,h4{letter-spacing:-.025em;line-height:1.25}
+label{display:block;line-height:1.4}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;min-height:40px;transition:background-color .15s ease,border-color .15s ease,transform .15s ease}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #e6b82e;outline-offset:2px}
+input,select,textarea{line-height:1.4}
+input::placeholder,textarea::placeholder{color:#a7b2c2;opacity:1}
+table{border-collapse:separate;border-spacing:0}
+th{font-weight:750;line-height:1.35}
+td{line-height:1.45;vertical-align:middle}
+pre,code{overflow-wrap:anywhere;white-space:pre-wrap}
+.muted,.muted-text,.help-text,.form-help{color:#65758a}
+.panel,.card,.workspace-card,.settings-card,.register-card,.report-card,.form-card{min-width:0}
+.panel h2,.card h2,.workspace-card h2,.settings-card h2,.register-card h2{margin-top:0}
+.panel p,.card p,.workspace-card p{max-width:75ch}
+.panel-head,.section-heading,.page-heading,.toolbar,.actions{min-width:0}
+.panel-head h2,.section-heading h2,.page-heading h1{overflow-wrap:anywhere}
+.actions,.toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.actions button,.toolbar button{max-width:100%}
+.form-grid,.fields-grid{align-items:start}
+.form-grid>*,.fields-grid>*{min-width:0}
+.form-grid label,.fields-grid label{display:flex;flex-direction:column;gap:6px}
+.form-grid input,.form-grid select,.form-grid textarea,.fields-grid input,.fields-grid select,.fields-grid textarea{width:100%;min-width:0}
+table th,table td{overflow-wrap:anywhere}
+.table-scroll,.table-wrap,.data-table-wrap{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.table-scroll table,.table-wrap table,.data-table-wrap table{min-width:540px}
+.metric strong,.stat-value,.kpi-value{font-variant-numeric:tabular-nums}
+@media(max-width:760px){
+ .page-heading,.section-heading{align-items:flex-start;gap:10px;flex-wrap:wrap}
+ .page-heading>*,.section-heading>*{min-width:0}
+ .actions{width:100%}
+ .actions button{flex:1 1 auto}
+ .panel,.card,.workspace-card,.settings-card,.register-card,.report-card,.form-card{max-width:100%}
+ .form-grid,.fields-grid{grid-template-columns:minmax(0,1fr)!important}
+}
+@media(max-width:560px){
+ h1{font-size:clamp(21px,6vw,27px)}
+ h2{font-size:clamp(17px,4.8vw,21px)}
+ h3{font-size:16px}
+ p{overflow-wrap:anywhere}
+ .main{padding-left:10px;padding-right:10px}
+ .panel,.card,.workspace-card,.settings-card,.register-card,.report-card,.form-card{padding:12px!important;margin-bottom:10px!important;border-radius:13px!important}
+ .panel-head,.section-heading,.page-heading{margin-bottom:10px}
+ .actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .actions button{width:100%;min-width:0;padding:9px 8px;font-size:12px}
+ .actions button:only-child{grid-column:1/-1}
+ .form-grid,.fields-grid{gap:10px!important}
+ label{font-size:12px}
+ input,select,textarea{min-height:42px;font-size:14px!important;padding:10px!important;border-radius:10px!important}
+ textarea{min-height:84px}
+ table th,table td{padding:8px 7px;font-size:11px}
+ .table-scroll table,.table-wrap table,.data-table-wrap table{min-width:500px}
+ .status,.badge,.pill{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+ .empty-state,.empty,.no-data{padding:20px 12px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
