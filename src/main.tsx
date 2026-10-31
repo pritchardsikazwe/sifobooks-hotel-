@@ -27,8 +27,31 @@ class StartupErrorBoundary extends Component<{ children: ReactNode }, { error: s
 }
 
 if ("serviceWorker" in navigator && import.meta.env.PROD) {
+  // Installed PWAs and browser tabs check for a new service worker immediately
+  // and then periodically while open. The worker calls skipWaiting() on install.
+  const hadControllerAtStartup = Boolean(navigator.serviceWorker.controller);
+  let reloadingForUpdate = false;
+
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    // Do not reload the very first time a PWA is installed; reload only when an
+    // already-running app is taken over by a newly activated worker.
+    if (!hadControllerAtStartup || reloadingForUpdate) return;
+    reloadingForUpdate = true;
+    window.location.reload();
+  });
+
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js").catch((error) => console.error("PWA service worker registration failed:", error));
+    navigator.serviceWorker.register("/sw.js", { updateViaCache: "none" })
+      .then(registration => {
+        // Force the browser to revalidate sw.js instead of trusting its HTTP cache.
+        void registration.update().catch(error => console.warn("Initial PWA update check failed:", error));
+        window.setInterval(() => {
+          if (navigator.onLine) {
+            void registration.update().catch(error => console.warn("PWA update check failed:", error));
+          }
+        }, 60 * 1000);
+      })
+      .catch(error => console.error("PWA service worker registration failed:", error));
   });
 }
 
