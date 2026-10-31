@@ -690,3 +690,99 @@ body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto!important;ove
 #root,.app-shell{height:auto;min-height:100vh;overflow:visible}
 .main{height:auto;min-height:100vh;overflow:visible;touch-action:pan-y}
 @media(max-width:560px){body{padding-bottom:calc(76px + env(safe-area-inset-bottom));overflow-y:auto!important}.main{padding-bottom:calc(20px + env(safe-area-inset-bottom))}.sidebar{padding-bottom:calc(6px + env(safe-area-inset-bottom))}}
+
+
+/* SifoHotel mobile-first readability and compact workspace refinement */
+:root{color-scheme:dark;--muted:#b6c0d1}
+body{color:#edf2f9;line-height:1.5}
+h1,h2,h3,h4,strong,b{overflow-wrap:anywhere}
+p{line-height:1.55}
+.panel,.metric,.pw-panel,.pw-type-card,.invoice-paper,.events-modal{min-width:0}
+.metric{gap:7px;padding:15px;min-height:unset}
+.metric strong,.events-metrics .metric strong{display:block;color:#f8fafc!important;font-size:clamp(20px,2vw,27px);line-height:1.25;font-weight:800;letter-spacing:-.025em}
+.metric small,.metric-label{color:#c7d0df!important;font-size:12px;font-weight:700;line-height:1.4}
+.metric span{color:#c0cada!important;font-size:11px;line-height:1.45}
+.panel{padding:clamp(13px,1.8vw,20px);margin-bottom:13px;border-radius:15px}
+.panel h2{margin-bottom:9px}
+.panel-head{flex-wrap:wrap}
+.panel-head>div:first-child{min-width:0;flex:1 1 220px}
+.panel-head p{margin:5px 0 10px;color:#c1cada}
+.form-grid{gap:10px}
+.form-grid label,.event-field,.pw-fields label,.pw-field-full{line-height:1.4;font-size:12px}
+input,select,textarea{max-width:100%;min-width:0}
+input::placeholder,textarea::placeholder{color:#a3afc2!important;opacity:1}
+select{color:#f2f5fb}
+button{line-height:1.3;white-space:normal}
+.table-scroll{max-width:100%;overscroll-behavior-x:contain}
+td{color:#e6ebf4}
+th{color:#d2d9e6}
+.page-intro{gap:14px}
+.page-intro-copy{min-width:0}
+.page-intro-copy p{color:#c0cad9}
+.events-workspace{gap:12px}
+.events-metrics{gap:9px}
+.events-metrics .metric{gap:7px;padding:14px;min-height:112px}
+.events-metrics .metric strong{color:#fff!important;font-size:clamp(22px,3vw,29px)}
+.events-metrics .metric span{color:#d0d8e5!important}
+.events-filters{margin:10px 0}
+.events-actions{gap:7px}
+.events-actions button{min-height:40px}
+.events-empty{padding:25px 14px}
+.events-empty p{color:#d0d8e5}
+.event-ref{color:#c0cada}
+.invoice-paper{overflow:hidden}
+.invoice-paper,.invoice-paper *{overflow-wrap:anywhere}
+.invoice-paper table{table-layout:auto}
+.invoice-paper td:last-child,.invoice-paper th:last-child{white-space:normal}
+@media(max-width:850px){
+ .main{padding:16px 12px}
+ .topbar{margin-bottom:16px}
+ .metrics{gap:9px}
+ .panel-head{align-items:flex-start}
+ .events-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:560px){
+ html,body,#root,.app-shell,.main{width:100%;max-width:100%;overflow-x:clip}
+ body{padding-bottom:calc(70px + env(safe-area-inset-bottom))}
+ .main{padding:13px 10px calc(20px + env(safe-area-inset-bottom))}
+ .topbar{align-items:center;gap:8px;padding-bottom:12px}
+ .topbar h1{font-size:clamp(20px,6vw,25px);line-height:1.2;overflow-wrap:anywhere}
+ .topbar p{font-size:12px}
+ .metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .metric{padding:11px;border-radius:12px;gap:6px}
+ .metric strong,.events-metrics .metric strong{font-size:clamp(19px,5.5vw,24px);line-height:1.2}
+ .metric small,.metric-label{font-size:11px}
+ .metric span{font-size:10px}
+ .panel{padding:12px;border-radius:13px;margin-bottom:10px}
+ .panel h2{font-size:16px;line-height:1.3}
+ .panel-head{gap:8px}
+ .panel-head p{font-size:12px}
+ .events-workspace{gap:10px}
+ .events-metrics{gap:8px}
+ .events-metrics .metric{padding:11px;min-height:106px}
+ .events-metrics .metric span{font-size:10px}
+ .events-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}
+ .events-actions button{width:100%;min-width:0;padding:9px 7px;font-size:12px}
+ .events-actions button.primary{grid-column:1/-1}
+ .events-filters{gap:8px;margin:10px 0}
+ .events-filters label{min-height:44px}
+ .events-filters input,.events-filters select{font-size:13px}
+ .page-intro{align-items:flex-start;gap:10px}
+ .page-intro-copy h2{font-size:clamp(21px,6vw,28px);line-height:1.2}
+ .page-intro-copy p{font-size:12px}
+ .intro-status{display:none}
+ .invoice-paper{padding:12px}
+ .invoice-paper>header{gap:10px;padding-bottom:12px}
+ .invoice-paper>header h2{font-size:19px}
+ .invoice-title h1{font-size:24px}
+ .invoice-billto{gap:8px;margin:12px 0;padding:11px}
+ .invoice-paper table{font-size:11px}
+ .invoice-paper th,.invoice-paper td{padding:7px 5px;font-size:10px}
+ .invoice-totals{width:100%;margin-top:12px}
+ .invoice-totals div{font-size:12px;padding:7px 5px}
+ .invoice-totals .invoice-grand{font-size:14px}
+ .events-modal-backdrop{padding:6px}
+ .events-modal{padding:12px;border-radius:13px}
+ .form-grid{grid-template-columns:minmax(0,1fr)}
+ .form-grid input,.form-grid select,.form-grid textarea,.event-field input,.event-field select,.event-field textarea{width:100%;min-height:43px;font-size:14px}
+}
