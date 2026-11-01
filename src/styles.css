@@ -1406,3 +1406,151 @@ td,th{max-width:360px}
 
 /* HR & Monthly Payroll workspace */
 .hr-payroll{display:grid;gap:16px;color:#eef3fb}.hr-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;padding:20px;border:1px solid #35445c;border-radius:18px;background:linear-gradient(120deg,#1d2a40,#151c2b)}.hr-head h2{font:800 clamp(23px,2.6vw,31px) Manrope,sans-serif;margin:7px 0;color:#fff}.hr-head p{margin:0;color:#bbc7d9;font-size:13px}.hr-kicker{font-size:10px;letter-spacing:.16em;font-weight:800;color:#ffd44c}.hr-head-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.hr-period{display:flex;align-items:center;gap:7px;color:#ffd44c}.hr-period input{padding:8px;max-width:155px}.hr-tabs{display:flex;gap:6px;overflow-x:auto;padding:3px 0 8px}.hr-tabs button{white-space:nowrap;padding:10px 13px;border:1px solid #354158;border-radius:10px;background:#172033;color:#d5deeb;font-size:12px;font-weight:700}.hr-tabs button.active{background:#ffdb57;color:#171b24;border-color:#ffe37b}.hr-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.hr-kpis article{display:grid;gap:9px;padding:17px;border:1px solid #344158;border-radius:15px;background:linear-gradient(145deg,#1d273a,#151c2a)}.hr-kpis article>span{display:flex;align-items:center;gap:8px;color:#bdc8da;font-size:12px}.hr-kpis svg{width:17px;color:#ffd44c}.hr-kpis strong{font:800 22px Manrope,sans-serif;color:#fff}.hr-kpis small{font-size:11px;color:#aebbd0}.hr-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.hr-grid>.panel{margin:0;min-width:0}.hr-progress{height:8px;background:#303b50;border-radius:9px;overflow:hidden;margin:22px 0 12px}.hr-progress span{display:block;height:100%;background:linear-gradient(90deg,#ffd44c,#20c997);border-radius:9px;transition:width .2s}.hr-steps{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.hr-steps button{padding:8px 11px;border-radius:9px;border:1px solid #3b465a;background:#202a3d;color:#d9e1ee;font-size:11px}.hr-steps button.done{border-color:#26765e;background:#12392f;color:#80e2bd}.hr-reminder{display:flex;align-items:flex-start;gap:10px;padding:13px 0;border-bottom:1px solid #30394b}.hr-reminder:last-child{border-bottom:0}.hr-reminder>svg{width:18px;color:#ffd44c;flex-shrink:0}.hr-reminder div{display:grid;gap:5px;flex:1}.hr-reminder strong{font-size:12px}.hr-reminder small{color:#b6c2d5;font-size:11px;line-height:1.5}.hr-reminder>span{font-size:10px;color:#ffd44c}.hr-toolbar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:15px 0}.hr-toolbar label{display:flex;align-items:center;gap:8px;min-width:min(100%,300px);padding:0 10px;border:1px solid #39465d;border-radius:10px;background:#101725}.hr-toolbar label svg{color:#aebbd0;width:16px}.hr-toolbar input{border:0!important;box-shadow:none!important;min-width:0;flex:1}.hr-add{margin:12px 0 18px;padding:15px;background:#101725;border:1px solid #344158;border-radius:12px}.hr-sub{display:block;color:#9eacc2;font-size:10px;margin-top:4px}.hr-disclaimer{font-size:11px;color:#e7c77c;line-height:1.6;margin:15px 0 0}.hr-feature-list{display:grid;gap:0;margin-top:12px}.hr-feature-list>div{display:flex;align-items:center;gap:9px;padding:12px 0;border-bottom:1px solid #30394b;font-size:12px;color:#e0e7f2}.hr-feature-list>div:last-child{border-bottom:0}.hr-feature-list svg{width:16px;color:#ffd44c;flex-shrink:0}.hr-feature-list span,.hr-feature-list button{margin-left:auto;color:#c3d0e3;font-size:10px}.hr-feature-list span{border:1px solid #3b465a;padding:5px 7px;border-radius:7px}.hr-feature-list button{white-space:nowrap}.hr-payroll .table-scroll{margin-top:12px}.hr-payroll table{min-width:740px}.hr-payroll th{background:#202a3c;color:#c7d2e3}.hr-payroll td{color:#e7edf7}.hr-payroll tbody tr:hover{background:#263146}.hr-payroll .badge.draft,.hr-payroll .badge.reviewed{background:#44391c;color:#ffdc76}.hr-payroll .badge.approved,.hr-payroll .badge.posted{background:#123c30;color:#7fe2ba}@media(max-width:760px){.hr-grid{grid-template-columns:1fr}.hr-head{padding:15px}.hr-head-actions{width:100%}.hr-head-actions .primary{flex:1}.hr-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.hr-kpis article{padding:13px}.hr-kpis strong{font-size:18px}.hr-tabs{margin-right:-2px}.hr-toolbar label{width:100%}.hr-payroll .table-scroll table{min-width:760px}}@media(max-width:420px){.hr-kpis{grid-template-columns:1fr 1fr}.hr-kpis article>span{font-size:10px}.hr-kpis strong{font-size:16px}.hr-head h2{font-size:22px}.hr-head-actions .primary{font-size:11px;padding:9px}}
+
+
+/* SifoBooks Hotel PMS — emerald & gold visual system, applied across every module */
+:root{
+  --hotel-emerald:#075b43;
+  --hotel-emerald-deep:#034431;
+  --hotel-emerald-soft:#e6f5ee;
+  --hotel-gold:#e9b83f;
+  --hotel-gold-soft:#fff5d9;
+  --hotel-canvas:#f3f7f8;
+  --hotel-ink:#18364a;
+  --hotel-muted:#6d8290;
+  --hotel-line:#dce7e8;
+  --hotel-shadow:0 7px 22px rgba(10,65,49,.07);
+}
+html,body{background:var(--hotel-canvas);color:var(--hotel-ink)}
+.app-shell:has(.hotel-sidebar){padding:0 24px 0 274px;background:var(--hotel-canvas);min-height:100vh}
+.hotel-sidebar{
+  position:fixed;z-index:40;inset:0 auto 0 0;width:250px;display:flex;flex-direction:column;
+  padding:18px 13px 14px;background:linear-gradient(180deg,#064b39 0%,#033a2d 100%);
+  color:#f5fbf8;border-right:1px solid #0d6a50;box-shadow:5px 0 22px rgba(5,50,38,.12);overflow:hidden
+}
+.hotel-sidebar-brand{display:flex;align-items:center;gap:11px;padding:2px 5px 17px;border-bottom:1px solid #ffffff20}
+.hotel-sidebar-mark{width:43px;height:43px;display:grid;place-items:center;flex:none;border-radius:14px;background:linear-gradient(145deg,#f7d477,#dca62e);color:#064431;box-shadow:0 5px 15px #0002}
+.hotel-sidebar-brand strong{display:block;font:800 17px Manrope,sans-serif;color:#fff;letter-spacing:-.03em}
+.hotel-sidebar-brand small{display:block;margin-top:2px;color:#f1ca65;font-size:11px;font-weight:800;letter-spacing:.04em}
+.hotel-sidebar-property{display:flex;align-items:center;gap:9px;min-width:0;padding:14px 5px 13px;border-bottom:1px solid #ffffff20}
+.hotel-sidebar-property-icon{width:34px;height:34px;display:grid;place-items:center;flex:none;border-radius:10px;background:#ffffff16;color:#f4cc68}
+.hotel-sidebar-property span:last-child{min-width:0}
+.hotel-sidebar-property strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#fff;font-size:11px}
+.hotel-sidebar-property small{display:block;margin-top:3px;color:#b7d2c7;font-size:10px}
+.hotel-sidebar-label{padding:14px 8px 7px;color:#a9cabe;font-size:9px;font-weight:850;letter-spacing:.15em}
+.hotel-sidebar-nav{display:grid;gap:3px;overflow-y:auto;overscroll-behavior:contain;padding:0 1px 10px;scrollbar-width:thin;scrollbar-color:#3c816a transparent}
+.hotel-side-link{display:flex;align-items:center;gap:11px;width:100%;min-height:39px;padding:8px 10px;border:1px solid transparent;border-radius:10px;background:transparent;color:#d5e9e1;text-align:left;font-size:11px;font-weight:650;cursor:pointer;transition:background .16s,border-color .16s,color .16s}
+.hotel-side-link svg{width:17px;height:17px;flex:none;color:#b9d8ca}
+.hotel-side-link:hover{background:#ffffff13;color:#fff}
+.hotel-side-link.active{background:linear-gradient(100deg,#f3ca62,#e8b43b);border-color:#ffdf87;color:#173d30;box-shadow:0 4px 13px #0002;font-weight:850}
+.hotel-side-link.active svg{color:#174633}
+.hotel-sidebar-quick{display:grid;gap:6px;padding-top:5px;border-top:1px solid #ffffff20}
+.hotel-sidebar-quick .hotel-sidebar-label{padding:10px 8px 3px}
+.hotel-quick-primary,.hotel-quick-secondary{display:flex;align-items:center;justify-content:flex-start;gap:9px;min-height:36px;padding:8px 10px;border-radius:9px;font-size:11px;font-weight:800;cursor:pointer}
+.hotel-quick-primary{border:1px solid #f9dc87;background:linear-gradient(135deg,#ffdf83,#eab63e);color:#173b2d;box-shadow:0 4px 12px #0002}
+.hotel-quick-secondary{border:1px solid #4a9278;background:#ffffff0d;color:#f3faf6}
+.hotel-quick-secondary:hover{background:#ffffff1a;border-color:#8bc4aa}
+.hotel-sidebar-foot{display:flex;align-items:center;gap:7px;margin-top:auto;padding:12px 7px 2px;border-top:1px solid #ffffff20;color:#d8e9e1;font-size:10px;font-weight:700}
+.hotel-sidebar-foot small{margin-left:auto;color:#9fc4b5;font-size:9px;font-weight:500}
+.hotel-online-dot{width:7px;height:7px;border-radius:50%;background:#42d69b;box-shadow:0 0 0 4px #42d69b22}
+.app-shell:has(.hotel-sidebar) .app-header{margin:0 -24px 22px;padding:12px 24px 0;background:rgba(255,255,255,.96);border-bottom:1px solid var(--hotel-line);box-shadow:0 4px 16px rgba(12,62,48,.055);backdrop-filter:blur(16px)}
+.app-shell:has(.hotel-sidebar) .app-brand-row{padding-bottom:10px}
+.app-shell:has(.hotel-sidebar) .app-brand-row .brand-mark{background:var(--hotel-emerald);color:#f6d16f}
+.app-shell:has(.hotel-sidebar) .app-brand-row .brand strong{color:var(--hotel-ink)}
+.app-shell:has(.hotel-sidebar) .app-brand-row .brand small{color:var(--hotel-muted)}
+.app-shell:has(.hotel-sidebar) .property-chip{background:var(--hotel-emerald-soft);border-color:#c9e5d7;color:var(--hotel-emerald)}
+.app-shell:has(.hotel-sidebar) .user-chip{background:#f7fafb;border-color:var(--hotel-line);color:#526b79}
+.app-shell:has(.hotel-sidebar) .top-menu{gap:5px;padding-bottom:8px}
+.app-shell:has(.hotel-sidebar) .top-menu-item{min-height:39px;padding:9px 12px;border:1px solid #e0e9e8;border-radius:9px;background:#f7faf9;color:#4b6870;font-size:10px}
+.app-shell:has(.hotel-sidebar) .top-menu-item:hover{background:var(--hotel-emerald-soft);border-color:#b8dcca;color:var(--hotel-emerald)}
+.app-shell:has(.hotel-sidebar) .top-menu-item.active{background:linear-gradient(135deg,#f8dc8c,#edbd4e);border-color:#e5b847;color:#173f30;box-shadow:0 3px 10px #b9892520}
+.app-shell:has(.hotel-sidebar) .main{max-width:none;padding:0 0 30px;margin:0;min-height:calc(100vh - 120px)}
+.app-shell:has(.hotel-sidebar) .topbar{padding:5px 2px 17px;margin-bottom:18px;border-bottom:1px solid var(--hotel-line)}
+.app-shell:has(.hotel-sidebar) .topbar h1{color:var(--hotel-emerald-deep);font-size:clamp(23px,2.4vw,31px)}
+.app-shell:has(.hotel-sidebar) .topbar p{color:var(--hotel-muted)}
+.app-shell:has(.hotel-sidebar) .eyebrow{color:#a47b18}
+.app-shell:has(.hotel-sidebar) .page-intro{border:1px solid var(--hotel-line);border-radius:16px;background:linear-gradient(120deg,#fff,#edf7f2);box-shadow:var(--hotel-shadow)}
+.app-shell:has(.hotel-sidebar) .page-intro h2{color:var(--hotel-emerald-deep)}
+.app-shell:has(.hotel-sidebar) .page-intro p{color:#637b80}
+.app-shell:has(.hotel-sidebar) .page-intro-mark{background:var(--hotel-emerald-soft);color:var(--hotel-emerald)}
+.app-shell:has(.hotel-sidebar) .page-highlights .page-highlight{border:1px solid var(--hotel-line);border-radius:13px;background:#fff;box-shadow:var(--hotel-shadow)}
+.app-shell:has(.hotel-sidebar) .page-highlight strong{color:var(--hotel-emerald-deep)}
+.app-shell:has(.hotel-sidebar) .manager-dashboard{gap:15px}
+.app-shell:has(.hotel-sidebar) .manager-welcome{background:linear-gradient(115deg,#fff 0%,#edf8f2 70%,#e5f3ec 100%);border-color:#d3e7dc;box-shadow:var(--hotel-shadow)}
+.app-shell:has(.hotel-sidebar) .manager-welcome .hero-kicker{color:#a47b18}
+.app-shell:has(.hotel-sidebar) .manager-welcome h2{color:var(--hotel-emerald-deep)}
+.app-shell:has(.hotel-sidebar) .manager-kpi,.app-shell:has(.hotel-sidebar) .manager-card{border-color:var(--hotel-line);box-shadow:var(--hotel-shadow);border-radius:15px}
+.app-shell:has(.hotel-sidebar) .manager-kpi>strong,.app-shell:has(.hotel-sidebar) .manager-card-head h3{color:var(--hotel-emerald-deep)}
+.app-shell:has(.hotel-sidebar) .manager-kpi .kpi-icon.green{background:#e0f5e9;color:#078354}
+.app-shell:has(.hotel-sidebar) .manager-kpi .kpi-icon.gold{background:var(--hotel-gold-soft);color:#a9770c}
+.app-shell:has(.hotel-sidebar) .kpi-track i{background:linear-gradient(90deg,#0b9864,#e9bb4b)}
+.app-shell:has(.hotel-sidebar) .text-action{background:#e7f5ed;color:#075b43;border:1px solid #c9e7d5}
+.app-shell:has(.hotel-sidebar) .text-action:hover{background:#d6efdf}
+.app-shell:has(.hotel-sidebar) .primary,.app-shell:has(.hotel-sidebar) .manager-actions .primary{background:linear-gradient(135deg,#f8d978,#e6b23b)!important;border:1px solid #e2b13f!important;color:#173b2d!important;box-shadow:0 4px 12px rgba(165,119,20,.18)!important}
+.app-shell:has(.hotel-sidebar) .primary:hover{background:linear-gradient(135deg,#ffe79c,#efc45b)!important;transform:translateY(-1px)}
+.app-shell:has(.hotel-sidebar) .secondary{background:#fff!important;border:1px solid #b9d9ca!important;color:#075b43!important;box-shadow:0 2px 8px rgba(8,80,57,.06)}
+.app-shell:has(.hotel-sidebar) .secondary:hover{background:#eaf6ef!important;border-color:#78b899!important}
+.app-shell:has(.hotel-sidebar) .small{background:#e8f5ed!important;border:1px solid #c4e3d1!important;color:#075b43!important}
+.app-shell:has(.hotel-sidebar) .small.danger{background:#fff0ef!important;border-color:#f3cfca!important;color:#a43d35!important}
+.app-shell:has(.hotel-sidebar) .form-grid input,.app-shell:has(.hotel-sidebar) .form-grid select,.app-shell:has(.hotel-sidebar) input,.app-shell:has(.hotel-sidebar) select,.app-shell:has(.hotel-sidebar) textarea{border-color:#cdded9;border-radius:9px}
+.app-shell:has(.hotel-sidebar) input:focus,.app-shell:has(.hotel-sidebar) select:focus,.app-shell:has(.hotel-sidebar) textarea:focus{border-color:#15966a;box-shadow:0 0 0 3px #15966a20;outline:none}
+.app-shell:has(.hotel-sidebar) .panel,.app-shell:has(.hotel-sidebar) .metric,.app-shell:has(.hotel-sidebar) .manager-card{background:#fff}
+.app-shell:has(.hotel-sidebar) .table-scroll{border-color:var(--hotel-line);box-shadow:0 2px 10px rgba(9,65,49,.035)}
+.app-shell:has(.hotel-sidebar) .table-scroll thead th,.app-shell:has(.hotel-sidebar) table thead th{background:#e9f4ee;color:#315d4d}
+.app-shell:has(.hotel-sidebar) .table-scroll tbody tr:nth-child(even){background:#f7fbf8}
+.app-shell:has(.hotel-sidebar) .table-scroll tbody tr:hover{background:#edf7f0}
+.app-shell:has(.hotel-sidebar) .badge.active,.app-shell:has(.hotel-sidebar) .badge.completed,.app-shell:has(.hotel-sidebar) .badge.posted,.app-shell:has(.hotel-sidebar) .badge.available,.app-shell:has(.hotel-sidebar) .badge.confirmed{background:#e1f4e9;color:#126743;border-color:#c6e8d3}
+.app-shell:has(.hotel-sidebar) .alert.success{background:#e7f6ec;color:#126743;border-color:#c5e7d1}
+.app-shell:has(.hotel-sidebar) .alert.error{background:#fff0ef;color:#963d39;border-color:#f1cfca}
+.app-shell:has(.hotel-sidebar) .app-bottom-nav{background:rgba(4,66,48,.97);border-top-color:#236b54}
+.app-shell:has(.hotel-sidebar) .app-bottom-nav-item{color:#d6e9df}
+.app-shell:has(.hotel-sidebar) .app-bottom-nav-item.active{color:#ffda78;background:#ffffff12}
+.app-shell:has(.hotel-sidebar) footer{color:#71877d}
+@media(max-width:1050px){
+ .app-shell:has(.hotel-sidebar){padding-left:86px;padding-right:15px}
+ .hotel-sidebar{width:72px;padding:13px 7px}
+ .hotel-sidebar-brand{justify-content:center;padding:0 0 12px}
+ .hotel-sidebar-brand>span:last-child,.hotel-sidebar-property span:last-child,.hotel-sidebar-label,.hotel-side-link span,.hotel-sidebar-quick,.hotel-sidebar-foot small{display:none}
+ .hotel-sidebar-property{justify-content:center;padding:10px 0}
+ .hotel-sidebar-property-icon{width:36px;height:36px}
+ .hotel-sidebar-nav{gap:5px}
+ .hotel-side-link{justify-content:center;min-height:42px;padding:8px 4px}
+ .hotel-side-link svg{width:19px;height:19px}
+ .hotel-sidebar-foot{justify-content:center;padding:12px 0}
+ .app-shell:has(.hotel-sidebar) .app-header{margin-left:-15px;margin-right:-15px;padding-left:15px;padding-right:15px}
+}
+@media(max-width:680px){
+ .app-shell:has(.hotel-sidebar){padding:0 10px 0 68px}
+ .hotel-sidebar{width:58px;padding:10px 5px calc(80px + env(safe-area-inset-bottom))}
+ .hotel-sidebar-mark{width:39px;height:39px}
+ .hotel-sidebar-property{padding:8px 0}
+ .hotel-sidebar-property-icon{width:32px;height:32px}
+ .hotel-sidebar-nav{gap:4px}
+ .hotel-side-link{min-height:39px;border-radius:9px}
+ .hotel-side-link svg{width:18px;height:18px}
+ .hotel-sidebar-foot{font-size:0}
+ .hotel-sidebar-foot .hotel-online-dot{width:8px;height:8px}
+ .app-shell:has(.hotel-sidebar) .app-header{margin-left:-10px;margin-right:-10px;padding:8px 10px 0}
+ .app-shell:has(.hotel-sidebar) .app-brand-row .brand{display:none}
+ .app-shell:has(.hotel-sidebar) .app-brand-row{justify-content:flex-end;min-height:40px}
+ .app-shell:has(.hotel-sidebar) .app-header-right{max-width:100%}
+ .app-shell:has(.hotel-sidebar) .main{padding-bottom:16px}
+ .app-shell:has(.hotel-sidebar) .topbar h1{font-size:22px}
+ .app-shell:has(.hotel-sidebar) .manager-welcome{padding:17px;display:grid}
+ .app-shell:has(.hotel-sidebar) .manager-actions{display:flex}
+ .app-shell:has(.hotel-sidebar) .manager-actions>*{flex:1;min-width:0}
+ .app-shell:has(.hotel-sidebar) .manager-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .app-shell:has(.hotel-sidebar) .manager-kpi{padding:13px 10px 12px 48px;min-height:108px}
+ .app-shell:has(.hotel-sidebar) .manager-kpi .kpi-icon{left:9px;top:13px;width:30px;height:30px}
+ .app-shell:has(.hotel-sidebar) .manager-kpi>strong{font-size:18px}
+ .app-shell:has(.hotel-sidebar) .manager-card{padding:13px}
+ .app-shell:has(.hotel-sidebar) .manager-grid{grid-template-columns:minmax(0,1fr)}
+ .app-shell:has(.hotel-sidebar) .page-intro{padding:14px}
+ .app-shell:has(.hotel-sidebar) .page-intro .intro-status{display:none}
+}
+@media(max-width:380px){
+ .app-shell:has(.hotel-sidebar){padding-left:64px;padding-right:8px}
+ .hotel-sidebar{width:55px}
+ .app-shell:has(.hotel-sidebar) .manager-kpi{padding-left:10px}
+ .app-shell:has(.hotel-sidebar) .manager-kpi .kpi-icon{position:static;margin-bottom:6px}
+}
