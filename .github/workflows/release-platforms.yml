@@ -94,10 +94,28 @@ jobs:
         run: sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
       - run: npm install
       - run: npm run build
-      - name: Create Android project and sync web app
+      - name: Create Android project
+        run: npx cap add android
+      - name: Generate branded Android launcher icon
         run: |
-          npx cap add android
-          npx cap sync android
+          sudo apt-get update
+          sudo apt-get install -y python3-pil
+          mkdir -p resources
+          python3 - <<'PY'
+          from PIL import Image, ImageDraw
+          size = 1024
+          image = Image.new("RGB", (size, size), "#075b43")
+          draw = ImageDraw.Draw(image)
+          draw.rounded_rectangle((55, 55, 969, 969), radius=185, outline="#f1c75d", width=24)
+          # A simple, bold hotel monogram with a gold roofline.
+          draw.polygon([(275, 745), (275, 300), (390, 300), (390, 450), (634, 450), (634, 300), (749, 300), (749, 745), (634, 745), (634, 565), (390, 565), (390, 745)], fill="#ffffff")
+          draw.line((275, 300, 512, 125, 749, 300), fill="#f1c75d", width=34, joint="curve")
+          draw.line((225, 835, 799, 835), fill="#f1c75d", width=28)
+          image.save("resources/icon.png")
+          PY
+          npx --yes @capacitor/assets generate --android --iconBackgroundColor "#075b43" --iconBackgroundColorDark "#034431"
+      - name: Sync branded Android app
+        run: npx cap sync android
       - name: Build debug APK
         if: github.event_name == 'push' || inputs.target == 'all' || inputs.target == 'android-apk'
         run: cd android && ./gradlew assembleDebug
