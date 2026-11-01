@@ -1,29 +1,16 @@
 {
-  "name": "SifoHotel",
+  "name": "SifoBooks Hotel",
   "short_name": "SifoHotel",
-  "description": "SifoHotel hotel management system for reservations, front desk, rooms, guest folios and daily operations.",
+  "description": "SifoBooks Hotel — hotel reservations, front desk, rooms, guest folios and daily operations.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#061b49",
-  "theme_color": "#0b3d91",
-  "categories": [
-    "business",
-    "productivity"
-  ],
+  "background_color": "#f3f7f8",
+  "theme_color": "#075b43",
+  "categories": ["business", "productivity"],
   "icons": [
-    {
-      "src": "/icons/sifohotel-icon.svg",
-      "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/sifohotel-icon.svg",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
+    {"src": "/icons/sifohotel-icon.svg", "sizes": "192x192", "type": "image/svg+xml", "purpose": "any"},
+    {"src": "/icons/sifohotel-icon.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any maskable"}
   ]
 }
