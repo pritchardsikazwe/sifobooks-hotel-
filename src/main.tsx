@@ -4,6 +4,13 @@ import { App } from "./App";
 import { GuestPortal } from "./GuestPortal";
 import "./styles.css";
 
+declare global {
+  interface Window {
+    __sifohotelReady?: () => void;
+    __sifohotelFail?: (message?: string) => void;
+  }
+}
+
 class StartupErrorBoundary extends Component<{ children: ReactNode }, { error: string }> {
   state = { error: "" };
 
