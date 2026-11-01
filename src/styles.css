@@ -2037,3 +2037,61 @@ html,body{background:var(--hotel-canvas);color:var(--hotel-ink)}
   .hr-payroll .hr-kpis article { min-width:0!important; }
   .hr-payroll .hr-line-input { width:90px!important; }
 }
+
+
+/* Expanded employee master record — desktop and mobile HR workspace */
+.employee-register-table { min-width: 980px; }
+.employee-expand-button { white-space: nowrap; }
+.employee-record-expanded {
+  padding: 22px;
+  margin: 4px 0 10px;
+  border: 1px solid #dce7e5;
+  border-radius: 16px;
+  background: linear-gradient(145deg,#ffffff,#f4f9f7);
+  color: #24445a;
+  box-shadow: 0 5px 18px rgba(25,65,75,.06);
+}
+.employee-record-heading {
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+  padding-bottom:16px;border-bottom:1px solid #e1ebe7;margin-bottom:16px;
+}
+.employee-record-heading h3 { margin:4px 0;color:#174d40;font-size:22px; }
+.employee-record-heading p { margin:0;color:#718493;font-size:12px; }
+.employee-record-section { padding:14px 0;border-bottom:1px solid #e7eeeb; }
+.employee-record-section h4 {
+  margin:0 0 12px;color:#245b4b;font-size:13px;font-weight:800;
+  display:flex;align-items:center;gap:8px;
+}
+.employee-record-section h4 small {
+  color:#9b7b2d;font-size:10px;font-weight:700;
+  background:#fff5d9;padding:4px 8px;border-radius:20px;
+}
+.employee-record-grid {
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;
+}
+.employee-detail-field {
+  display:flex;flex-direction:column;gap:6px;min-width:0;
+  color:#667b89;font-size:11px;font-weight:700;
+}
+.employee-detail-field input,.employee-detail-field select {
+  width:100%;min-width:0;min-height:40px;padding:9px 11px;
+  border:1px solid #d5e1e4;border-radius:8px;background:#fff;
+  color:#203b50;font:inherit;font-size:13px;outline:none;
+}
+.employee-detail-field input:focus,.employee-detail-field select:focus {
+  border-color:#2a8a6d;box-shadow:0 0 0 3px rgba(42,138,109,.12);
+}
+.employee-record-actions {
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding-top:16px;color:#718493;font-size:11px;
+}
+@media(max-width:680px) {
+  .employee-record-expanded { padding:14px;margin:2px 0 8px; }
+  .employee-record-heading { flex-direction:column;gap:8px; }
+  .employee-record-grid { grid-template-columns:repeat(2,minmax(0,1fr));gap:10px; }
+  .employee-record-actions { align-items:stretch;flex-direction:column; }
+  .employee-record-actions .primary { width:100%;justify-content:center; }
+}
+@media(max-width:390px) {
+  .employee-record-grid { grid-template-columns:minmax(0,1fr); }
+}
