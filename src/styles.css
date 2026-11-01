@@ -1580,3 +1580,52 @@ html,body{background:var(--hotel-canvas);color:var(--hotel-ink)}
 .app-shell:has(.hotel-sidebar) .hr-payroll .table-scroll tbody tr:hover{background:#edf7f0}
 .app-shell:has(.hotel-sidebar) .hr-payroll .badge.draft,.app-shell:has(.hotel-sidebar) .hr-payroll .badge.reviewed{background:#fff3d5;color:#805900}
 .app-shell:has(.hotel-sidebar) .hr-payroll .badge.approved,.app-shell:has(.hotel-sidebar) .hr-payroll .badge.posted{background:#e1f4e9;color:#126743}
+
+
+/* QuickBooks-style application navigation: no vertical sidebar */
+.hotel-sidebar{display:none!important}
+.app-shell:has(.hotel-sidebar){padding:0 clamp(14px,2.4vw,32px)!important;min-height:100vh}
+.app-shell:has(.hotel-sidebar) .app-header{
+  margin:0 calc(clamp(14px,2.4vw,32px) * -1) 22px!important;
+  padding:12px clamp(14px,2.4vw,32px) 0!important;
+  background:#fff!important;border-bottom:1px solid #d9e2ed!important;
+  box-shadow:0 2px 8px rgba(28,54,82,.06)!important;
+  backdrop-filter:blur(14px)
+}
+.app-shell:has(.hotel-sidebar) .main{margin:0!important;padding:0 0 28px!important;max-width:1800px;min-height:calc(100vh - 110px)}
+.app-shell:has(.hotel-sidebar) .mobile-menu-toggle{display:none!important}
+.app-shell:has(.hotel-sidebar) .top-menu{
+  display:flex!important;visibility:visible!important;max-height:none!important;
+  overflow-x:auto!important;overflow-y:hidden!important;gap:3px;
+  border-top:1px solid #edf1f5;padding:5px 0 0!important;
+  scrollbar-width:thin;scrollbar-color:#9bb8d8 transparent
+}
+.app-shell:has(.hotel-sidebar) .top-menu-item{
+  min-height:46px;padding:11px 13px!important;border-radius:7px 7px 0 0!important;
+  color:#40566d!important;font-size:12px;font-weight:700;
+  border-bottom:3px solid transparent!important
+}
+.app-shell:has(.hotel-sidebar) .top-menu-item:hover{background:#edf4fb!important;color:#1e5e9b!important}
+.app-shell:has(.hotel-sidebar) .top-menu-item.active{
+  color:#1763a6!important;background:#eaf2fb!important;
+  border-bottom-color:#3478bd!important
+}
+.app-shell:has(.hotel-sidebar) .top-menu-item.active svg{color:#3478bd!important}
+.app-shell:has(.hotel-sidebar) .app-brand-row{padding-bottom:10px}
+.app-shell:has(.hotel-sidebar) .topbar{margin-top:0}
+@media(max-width:680px){
+  body{padding-bottom:calc(68px + env(safe-area-inset-bottom))!important}
+  .app-shell:has(.hotel-sidebar){padding:0 12px calc(78px + env(safe-area-inset-bottom))!important}
+  .app-shell:has(.hotel-sidebar) .app-header{margin:0 -12px 17px!important;padding:calc(8px + env(safe-area-inset-top)) 12px 0!important}
+  .app-shell:has(.hotel-sidebar) .top-menu{margin:0 -12px;padding:4px 12px 0!important}
+  .app-shell:has(.hotel-sidebar) .top-menu-item{min-height:42px;padding:9px 11px!important;font-size:11px}
+  .app-shell:has(.hotel-sidebar) .main{padding:0 0 18px!important}
+  .app-shell:has(.hotel-sidebar) .app-bottom-nav{
+    background:rgba(48,111,177,.98)!important;border-top:1px solid #255d98!important;
+    box-shadow:0 -5px 22px rgba(22,58,96,.16)!important
+  }
+  .app-shell:has(.hotel-sidebar) .app-bottom-nav-item{color:#eaf3fc!important}
+  .app-shell:has(.hotel-sidebar) .app-bottom-nav-item.active{
+    background:#245f9e!important;border-color:#8db6df!important;color:#fff!important
+  }
+}
