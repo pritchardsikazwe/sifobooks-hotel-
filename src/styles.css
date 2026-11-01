@@ -1684,7 +1684,7 @@ html,body{background:var(--hotel-canvas);color:var(--hotel-ink)}
 
 
 /* Responsive QuickBooks-style workspace: one horizontal navigation system on all screens. */
-.app-shell:has(.hotel-header) {
+.app-shell:has(.app-header) {
   display: block !important;
   width: 100% !important;
   min-height: 100vh;
