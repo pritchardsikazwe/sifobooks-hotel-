@@ -1681,3 +1681,69 @@ html,body{background:var(--hotel-canvas);color:var(--hotel-ink)}
     border-top: 1px solid #2e67ad !important;
   }
 }
+
+
+/* Responsive QuickBooks-style workspace: one horizontal navigation system on all screens. */
+.app-shell:has(.hotel-header) {
+  display: block !important;
+  width: 100% !important;
+  min-height: 100vh;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.hotel-sidebar { display: none !important; }
+.app-shell .main {
+  width: 100% !important;
+  max-width: 1800px !important;
+  margin: 0 auto !important;
+  padding: 24px clamp(16px, 3vw, 44px) 96px !important;
+}
+.app-shell .app-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  width: 100%;
+  margin: 0 !important;
+  padding: 12px clamp(16px, 3vw, 44px) 0 !important;
+  background: #f5f8fc;
+  border-bottom: 1px solid #dce7e3;
+}
+.app-shell .top-menu {
+  display: flex !important;
+  position: static !important;
+  width: 100% !important;
+  max-height: none !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  flex-wrap: nowrap !important;
+  gap: 6px !important;
+  padding: 10px 0 12px !important;
+  scrollbar-width: none;
+}
+.app-shell .top-menu::-webkit-scrollbar { display: none; }
+.app-shell .top-menu-item {
+  flex: 0 0 auto !important;
+  min-height: 42px;
+  white-space: nowrap;
+}
+.app-shell .mobile-menu-toggle { display: none !important; }
+.app-shell .app-bottom-nav { display: none !important; }
+@media (max-width: 680px) {
+  .app-shell .app-header {
+    padding: calc(8px + env(safe-area-inset-top)) 12px 0 !important;
+  }
+  .app-shell .app-brand-row { min-height: 44px; }
+  .app-shell .app-header-right { max-width: 68%; }
+  .app-shell .main { padding: 16px 12px calc(76px + env(safe-area-inset-bottom)) !important; }
+  .app-shell .app-bottom-nav {
+    display: flex !important;
+    position: fixed !important;
+    z-index: 60 !important;
+    inset: auto 0 0 !important;
+    min-height: 64px !important;
+    padding: 7px 6px calc(7px + env(safe-area-inset-bottom)) !important;
+    justify-content: space-around !important;
+    background: #3974bb !important;
+    border-top: 1px solid #2e67ad !important;
+  }
+}
