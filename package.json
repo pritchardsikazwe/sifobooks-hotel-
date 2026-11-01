@@ -22,7 +22,8 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "@capacitor/core": "^7.4.3",
-    "@capacitor/android": "^7.4.3"
+    "@capacitor/android": "^7.4.3",
+    "@tauri-apps/api": "^2.8.0"
   },
   "devDependencies": {
     "@types/react": "19.0.8",
