@@ -6,7 +6,7 @@ concurrency:
 
 on:
   push:
-    branches: [main, gracesoft-ui-rollout]
+    branches: [main, gracesoft-ui-rollout, signed-in-dashboard-reference]
     paths:
       - ".github/workflows/build.yml"
       - "package.json"
