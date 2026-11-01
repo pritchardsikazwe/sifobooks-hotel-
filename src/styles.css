@@ -1554,3 +1554,29 @@ html,body{background:var(--hotel-canvas);color:var(--hotel-ink)}
  .app-shell:has(.hotel-sidebar) .manager-kpi{padding-left:10px}
  .app-shell:has(.hotel-sidebar) .manager-kpi .kpi-icon{position:static;margin-bottom:6px}
 }
+
+
+/* Bring specialist workspaces (including HR) into the same light emerald/gold theme. */
+.app-shell:has(.hotel-sidebar) .hr-payroll{color:var(--hotel-ink)}
+.app-shell:has(.hotel-sidebar) .hr-head{background:linear-gradient(115deg,#fff,#edf7f1);border-color:var(--hotel-line);box-shadow:var(--hotel-shadow)}
+.app-shell:has(.hotel-sidebar) .hr-head h2{color:var(--hotel-emerald-deep)}
+.app-shell:has(.hotel-sidebar) .hr-head p,.app-shell:has(.hotel-sidebar) .hr-kpis article>span,.app-shell:has(.hotel-sidebar) .hr-kpis small,.app-shell:has(.hotel-sidebar) .hr-reminder small,.app-shell:has(.hotel-sidebar) .hr-feature-list>div{color:var(--hotel-muted)}
+.app-shell:has(.hotel-sidebar) .hr-kicker,.app-shell:has(.hotel-sidebar) .hr-period,.app-shell:has(.hotel-sidebar) .hr-kpis svg,.app-shell:has(.hotel-sidebar) .hr-reminder>svg,.app-shell:has(.hotel-sidebar) .hr-feature-list svg{color:#a77b16}
+.app-shell:has(.hotel-sidebar) .hr-kpis article{background:#fff;border-color:var(--hotel-line);box-shadow:var(--hotel-shadow)}
+.app-shell:has(.hotel-sidebar) .hr-kpis strong{color:var(--hotel-emerald-deep)}
+.app-shell:has(.hotel-sidebar) .hr-progress{background:#e5eee9}
+.app-shell:has(.hotel-sidebar) .hr-progress span{background:linear-gradient(90deg,#07885b,#e8b83f)}
+.app-shell:has(.hotel-sidebar) .hr-tabs button{background:#f5faf7;border-color:var(--hotel-line);color:#416356}
+.app-shell:has(.hotel-sidebar) .hr-tabs button.active{background:linear-gradient(135deg,#f8dc8c,#edbd4e);border-color:#e5b847;color:#173f30}
+.app-shell:has(.hotel-sidebar) .hr-toolbar label,.app-shell:has(.hotel-sidebar) .hr-add{background:#f7faf8;border-color:var(--hotel-line)}
+.app-shell:has(.hotel-sidebar) .hr-add{color:var(--hotel-ink)}
+.app-shell:has(.hotel-sidebar) .hr-sub{color:var(--hotel-muted)}
+.app-shell:has(.hotel-sidebar) .hr-steps button{background:#f3f8f5;border-color:var(--hotel-line);color:#315d4d}
+.app-shell:has(.hotel-sidebar) .hr-steps button.done{background:#e2f5e9;border-color:#bde2cb;color:#126743}
+.app-shell:has(.hotel-sidebar) .hr-reminder,.app-shell:has(.hotel-sidebar) .hr-feature-list>div{border-bottom-color:var(--hotel-line)}
+.app-shell:has(.hotel-sidebar) .hr-disclaimer{color:#896414}
+.app-shell:has(.hotel-sidebar) .hr-payroll .table-scroll th{background:#e9f4ee;color:#315d4d}
+.app-shell:has(.hotel-sidebar) .hr-payroll .table-scroll td{color:#2c4358}
+.app-shell:has(.hotel-sidebar) .hr-payroll .table-scroll tbody tr:hover{background:#edf7f0}
+.app-shell:has(.hotel-sidebar) .hr-payroll .badge.draft,.app-shell:has(.hotel-sidebar) .hr-payroll .badge.reviewed{background:#fff3d5;color:#805900}
+.app-shell:has(.hotel-sidebar) .hr-payroll .badge.approved,.app-shell:has(.hotel-sidebar) .hr-payroll .badge.posted{background:#e1f4e9;color:#126743}
