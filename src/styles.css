@@ -1747,3 +1747,106 @@ html,body{background:var(--hotel-canvas);color:var(--hotel-ink)}
     border-top: 1px solid #2e67ad !important;
   }
 }
+
+
+/* Signed-in dashboard layout inspired by the supplied SifoBooks Hotel reference. */
+.manager-dashboard { gap: 14px; }
+.manager-welcome {
+  min-height: 150px;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  border: 0;
+  background:
+    radial-gradient(ellipse at 82% 18%, #f5d17a55 0, transparent 28%),
+    radial-gradient(ellipse at 92% 100%, #0d8d68 0, transparent 42%),
+    linear-gradient(112deg,#073e36 0%,#086b55 48%,#123f49 100%);
+  box-shadow: 0 10px 28px #123b6320;
+}
+.manager-welcome:after {
+  content: "";
+  position: absolute;
+  width: 46%;
+  height: 180%;
+  right: -5%;
+  top: -36%;
+  opacity: .32;
+  background: repeating-linear-gradient(90deg,transparent 0 13px,#f7e7b1 14px 16px,transparent 17px 27px);
+  clip-path: polygon(18% 25%,100% 0,100% 100%,0 100%);
+  pointer-events: none;
+}
+.manager-welcome > div:first-child { position: relative; z-index: 1; }
+.manager-welcome h2,.manager-welcome p,.manager-welcome .manager-date { color:#fff; }
+.manager-welcome .hero-kicker { color:#f6d16b; }
+.manager-welcome .manager-date { color:#d9eee8; }
+.manager-welcome .manager-actions { position:relative; z-index:2; }
+.manager-welcome .secondary { background:#07533f;color:#fff;border-color:#78bba0; }
+.manager-kpis { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.manager-grid-main { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.room-overview-card { grid-row:auto; }
+.occupancy-chart { display:grid; grid-template-columns:34px minmax(0,1fr); height:122px; align-items:stretch; }
+.occupancy-y-labels { display:flex;flex-direction:column;justify-content:space-between;color:#8190a3;font-size:9px;padding:2px 0 8px; }
+.occupancy-chart svg { width:100%;height:112px;overflow:visible;background:repeating-linear-gradient(to bottom,transparent 0 calc(25% - 1px),#edf2f7 calc(25% - 1px) 25%); }
+.occupancy-x-labels { display:flex;justify-content:space-between;margin-left:34px;color:#8290a3;font-size:9px; }
+.occupancy-legend { background:#18a45b !important; }
+.manager-growth-banner {
+  min-height:118px;
+  color:#fff;
+  border:0;
+  background:radial-gradient(ellipse at 5% 100%,#f1c85c45,transparent 36%),linear-gradient(105deg,#07533e,#08704f 62%,#063d36);
+  box-shadow:0 9px 26px #07533e22;
+}
+.manager-growth-banner .growth-icon { width:58px;height:58px;flex:0 0 58px;display:grid;place-items:center;border:2px solid #e9c85d;border-radius:50%;color:#f5d36c; }
+.manager-growth-banner>div:nth-child(2) { flex:1;min-width:180px; }
+.manager-growth-banner strong { color:#f7d45f;font-size:19px; }
+.manager-growth-banner span { color:#e0eee8; }
+.manager-growth-banner .secondary { background:#0b4939;color:#fff;border-color:#a5c8b6; }
+@media(max-width:760px) {
+  .manager-dashboard { gap:10px; }
+  .manager-welcome { min-height:136px;padding:16px;gap:12px; }
+  .manager-welcome h2 { font-size:23px; }
+  .manager-welcome p { font-size:11px;max-width:95%; }
+  .manager-welcome .manager-date { font-size:9px;flex-wrap:wrap; }
+  .manager-welcome .manager-actions { gap:7px; }
+  .manager-welcome .manager-actions button { min-height:38px;padding:8px 9px;font-size:10px; }
+  .manager-kpis { grid-template-columns:repeat(2,minmax(0,1fr));gap:8px; }
+  .manager-kpi { min-height:108px;padding:12px 9px 11px 48px; }
+  .manager-kpi>strong { font-size:18px; }
+  .manager-kpi small { font-size:9px; }
+  .kpi-icon { left:9px;top:13px;width:31px;height:31px; }
+  .manager-grid-main,.manager-grid-bottom { grid-template-columns:repeat(2,minmax(0,1fr));gap:9px; }
+  .manager-card { padding:11px;border-radius:14px; }
+  .manager-card-head { flex-direction:column;gap:7px;margin-bottom:10px; }
+  .manager-card-head h3 { font-size:12px; }
+  .manager-card-head p { font-size:9px; }
+  .text-action { font-size:9px;padding:6px 7px; }
+  .room-status-counts { gap:5px; }
+  .room-status-count { padding:8px 7px;font-size:9px; }
+  .room-status-count strong { font-size:15px; }
+  .room-mini-grid { grid-template-columns:repeat(2,minmax(0,1fr));gap:5px; }
+  .room-mini { padding:7px 6px; }
+  .room-mini strong { font-size:10px; }
+  .room-mini span,.room-mini em { font-size:8px; }
+  .activity-row { gap:6px;padding:7px 0; }
+  .activity-icon,.guest-avatar { width:25px;height:25px;flex-basis:25px; }
+  .activity-row strong,.compact-main strong { font-size:9px; }
+  .activity-row small,.compact-main small { font-size:8px; }
+  .activity-row time { font-size:8px; }
+  .revenue-chart { height:118px;gap:4px; }
+  .revenue-bar-wrap { height:75px;width:min(100%,17px); }
+  .revenue-column>strong { font-size:7px; }
+  .revenue-column small { font-size:8px; }
+  .manager-task-list>button { gap:6px;padding:8px 0; }
+  .task-mark { width:25px;height:25px;flex-basis:25px; }
+  .manager-task-list strong { font-size:8px; }
+  .manager-task-list small { font-size:7px; }
+  .manager-growth-banner { grid-column:1/-1;gap:8px;padding:12px; }
+  .manager-growth-banner .growth-icon { width:38px;height:38px;flex-basis:38px; }
+  .manager-growth-banner strong { font-size:14px; }
+  .manager-growth-banner span { font-size:9px; }
+  .manager-growth-banner .secondary,.manager-growth-banner .primary { font-size:9px;padding:8px; }
+}
+@media(max-width:390px) {
+  .manager-grid-main,.manager-grid-bottom { grid-template-columns:1fr; }
+  .manager-welcome .manager-actions { flex-direction:column; }
+}
