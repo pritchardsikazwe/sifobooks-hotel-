@@ -3,19 +3,94 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0b3d91" />
+    <meta name="theme-color" content="#075b43" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="SifoHotel" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="SifoBooks Hotel" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="icon" type="image/svg+xml" href="/icons/sifohotel-icon.svg" />
     <link rel="apple-touch-icon" href="/icons/sifohotel-icon.svg" />
-    <meta name="description" content="SifoHotel — hotel reservations, front desk, rooms, guest folios and daily operations." />
-    <title>SifoHotel</title>
+    <meta name="description" content="SifoBooks Hotel — hotel reservations, front desk, rooms, guest folios and daily operations." />
+    <title>SifoBooks Hotel</title>
+    <style>
+      html,body{margin:0;min-width:320px;min-height:100%;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#f4f7fb;color:#20354a}
+      #root{min-height:100vh}
+      #startup-guard{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;padding:22px;background:#f4f7fb}
+      #startup-guard[hidden]{display:none}
+      .startup-card{width:min(100%,440px);box-sizing:border-box;padding:30px;border:1px solid #dbe4ee;border-radius:20px;background:#fff;box-shadow:0 16px 50px #173b5b14;text-align:center}
+      .startup-mark{width:48px;height:48px;margin:0 auto 15px;display:grid;place-items:center;border-radius:14px;background:#075b43;color:#f1c75d;font-weight:900;font-size:23px}
+      .startup-card h1{font-size:21px;margin:0 0 9px}.startup-card p{font-size:13px;line-height:1.6;color:#64788d;margin:0 0 18px}
+      .startup-spinner{width:25px;height:25px;margin:0 auto 17px;border:3px solid #dbe4ee;border-top-color:#e9b83f;border-radius:50%;animation:startup-spin .8s linear infinite}
+      .startup-actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+      .startup-actions button{border:0;border-radius:10px;padding:11px 15px;background:#075b43;color:#fff;font-weight:700}
+      .startup-actions button.secondary{background:#eaf3fb;color:#123b5d}
+      #startup-error{display:none;color:#8f2e35;font-size:11px;overflow-wrap:anywhere;margin-top:14px}
+      @keyframes startup-spin{to{transform:rotate(360deg)}}
+      @media(prefers-reduced-motion:reduce){.startup-spinner{animation:none}}
+    </style>
+    <script>
+      (() => {
+        let finished = false;
+        const revealFailure = (message) => {
+          if (finished) return;
+          const guard = document.getElementById("startup-guard");
+          const heading = document.getElementById("startup-heading");
+          const copy = document.getElementById("startup-copy");
+          const spinner = document.getElementById("startup-spinner");
+          const detail = document.getElementById("startup-error");
+          if (!guard || !heading || !copy) return;
+          guard.hidden = false;
+          heading.textContent = "The workspace could not start";
+          copy.textContent = "Your hotel data has not been deleted. Reload the application. If the problem continues, use Reset application files to remove an outdated offline cache.";
+          if (spinner) spinner.style.display = "none";
+          if (detail) { detail.style.display = message ? "block" : "none"; detail.textContent = message || ""; }
+        };
+        window.__sifohotelReady = () => {
+          finished = true;
+          const guard = document.getElementById("startup-guard");
+          if (guard) guard.hidden = true;
+        };
+        window.addEventListener("error", event => {
+          if (event.target && event.target !== window) revealFailure("A required application file could not be loaded.");
+          else revealFailure(event.message || "An application error occurred.");
+        }, true);
+        window.addEventListener("unhandledrejection", event => revealFailure(event.reason?.message || "An unexpected startup request failed."));
+        window.setTimeout(() => {
+          if (!finished) revealFailure("The application did not finish starting within 15 seconds.");
+        }, 15000);
+        window.__sifohotelReset = async () => {
+          try {
+            if ("serviceWorker" in navigator) {
+              const registrations = await navigator.serviceWorker.getRegistrations();
+              await Promise.all(registrations.map(registration => registration.unregister()));
+            }
+            if ("caches" in window) {
+              const names = await caches.keys();
+              await Promise.all(names.filter(name => name.startsWith("sifohotel-") || name.startsWith("sifobooks-hotel-")).map(name => caches.delete(name)));
+            }
+          } finally {
+            window.location.replace(window.location.pathname + "?recovery=" + Date.now());
+          }
+        };
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <section id="startup-guard" role="status" aria-live="polite">
+      <div class="startup-card">
+        <div class="startup-mark">S</div>
+        <div id="startup-spinner" class="startup-spinner" aria-hidden="true"></div>
+        <h1 id="startup-heading">Opening SifoBooks Hotel</h1>
+        <p id="startup-copy">Preparing your workspace. Please wait a moment.</p>
+        <div class="startup-actions">
+          <button type="button" onclick="window.location.reload()">Reload application</button>
+          <button type="button" class="secondary" onclick="window.__sifohotelReset()">Reset application files</button>
+        </div>
+        <div id="startup-error"></div>
+      </div>
+    </section>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

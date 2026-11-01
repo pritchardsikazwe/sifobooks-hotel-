@@ -37,6 +37,13 @@ jobs:
         run: npm install
       - name: Build app
         run: npm run build
+      - name: Verify production output
+        run: |
+          test -s dist/index.html
+          test -d dist/assets
+          find dist/assets -maxdepth 1 -type f -name '*.js' -print -quit | grep -q .
+          find dist/assets -maxdepth 1 -type f -name '*.css' -print -quit | grep -q .
+          grep -q 'startup-guard' dist/index.html
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -54,3 +61,13 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Verify live website responds
+        run: |
+          for attempt in 1 2 3 4 5 6; do
+            if curl --fail --silent --show-error https://hotel.sifobooks.com/ -o /tmp/hotel-home.html; then
+              grep -q 'startup-guard' /tmp/hotel-home.html && exit 0
+            fi
+            sleep 10
+          done
+          echo "Live website did not return the expected startup-protected HTML."
+          exit 1

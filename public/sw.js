@@ -1,4 +1,4 @@
-const CACHE = "sifohotel-shell-v6";
+const CACHE = "sifohotel-shell-v7";
 const SHELL = ["/manifest.webmanifest", "/icons/sifohotel-icon.svg"];
 
 // Keep the application HTML and hashed JavaScript/CSS network-only.
