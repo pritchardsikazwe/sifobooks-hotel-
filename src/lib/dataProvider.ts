@@ -46,10 +46,22 @@ export async function saveRecord<T extends LocalRecord = LocalRecord>(
   }
   if (!supabase) throw new Error("Cloud database is not configured.");
   const payload = { ...record, hotel_id: companyId };
-  const query = record.id
-    ? supabase.from(collection).upsert(payload).eq("hotel_id", companyId)
-    : supabase.from(collection).insert(payload);
-  const { data, error } = await query.select("*").single();
+  if (record.id) {
+    const { data, error } = await supabase
+      .from(collection)
+      .update(payload)
+      .eq("hotel_id", companyId)
+      .eq("id", record.id)
+      .select("*")
+      .single();
+    if (error) throw error;
+    return data as T;
+  }
+  const { data, error } = await supabase
+    .from(collection)
+    .insert(payload)
+    .select("*")
+    .single();
   if (error) throw error;
   return data as T;
 }
