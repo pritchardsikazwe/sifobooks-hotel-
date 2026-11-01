@@ -78,7 +78,7 @@ jobs:
           generate_release_notes: true
 
   android:
-    if: (github.event_name == 'workflow_dispatch' && (inputs.target == 'all' || inputs.target == 'android-apk' || inputs.target == 'android-aab')) || (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/hotel-v') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/gracesoft-ui-rollout'))
+    if: (github.event_name == 'workflow_dispatch' && (inputs.target == 'all' || inputs.target == 'android-apk' || inputs.target == 'android-aab')) || (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/hotel-v') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/gracesoft-ui-rollout' || github.ref == 'refs/heads/signed-in-dashboard-reference'))
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
