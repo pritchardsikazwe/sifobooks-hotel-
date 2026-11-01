@@ -1580,3 +1580,104 @@ html,body{background:var(--hotel-canvas);color:var(--hotel-ink)}
 .app-shell:has(.hotel-sidebar) .hr-payroll .table-scroll tbody tr:hover{background:#edf7f0}
 .app-shell:has(.hotel-sidebar) .hr-payroll .badge.draft,.app-shell:has(.hotel-sidebar) .hr-payroll .badge.reviewed{background:#fff3d5;color:#805900}
 .app-shell:has(.hotel-sidebar) .hr-payroll .badge.approved,.app-shell:has(.hotel-sidebar) .hr-payroll .badge.posted{background:#e1f4e9;color:#126743}
+
+
+/* SifoBooks Hotel mobile workspace: remove the vertical sidebar completely.
+   Keep the horizontal module strip and the existing bottom app shortcuts. */
+.app-shell:has(> .hotel-sidebar) {
+  width: 100%;
+  min-width: 0;
+  padding: 0 clamp(12px, 2.4vw, 32px) !important;
+  margin: 0;
+  background: var(--hotel-canvas, #f4f7fb);
+}
+.app-shell > .hotel-sidebar {
+  display: none !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  pointer-events: none !important;
+}
+.app-shell:has(> .hotel-sidebar) .main {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 0 88px !important;
+}
+.app-shell:has(> .hotel-sidebar) .app-header {
+  margin-left: calc(clamp(12px, 2.4vw, 32px) * -1) !important;
+  margin-right: calc(clamp(12px, 2.4vw, 32px) * -1) !important;
+}
+.app-shell:has(> .hotel-sidebar) .mobile-menu-toggle {
+  display: none !important;
+}
+.app-shell:has(> .hotel-sidebar) .top-menu {
+  display: flex !important;
+  position: static !important;
+  width: 100% !important;
+  max-height: none !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  flex-wrap: nowrap !important;
+  gap: 5px !important;
+  padding: 5px clamp(12px, 2.4vw, 32px) 9px !important;
+  background: #fff !important;
+  border-top: 1px solid var(--hotel-border, #dce8e3);
+  border-bottom: 1px solid var(--hotel-border, #dce8e3);
+  scrollbar-width: none;
+}
+.app-shell:has(> .hotel-sidebar) .top-menu::-webkit-scrollbar { display: none; }
+.app-shell:has(> .hotel-sidebar) .top-menu-item {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  min-height: 42px !important;
+  padding: 9px 12px !important;
+  border: 1px solid #dce8e3 !important;
+  border-radius: 9px !important;
+  background: #f7faf8 !important;
+  color: #42675a !important;
+  white-space: nowrap !important;
+}
+.app-shell:has(> .hotel-sidebar) .top-menu-item.active {
+  background: linear-gradient(135deg, #f8dc8c, #edbd4e) !important;
+  border-color: #e5b847 !important;
+  color: #173f30 !important;
+}
+@media (max-width: 560px) {
+  body { padding-bottom: 0 !important; }
+  .app-shell:has(> .hotel-sidebar) {
+    padding: 0 0 calc(68px + env(safe-area-inset-bottom)) !important;
+  }
+  .app-shell:has(> .hotel-sidebar) .app-header {
+    margin: 0 !important;
+    padding: calc(8px + env(safe-area-inset-top)) 12px 0 !important;
+  }
+  .app-shell:has(> .hotel-sidebar) .app-brand-row {
+    min-height: 44px;
+    justify-content: space-between !important;
+  }
+  .app-shell:has(> .hotel-sidebar) .app-brand-row .brand {
+    display: flex !important;
+  }
+  .app-shell:has(> .hotel-sidebar) .app-header-right {
+    max-width: 65%;
+  }
+  .app-shell:has(> .hotel-sidebar) .top-menu {
+    margin: 0 -0px !important;
+    padding: 5px 12px 9px !important;
+  }
+  .app-shell:has(> .hotel-sidebar) .main {
+    padding: 0 12px 18px !important;
+  }
+  .app-shell:has(> .hotel-sidebar) .app-bottom-nav {
+    display: flex !important;
+    position: fixed !important;
+    z-index: 50 !important;
+    inset: auto 0 0 !important;
+    min-height: 64px !important;
+    padding: 7px 6px calc(7px + env(safe-area-inset-bottom)) !important;
+    justify-content: space-around !important;
+    background: #3974bb !important;
+    border-top: 1px solid #2e67ad !important;
+  }
+}
