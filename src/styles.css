@@ -2019,3 +2019,202 @@ html,body{background:var(--hotel-canvas);color:var(--hotel-ink)}
 .report-sort-button{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:inherit;font:inherit;font-weight:700;text-align:left;cursor:pointer;padding:2px 0;white-space:nowrap}.report-sort-button:focus-visible{outline:2px solid var(--primary,#08724f);outline-offset:3px;border-radius:4px}.report-table-pagination{display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap;padding:12px 14px;border-top:1px solid var(--border,#dfe7e2);font-size:12px;color:var(--muted,#65756c)}.report-table-pagination label{display:flex;align-items:center;gap:6px}.report-table-pagination select{min-height:30px;border:1px solid var(--border,#dfe7e2);border-radius:7px;padding:3px 8px;background:var(--surface,#fff);color:inherit}.report-table-pagination button{min-height:30px;padding:4px 10px}.report-table-pagination button:disabled{opacity:.45;cursor:not-allowed}@media(max-width:640px){.report-table-pagination{justify-content:center;gap:8px}.report-table-pagination>span:first-child{width:100%;text-align:center}}
 
 .reservation-pagination{display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap;padding:12px 14px;border-top:1px solid var(--border,#dfe7e2);font-size:12px;color:var(--muted,#65756c)}.reservation-pagination label{display:flex;align-items:center;gap:6px}.reservation-pagination select{min-height:30px;border:1px solid var(--border,#dfe7e2);border-radius:7px;padding:3px 8px;background:var(--surface,#fff);color:inherit}.reservation-pagination button{min-height:30px;padding:4px 10px}.reservation-pagination button:disabled{opacity:.45;cursor:not-allowed}@media(max-width:640px){.reservation-pagination{justify-content:center;gap:8px}.reservation-pagination>span:first-child{width:100%;text-align:center}}
+
+
+/* Stronger SifoHotel contrast, less washed-out tabs and mobile navigation */
+:root {
+  --hotel-ink: #173247;
+  --hotel-muted: #5e7180;
+  --hotel-blue: #1769b2;
+  --hotel-blue-dark: #124f89;
+  --hotel-green: #087f5b;
+  --hotel-gold: #b88713;
+  --hotel-border: #d5e0e8;
+}
+.hotel-workspace .section-tabs,
+.hotel-workspace .tab-list,
+.hotel-workspace [role="tablist"] {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #d5e0e8;
+}
+.hotel-workspace .section-tabs button,
+.hotel-workspace .tab-list button,
+.hotel-workspace [role="tab"] {
+  color: #536a7c;
+  background: #e8eff5;
+  border: 1px solid #d5e0e8;
+  border-bottom: 3px solid transparent;
+  border-radius: 9px 9px 0 0;
+  padding: 11px 15px;
+  font-weight: 700;
+  opacity: 1;
+}
+.hotel-workspace .section-tabs button.active,
+.hotel-workspace .tab-list button.active,
+.hotel-workspace [role="tab"][aria-selected="true"] {
+  color: #124f89;
+  background: #fff;
+  border-color: #b8d1e6;
+  border-bottom-color: #1769b2;
+  box-shadow: 0 -2px 0 #1769b2 inset;
+}
+.hotel-workspace .section-tabs button:hover,
+.hotel-workspace .tab-list button:hover,
+.hotel-workspace [role="tab"]:hover { color: #124f89; background: #f7fbff; }
+.hotel-workspace .card,
+.hotel-workspace .panel,
+.hotel-workspace .room-status-card {
+  border-color: #d5e0e8;
+  box-shadow: 0 2px 8px #19354a0a;
+}
+.hotel-workspace .room-status-card { background: #fff; }
+.hotel-workspace .room-status-card h3,
+.hotel-workspace .room-board h3 { color: #173247; }
+.hotel-workspace .status-available { background: #d8f5e9; color: #087f5b; }
+.hotel-workspace .status-occupied { background: #dcecff; color: #1769b2; }
+.hotel-workspace .status-cleaning { background: #fff1cc; color: #916600; }
+.hotel-workspace .status-maintenance { background: #ffe1e5; color: #a72c43; }
+.hotel-workspace .room-tile { border-radius: 12px; border-color: #d5e0e8; }
+.hotel-workspace .room-tile.available { background: #e5f8ef; border-color: #b9e8d0; }
+.hotel-workspace .room-tile.cleaning { background: #fff5dc; border-color: #efdda8; }
+.hotel-workspace .room-tile.maintenance { background: #fff0f1; border-color: #efc5cb; }
+.hotel-workspace .room-tile.occupied { background: #e8f2ff; border-color: #c4d9f5; }
+.hotel-workspace .bottom-nav {
+  background: #1769b2;
+  border-top: 1px solid #4388c5;
+  box-shadow: 0 -5px 18px #17324718;
+}
+.hotel-workspace .bottom-nav button { color: #fff; opacity: 1; font-weight: 700; }
+.hotel-workspace .bottom-nav button.active {
+  color: #fff;
+  background: #124f89;
+  border: 1px solid #8bbce6;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px #ffffff20;
+}
+.hotel-workspace .bottom-nav button:not(.active):hover { background: #ffffff18; }
+.hotel-workspace button:focus-visible,
+.hotel-workspace a:focus-visible {
+  outline: 3px solid #f0bd32;
+  outline-offset: 2px;
+}
+@media (max-width: 640px) {
+  .hotel-workspace .section-tabs,
+  .hotel-workspace .tab-list,
+  .hotel-workspace [role="tablist"] { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; }
+  .hotel-workspace .section-tabs button,
+  .hotel-workspace .tab-list button,
+  .hotel-workspace [role="tab"] { flex: 0 0 auto; }
+}
+
+
+/* Whole-app usability polish across SifoHotel workspaces */
+:root {
+  --hotel-primary: #1769b2;
+  --hotel-primary-hover: #12558f;
+  --hotel-text: #1c3447;
+  --hotel-secondary-text: #5f7281;
+  --hotel-panel-border: #d7e1e9;
+  --hotel-panel-shadow: 0 3px 14px #18354b0b;
+}
+.hotel-workspace :is(.page-header,.section-header,.workspace-header) h1,
+.hotel-workspace :is(.page-header,.section-header,.workspace-header) h2 {
+  color: var(--hotel-text);
+  letter-spacing: -.025em;
+}
+.hotel-workspace :is(.page-header,.section-header,.workspace-header) p {
+  color: var(--hotel-secondary-text);
+  line-height: 1.55;
+}
+.hotel-workspace :is(.card,.panel,.workspace-card,.section-card,.form-panel,.table-panel) {
+  border: 1px solid var(--hotel-panel-border);
+  box-shadow: var(--hotel-panel-shadow);
+}
+.hotel-workspace :is(.card,.panel,.workspace-card,.section-card,.form-panel,.table-panel) h3 {
+  color: var(--hotel-text);
+}
+.hotel-workspace :is(.primary,.btn-primary,.button-primary,[data-variant="primary"]) {
+  background: var(--hotel-primary);
+  border-color: var(--hotel-primary);
+  color: #fff;
+  font-weight: 700;
+}
+.hotel-workspace :is(.primary,.btn-primary,.button-primary,[data-variant="primary"]):hover {
+  background: var(--hotel-primary-hover);
+  border-color: var(--hotel-primary-hover);
+}
+.hotel-workspace :is(button,.btn,.button) {
+  min-height: 38px;
+  border-radius: 9px;
+  font-weight: 650;
+}
+.hotel-workspace :is(input,select,textarea) {
+  color: #1c3447;
+  border-color: #cbd8e2;
+  background-color: #fff;
+}
+.hotel-workspace :is(input,select,textarea)::placeholder { color: #8292a0; opacity: 1; }
+.hotel-workspace :is(input,select,textarea):disabled {
+  background: #edf2f6;
+  color: #718291;
+}
+.hotel-workspace :is(table,.table) {
+  color: #253b4d;
+}
+.hotel-workspace :is(table,.table) thead th {
+  background: #edf3f7;
+  color: #4d6476;
+  font-weight: 750;
+}
+.hotel-workspace :is(table,.table) tbody tr:nth-child(even) { background: #f8fafc; }
+.hotel-workspace :is(table,.table) tbody tr:hover { background: #eaf4fd; }
+.hotel-workspace :is(.badge,.pill,.status-badge) { font-weight: 700; }
+.hotel-workspace :is(.empty-state,.no-data) {
+  color: #687c8b;
+  border: 1px dashed #cbd8e2;
+  border-radius: 12px;
+  background: #f8fbfd;
+  padding: 22px;
+}
+.hotel-workspace :is(.form-grid,.form-row) { row-gap: 16px; }
+.hotel-workspace :is(.form-actions,.modal-actions,.dialog-actions) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 14px;
+}
+.hotel-workspace :is(.modal,.dialog,.drawer) {
+  border: 1px solid #d5e0e8;
+  border-radius: 16px;
+  box-shadow: 0 18px 60px #17324724;
+}
+.hotel-workspace :is(.modal-header,.dialog-header,.drawer-header) {
+  border-bottom: 1px solid #e1e8ee;
+}
+@media (max-width: 720px) {
+  .hotel-workspace :is(.form-actions,.modal-actions,.dialog-actions) { justify-content: stretch; }
+  .hotel-workspace :is(.form-actions,.modal-actions,.dialog-actions) button { flex: 1 1 130px; }
+  .hotel-workspace :is(.card,.panel,.workspace-card,.section-card,.form-panel,.table-panel) { border-radius: 14px; }
+}
+
+
+/* Payroll and HR: interactive register rows and employee detail drawer/dialog */
+.hr-payroll .hr-click-row { cursor: pointer; transition: background .14s ease, box-shadow .14s ease; }
+.hr-payroll .hr-click-row:hover { background: #e8f3fc !important; box-shadow: inset 3px 0 #1769b2; }
+.hr-payroll .hr-click-row:focus-visible { outline: 3px solid #1769b2; outline-offset: -3px; }
+.hr-payroll .hr-click-row td:first-child strong { color: #173247; }
+.hr-payroll .hr-click-row td:first-child .hr-sub { display: block; margin-top: 3px; color: #55758e; font-size: 11px; }
+.hr-detail-backdrop { position: fixed; inset: 0; z-index: 1200; display: grid; place-items: center; padding: 18px; background: #10223599; backdrop-filter: blur(3px); }
+.hr-detail-dialog { width: min(100%, 680px); max-height: min(88vh, 820px); overflow: auto; border: 1px solid #cbd9e5; border-radius: 18px; padding: 22px; background: #fff; color: #1c3447; box-shadow: 0 24px 80px #0b233b40; }
+.hr-detail-dialog header { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid #e0e8ef; }
+.hr-detail-dialog h2 { margin: 6px 0; color: #173247; }
+.hr-detail-dialog header p { margin: 0; color: #61788a; }
+.hr-detail-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; padding: 18px 0; }
+.hr-detail-grid>div { display: grid; gap: 6px; padding: 14px; border: 1px solid #dce6ee; border-radius: 11px; background: #f7fafc; }
+.hr-detail-grid small { color: #647a8b; font-weight: 650; }
+.hr-detail-grid strong { color: #173247; overflow-wrap: anywhere; }
+@media(max-width:560px) { .hr-detail-dialog { padding: 16px; } .hr-detail-grid { grid-template-columns: 1fr; } }
