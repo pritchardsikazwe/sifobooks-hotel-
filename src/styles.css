@@ -2108,3 +2108,95 @@ html,body{background:var(--hotel-canvas);color:var(--hotel-ink)}
   .hotel-workspace .tab-list button,
   .hotel-workspace [role="tab"] { flex: 0 0 auto; }
 }
+
+
+/* Whole-app usability polish across SifoHotel workspaces */
+:root {
+  --hotel-primary: #1769b2;
+  --hotel-primary-hover: #12558f;
+  --hotel-text: #1c3447;
+  --hotel-secondary-text: #5f7281;
+  --hotel-panel-border: #d7e1e9;
+  --hotel-panel-shadow: 0 3px 14px #18354b0b;
+}
+.hotel-workspace :is(.page-header,.section-header,.workspace-header) h1,
+.hotel-workspace :is(.page-header,.section-header,.workspace-header) h2 {
+  color: var(--hotel-text);
+  letter-spacing: -.025em;
+}
+.hotel-workspace :is(.page-header,.section-header,.workspace-header) p {
+  color: var(--hotel-secondary-text);
+  line-height: 1.55;
+}
+.hotel-workspace :is(.card,.panel,.workspace-card,.section-card,.form-panel,.table-panel) {
+  border: 1px solid var(--hotel-panel-border);
+  box-shadow: var(--hotel-panel-shadow);
+}
+.hotel-workspace :is(.card,.panel,.workspace-card,.section-card,.form-panel,.table-panel) h3 {
+  color: var(--hotel-text);
+}
+.hotel-workspace :is(.primary,.btn-primary,.button-primary,[data-variant="primary"]) {
+  background: var(--hotel-primary);
+  border-color: var(--hotel-primary);
+  color: #fff;
+  font-weight: 700;
+}
+.hotel-workspace :is(.primary,.btn-primary,.button-primary,[data-variant="primary"]):hover {
+  background: var(--hotel-primary-hover);
+  border-color: var(--hotel-primary-hover);
+}
+.hotel-workspace :is(button,.btn,.button) {
+  min-height: 38px;
+  border-radius: 9px;
+  font-weight: 650;
+}
+.hotel-workspace :is(input,select,textarea) {
+  color: #1c3447;
+  border-color: #cbd8e2;
+  background-color: #fff;
+}
+.hotel-workspace :is(input,select,textarea)::placeholder { color: #8292a0; opacity: 1; }
+.hotel-workspace :is(input,select,textarea):disabled {
+  background: #edf2f6;
+  color: #718291;
+}
+.hotel-workspace :is(table,.table) {
+  color: #253b4d;
+}
+.hotel-workspace :is(table,.table) thead th {
+  background: #edf3f7;
+  color: #4d6476;
+  font-weight: 750;
+}
+.hotel-workspace :is(table,.table) tbody tr:nth-child(even) { background: #f8fafc; }
+.hotel-workspace :is(table,.table) tbody tr:hover { background: #eaf4fd; }
+.hotel-workspace :is(.badge,.pill,.status-badge) { font-weight: 700; }
+.hotel-workspace :is(.empty-state,.no-data) {
+  color: #687c8b;
+  border: 1px dashed #cbd8e2;
+  border-radius: 12px;
+  background: #f8fbfd;
+  padding: 22px;
+}
+.hotel-workspace :is(.form-grid,.form-row) { row-gap: 16px; }
+.hotel-workspace :is(.form-actions,.modal-actions,.dialog-actions) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 14px;
+}
+.hotel-workspace :is(.modal,.dialog,.drawer) {
+  border: 1px solid #d5e0e8;
+  border-radius: 16px;
+  box-shadow: 0 18px 60px #17324724;
+}
+.hotel-workspace :is(.modal-header,.dialog-header,.drawer-header) {
+  border-bottom: 1px solid #e1e8ee;
+}
+@media (max-width: 720px) {
+  .hotel-workspace :is(.form-actions,.modal-actions,.dialog-actions) { justify-content: stretch; }
+  .hotel-workspace :is(.form-actions,.modal-actions,.dialog-actions) button { flex: 1 1 130px; }
+  .hotel-workspace :is(.card,.panel,.workspace-card,.section-card,.form-panel,.table-panel) { border-radius: 14px; }
+}
