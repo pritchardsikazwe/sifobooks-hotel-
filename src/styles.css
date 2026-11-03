@@ -2200,3 +2200,21 @@ html,body{background:var(--hotel-canvas);color:var(--hotel-ink)}
   .hotel-workspace :is(.form-actions,.modal-actions,.dialog-actions) button { flex: 1 1 130px; }
   .hotel-workspace :is(.card,.panel,.workspace-card,.section-card,.form-panel,.table-panel) { border-radius: 14px; }
 }
+
+
+/* Payroll and HR: interactive register rows and employee detail drawer/dialog */
+.hr-payroll .hr-click-row { cursor: pointer; transition: background .14s ease, box-shadow .14s ease; }
+.hr-payroll .hr-click-row:hover { background: #e8f3fc !important; box-shadow: inset 3px 0 #1769b2; }
+.hr-payroll .hr-click-row:focus-visible { outline: 3px solid #1769b2; outline-offset: -3px; }
+.hr-payroll .hr-click-row td:first-child strong { color: #173247; }
+.hr-payroll .hr-click-row td:first-child .hr-sub { display: block; margin-top: 3px; color: #55758e; font-size: 11px; }
+.hr-detail-backdrop { position: fixed; inset: 0; z-index: 1200; display: grid; place-items: center; padding: 18px; background: #10223599; backdrop-filter: blur(3px); }
+.hr-detail-dialog { width: min(100%, 680px); max-height: min(88vh, 820px); overflow: auto; border: 1px solid #cbd9e5; border-radius: 18px; padding: 22px; background: #fff; color: #1c3447; box-shadow: 0 24px 80px #0b233b40; }
+.hr-detail-dialog header { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid #e0e8ef; }
+.hr-detail-dialog h2 { margin: 6px 0; color: #173247; }
+.hr-detail-dialog header p { margin: 0; color: #61788a; }
+.hr-detail-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; padding: 18px 0; }
+.hr-detail-grid>div { display: grid; gap: 6px; padding: 14px; border: 1px solid #dce6ee; border-radius: 11px; background: #f7fafc; }
+.hr-detail-grid small { color: #647a8b; font-weight: 650; }
+.hr-detail-grid strong { color: #173247; overflow-wrap: anywhere; }
+@media(max-width:560px) { .hr-detail-dialog { padding: 16px; } .hr-detail-grid { grid-template-columns: 1fr; } }
