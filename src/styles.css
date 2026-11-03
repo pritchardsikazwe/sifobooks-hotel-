@@ -1958,3 +1958,60 @@ html,body{background:var(--hotel-canvas);color:var(--hotel-ink)}
     font-size: 11px !important;
   }
 }
+
+
+/* SifoHotel incremental polish: clearer forms, tables and responsive detail panels */
+.hotel-workspace input:not([type="checkbox"]):not([type="radio"]),
+.hotel-workspace select,
+.hotel-workspace textarea,
+.guest-form-panel input,
+.guest-form-panel select,
+.guest-form-panel textarea {
+  min-height: 42px;
+  border-radius: 10px;
+  border: 1px solid #394256;
+  background: #111722;
+  color: #edf2f8;
+  padding: 10px 12px;
+  transition: border-color .16s ease, box-shadow .16s ease, background .16s ease;
+}
+.hotel-workspace textarea,
+.guest-form-panel textarea { min-height: 92px; resize: vertical; }
+.hotel-workspace input:focus,
+.hotel-workspace select:focus,
+.hotel-workspace textarea:focus,
+.guest-form-panel input:focus,
+.guest-form-panel select:focus,
+.guest-form-panel textarea:focus {
+  outline: none;
+  border-color: var(--gold, #f6c945);
+  box-shadow: 0 0 0 3px #f6c94520;
+  background: #151c29;
+}
+.hotel-workspace label,
+.guest-form-panel label { color: #b8c2d2; font-size: 11px; font-weight: 650; gap: 7px; }
+.guest-table-scroll,
+.hotel-workspace .table-scroll,
+.hotel-workspace .table-wrap { overflow-x: auto; overscroll-behavior-x: contain; }
+.guest-table { min-width: 680px; border-collapse: separate; border-spacing: 0; }
+.guest-table thead { position: sticky; top: 0; z-index: 2; }
+.guest-table th { background: #151b27; color: #aeb9cb; padding: 13px 12px; }
+.guest-table td { border-bottom: 1px solid #ffffff0b; padding: 13px 12px; }
+.guest-table tbody tr { transition: background .15s ease; }
+.guest-table tbody tr:hover { background: #ffffff08; }
+.guest-table tbody tr.selected:hover { background: #f6c94512; }
+.guest-profile-panel { border: 1px solid #30394b; border-radius: 16px; background: linear-gradient(180deg,#171e2b,#121722); }
+.guest-profile-tabs { scrollbar-width: thin; }
+.guest-profile-actions button,
+.guest-profile-actions a { border-radius: 10px; transition: transform .15s ease, filter .15s ease; }
+.guest-profile-actions button:hover,
+.guest-profile-actions a:hover { filter: brightness(1.08); transform: translateY(-1px); }
+@media (max-width: 1100px) {
+  .guest-profile-panel { position: static; }
+}
+@media (max-width: 720px) {
+  .guest-search-row { flex-wrap: wrap; }
+  .guest-search-row label { flex-basis: 100%; }
+  .guest-profile-actions { grid-template-columns: 1fr; }
+  .guest-details-list>div { grid-template-columns: minmax(75px,.8fr) minmax(0,1.2fr); }
+}
